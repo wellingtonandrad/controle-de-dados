@@ -1,7 +1,10 @@
 "use client"
 
+//valor em centavos = valor em reais * 100
+//valor em reais = valor em centavos / 100
+import { useState } from "react"
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { useDialogServiceForm } from "./dialog-service-form"
+import { useDialogServiceForm, DialogServiceFormData } from "./dialog-service-form"
 import {
     Form,
     FormControl,
@@ -12,11 +15,127 @@ import {
 } from "@/components/ui/form"
 import { Input} from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { convertRealToCents } from "@/utils/convertCurrency"
+import { createNewService } from "../_actions/create-service"
+import { updateService } from "../_actions/update-service"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+
+interface DialogServiceProps{
+    closeModal: () => void;
+    serviceId?: string;
+    initialValues?: {
+      name: string;
+      price: string;
+      hours: string;
+      minutes: string;
+    }
+}
+
+export function DialogService({closeModal, initialValues, serviceId}: DialogServiceProps){
 
 
-export function DialogService(){
 
-  const form = useDialogServiceForm()
+  const form = useDialogServiceForm( { initialValues: initialValues } )
+  const [ loading, setLoading ] = useState(false);
+  const router = useRouter();
+
+
+  async function onSubmit(values: DialogServiceFormData){
+         setLoading(true);
+         const priceInCents = convertRealToCents(values.price)
+         const hours = parseInt(values.hours) || 0;
+         const minutes = parseInt(values.minutes) || 0;
+
+         const duration = (hours * 60) + minutes;
+
+         if(serviceId){
+           await editServiceById({
+             serviceId: serviceId,
+             name: values.name,
+             priceInCents: priceInCents,
+             duration: duration
+           })
+
+           setLoading(false);
+            return;
+
+         }
+
+         const response = await createNewService({
+            name: values.name,
+            price: priceInCents,
+            duration: duration
+         })
+
+         setLoading(false);
+
+         if(response?.error){
+            toast.error(response.error)
+            return;
+  }
+
+  toast.success("Serviço cadastrado com sucesso")
+  handleCloseModal();
+  router.refresh();
+  }
+
+  
+
+  async function editServiceById({
+     serviceId,
+     name, 
+     priceInCents, 
+     duration }: { serviceId: string, 
+      name: string, 
+      priceInCents: number, 
+      duration: number
+    }) {          
+      //Aqui vamos atualizar o serviço
+
+
+      const response = await updateService({
+         serviceId: serviceId,
+         name: name,
+         price: priceInCents,
+         duration: duration
+      })
+
+setLoading(false);
+
+
+if(response.error) {
+  toast.error(response.error)
+  return;
+}
+
+  toast.success(response.data)
+    handleCloseModal();
+  }
+
+function handleCloseModal(){
+    form.reset();
+    closeModal();
+  }
+
+
+  function changeCurrency(event: React.ChangeEvent<HTMLInputElement>){
+      let { value } = event.target;
+      value = value.replace(/\D/g,"");
+
+      if(value){
+        value=(parseInt(value, 10) / 100).toFixed(2);
+        value = value.replace(".", ",");
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      
+        //encontrar grupo de três digitos que estejam seguidos por outro grupo de três digitos que não estejam seguidos por outro grupo de três.
+        //garatindo que os pontos sejam inseridos entre os  milhares
+      }
+
+      event.target.value = value;
+      form.setValue("price", value)
+
+  }
 
     return(
         <>
@@ -57,7 +176,9 @@ export function DialogService(){
                             </FormLabel>
                             <FormControl>
                                 <Input {...field} 
-                                placeholder="Ex 120,00" />
+                                placeholder="Ex 120,00" 
+                                onChange={changeCurrency}
+                                />
                             </FormControl>
                           </FormItem>
                        )}
@@ -105,8 +226,12 @@ export function DialogService(){
                     />
                 </div>
 
-                <Button type="submit" className="w-full font-semibold text-white ">
-                     Adicionar serviço
+                <Button 
+                type="submit" 
+                className="w-full font-semibold text-white "
+                disabled={loading}
+                >
+                 {loading? "Carregando..." : `${serviceId ? "Atualizar serviço" : "Cadastrar serviço"}`}
                 </Button>
                   
 

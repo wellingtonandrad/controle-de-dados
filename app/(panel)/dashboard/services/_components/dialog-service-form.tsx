@@ -1,3 +1,5 @@
+"use client"
+
 import { zodResolver}  from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
@@ -20,6 +22,15 @@ export interface UseDialogServiceFormProps{
 
 export type DialogServiceFormValues = z.infer<typeof formSchema>
 
-export function useDialogServiceForm(){
+export function useDialogServiceForm({ initialValues }: UseDialogServiceFormProps){
+    return useForm<DialogServiceFormData>({
+        resolver: zodResolver(formSchema),
+        defaultValues: initialValues ||  {
+            name: "",
+            price: "",
+            hours: "",
+            minutes: ""
+        }
+    })
     
 }

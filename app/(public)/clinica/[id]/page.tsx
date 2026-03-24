@@ -1,14 +1,21 @@
 import { getInfoSchedule } from "./_date-acess/get-info-schedule"
 import { ScheduleContent } from "./_components/schedule-content"
+import { redirect } from "next/navigation"
 
 export default async function SchedulePage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const user = await getInfoSchedule({ userId: params.id })
+
+  const userId = (await params).id
+  const user = await getInfoSchedule({ userId: userId })
+
+  if(!user){
+    redirect("/")
+  }
 
   console.log("Dados do usuário para agendamento:", user)
 
-  return <ScheduleContent />
+  return <ScheduleContent clinic={user} />
 }

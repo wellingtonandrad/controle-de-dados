@@ -3,6 +3,7 @@
 import { auth} from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { z} from "zod"
+import { revalidatePath } from "next/cache"
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "O nome do serviço é obrigatório"}),
@@ -12,7 +13,7 @@ const formSchema = z.object({
 
 type FromSchema = z.infer<typeof formSchema>
 
-export async function createService(formData: FormData){
+export async function createNewService(formData: FormData){
   const session = await auth();
 
   if(!session?.user?.id) {
@@ -32,8 +33,19 @@ export async function createService(formData: FormData){
 try{
 
 const newService = await prisma.service.create({
-    
+    data:{
+      name: formData.name,
+      price: formData.price,
+      duration: formData.duration,
+      userId: session?.user.id
+    }
 })
+
+revalidatePath("/dashboard/services");
+
+return {
+  data: newService
+}
 
 }catch(err){
     console.error(err);

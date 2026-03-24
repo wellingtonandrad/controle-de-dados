@@ -40,7 +40,7 @@ export function Professionals(){
                         <div className="flex items-center justify-between" >
                            <div>
                              <h3 className="font-semibold" >
-                                Clinica de odontologia
+                                Clinica centro
                              </h3>
                              <p className="text-sm text-gray-500" >
                                Rua x São Caetano - SP 

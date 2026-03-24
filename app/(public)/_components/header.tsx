@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { signIn, useSession } from "next-auth/react"
 import {
   Sheet,
   SheetClose,
@@ -21,7 +22,7 @@ import { LogIn, Menu } from "lucide-react"
 export function Header(){
   const [isOpen, setIsOpen] = useState(false);
 
-  const session = null;
+  const { data: session } = useSession();
 
 const navItems = [
     {href: "#profissionais", label: "Profissionais"},
@@ -53,7 +54,10 @@ const NavLinks = () => (
         
         </Link>
     ):(
-        <Button>
+        <Button
+          type="button"
+          onClick={() => signIn("github", { callbackUrl: "/dashboard/profile" })}
+        >
             <LogIn />
             Fazer login
         </Button>

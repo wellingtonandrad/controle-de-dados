@@ -33,7 +33,7 @@ export async function updateService(formData: FromSchema){
 
     try{
    
-     const service = await prisma.service.update({
+     await prisma.service.update({
         where: {
             id: formData.serviceId,
             userId: session?.user?.id,

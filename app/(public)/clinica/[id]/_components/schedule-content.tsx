@@ -4,7 +4,7 @@ import Image from "next/image"
 import imgTest from "../../../../../public/foto1.png"
 import { MapPin } from "lucide-react"
 import type { Prisma } from "@/lib/generated/prisma"
-import { useAppointmentForm } from "./schedule-form"
+import { useAppointmentForm, AppointmentFormData } from "./schedule-form"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -25,7 +25,7 @@ interface ScheduleContentProps {
 
 export function ScheduleContent({clinic}: ScheduleContentProps)  {
     
-      const form = useAppointmentForm()
+      const form = useAppointmentForm();
       const { watch } = form
 
 
