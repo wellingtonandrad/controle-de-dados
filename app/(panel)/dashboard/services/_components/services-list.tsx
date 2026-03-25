@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import { Plus, Pencil, X} from "lucide-react"
 import { DialogService } from "./dialog-service"
 import { Service } from "@prisma/client"
-import { formatCurrency } from "@/utils/formatCurrency"
+import { formatCurrency } from "@/app/utils/formatCurrency"
 import { deleteService } from "../_actions/delete-service"
 import { toast } from "sonner"
 
@@ -95,7 +95,7 @@ export function ServicesList({ services }: ServicesListProps) {
                     {services.map(service => (
                       <article 
                       key={service.id}
-                      className="flex items-center justify-center justify-between"
+                      className="flex items-center justify-between gap-2"
                       >
                            <div className="flex items-center space-x-2">
                             <span className="font-medium">{service.name}</span>
@@ -130,9 +130,11 @@ export function ServicesList({ services }: ServicesListProps) {
 
                     </section>
                 </CardContent>
-                <CardFooter>
-                  <p> Serviços </p>
-                </CardFooter>
+                {services.length === 0 ? (
+                  <CardFooter className="text-sm text-muted-foreground">
+                    Nenhum serviço cadastrado. Use o botão + para adicionar.
+                  </CardFooter>
+                ) : null}
               </Card>
             </section>
         </Dialog>

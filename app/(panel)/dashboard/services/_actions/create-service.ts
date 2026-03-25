@@ -1,57 +1,54 @@
-"user server"
+"use server"
 
-import { auth} from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
-import { z} from "zod"
+import { z } from "zod"
 import { revalidatePath } from "next/cache"
 
 const formSchema = z.object({
-    name: z.string().min(1, { message: "O nome do serviço é obrigatório"}),
-    price: z.number().min(1, { message: "O preço do serviço é obrigatório"}),
-    duration: z.number(),
+  name: z.string().min(1, { message: "O nome do serviço é obrigatório" }),
+  price: z.number().min(1, { message: "O preço do serviço é obrigatório" }),
+  duration: z.number(),
 })
 
-type FromSchema = z.infer<typeof formSchema>
+export type CreateServiceInput = z.infer<typeof formSchema>
 
-export async function createNewService(formData: FormData){
-  const session = await auth();
+export async function createNewService(input: CreateServiceInput) {
+  const session = await auth()
 
-  if(!session?.user?.id) {
+  if (!session?.user?.id) {
     return {
-        error: "Falha ao cadastrar serviço",
+      error: "Falha ao cadastrar serviço",
     }
   }
 
-  const schema = formSchema.safeParse(formData);
+  const parsed = formSchema.safeParse(input)
 
-  if (!schema.success) {
+  if (!parsed.success) {
     return {
-        error: schema.error.issues[0].message
+      error: parsed.error.issues[0].message,
     }
   }
-  
-try{
 
-const newService = await prisma.service.create({
-    data:{
-      name: formData.name,
-      price: formData.price,
-      duration: formData.duration,
-      userId: session?.user.id
-    }
-})
+  try {
+    const newService = await prisma.service.create({
+      data: {
+        name: parsed.data.name,
+        price: parsed.data.price,
+        duration: parsed.data.duration,
+        userId: session.user.id,
+      },
+    })
 
-revalidatePath("/dashboard/services");
+    revalidatePath("/dashboard/services")
 
-return {
-  data: newService
-}
-
-}catch(err){
-    console.error(err);
     return {
-    error: "Falha ao cadastrar serviço",
+      data: newService,
     }
-}
-
+  } catch (err) {
+    console.error(err)
+    return {
+      error: "Falha ao cadastrar serviço",
+    }
+  }
 }

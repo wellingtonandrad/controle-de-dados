@@ -4,7 +4,7 @@
 //valor em reais = valor em centavos / 100
 import { useState } from "react"
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { useDialogServiceForm, DialogServiceFormData } from "./dialog-service-form"
+import { useDialogServiceForm, DialogServiceFormValues } from "./dialog-service-form"
 import {
     Form,
     FormControl,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form"
 import { Input} from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { convertRealToCents } from "@/utils/convertCurrency"
+import { convertRealToCents } from "@/app/utils/convertCurrency"
 import { createNewService } from "../_actions/create-service"
 import { updateService } from "../_actions/update-service"
 import { toast } from "sonner"
@@ -41,7 +41,7 @@ export function DialogService({closeModal, initialValues, serviceId}: DialogServ
   const router = useRouter();
 
 
-  async function onSubmit(values: DialogServiceFormData){
+  async function onSubmit(values: DialogServiceFormValues) {
          setLoading(true);
          const priceInCents = convertRealToCents(values.price)
          const hours = parseInt(values.hours) || 0;
@@ -75,9 +75,9 @@ export function DialogService({closeModal, initialValues, serviceId}: DialogServ
             return;
   }
 
-  toast.success("Serviço cadastrado com sucesso")
-  handleCloseModal();
-  router.refresh();
+  toast.success("Serviço cadastrado com sucesso!")
+  handleCloseModal()
+  router.refresh()
   }
 
   
@@ -109,8 +109,13 @@ if(response.error) {
   return;
 }
 
-  toast.success(response.data)
-    handleCloseModal();
+  toast.success(
+      typeof response.data === "string"
+        ? response.data
+        : "Serviço atualizado com sucesso!"
+    )
+    handleCloseModal()
+    router.refresh()
   }
 
 function handleCloseModal(){
@@ -146,8 +151,11 @@ function handleCloseModal(){
             </DialogDescription>
           </DialogHeader>
 
-        <Form {...form} >
-            <form className="space-y-2" >
+        <Form {...form}>
+            <form
+              className="space-y-2"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
                 
                 <div className="flex flex-col ">
                     <FormField 

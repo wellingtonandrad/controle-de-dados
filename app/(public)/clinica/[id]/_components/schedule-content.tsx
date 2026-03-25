@@ -28,7 +28,9 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
       const form = useAppointmentForm();
       const { watch } = form
 
-
+      async function handleRegisterAppointment(formData: AppointmentFormData) {
+             console.log(formData)
+      }
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Faixa verde: altura fixa, largura total */}
@@ -68,6 +70,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
      
     <Form {...form}>
         <form 
+        onSubmit={form.handleSubmit(handleRegisterAppointment)}
         className= "mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm"
          >
 
@@ -86,6 +89,8 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
                       placeholder="Digite seu nome completo..."
                       {...field}
                     />
+
+
                  </FormControl>
                  <FormMessage/>
                </FormItem>
@@ -199,9 +204,12 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
    
 
           ) : (
-            <p className="text-red-500 texte-center px-4 py-2" >
+
+            
+            <p className="w-full text-center bg-red-500 text-white px-4 py-2 rounded-md">
               A clinica está fechada neste momento.
             </p>
+            
          )}
 
           </form>
