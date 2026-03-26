@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useCallback, useEffect } from "react"
 import Image from "next/image"
 import imgTest from "../../../../../public/foto1.png"
 import { MapPin } from "lucide-react"
@@ -11,6 +12,8 @@ import { Input } from "@/components/ui/input"
 import { formatPhone} from "@/app/utils/formatPhone"
 import { DateTimePicker } from "./date-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ScheduleTimeList } from "./schedule-time-list"
+import { Label } from "@/components/ui/label"
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
   include: {
@@ -23,10 +26,66 @@ interface ScheduleContentProps {
    clinic: UserWithServiceAndSubscription
 }
 
+interface TimeSlot {
+  time: string;
+  available: boolean;
+}
+
 export function ScheduleContent({clinic}: ScheduleContentProps)  {
     
       const form = useAppointmentForm();
-      const { watch } = form
+      const { watch } = form;
+
+      const selectedDate = watch("date")
+      const selectedServiceId = watch("serviceId")
+
+      const [selectedTime, setSelectedTime] = useState("");
+      const [avaibleTimeSlots, setAvaibleTimeSlots] = useState<TimeSlot[]>([]);
+      const [loadingSlots, setLoadingSlots] = useState(false);
+      
+      //código que busca horários bloqueados 
+      const [blockedTimes, setBlockedTimes] = useState<string[]>([])
+
+      //esse código busca os horário bloqueados (via fetch HTTp)
+      const fetchBlockedTimes = useCallback(async (date: Date): Promise<string[]> => {
+        setLoadingSlots(true)
+        try {
+          const dateString = date.toISOString().split("T")[0]
+          const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?userId=${clinic.
+            id}&date=${dateString}&date=${dateString}`)
+
+           const json = await response.json();
+           setLoadingSlots(false);
+           return json;
+
+         
+        } catch (err) {
+          console.log(err)
+          setLoadingSlots(false)
+          return [];
+        }  
+      }, [clinic.id])
+
+        useEffect(() => {
+
+          if(selectedDate){
+             fetchBlockedTimes(selectedDate).then((blocked) => {
+                  
+                setBlockedTimes(blocked)
+
+                const times = clinic.times || [];
+
+                const finalSlots = times.map((time) => ({
+                  time: time,
+                  available: !blocked.includes(time)
+                }))
+
+                setAvaibleTimeSlots(finalSlots)
+
+             })
+          }
+
+        }, [selectedDate, clinic.times, fetchBlockedTimes, selectedTime])
 
       async function handleRegisterAppointment(formData: AppointmentFormData) {
              console.log(formData)
@@ -193,10 +252,25 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
            )}
           />
 
+          {selectedServiceId && (
+            <div className="space-y-2" >
+                <Label>Horarios disponíveis:</Label>
+                <div className="bg-gray-50 p-4 rounded-lg" >
+                    {loadingSlots ? (
+                      <p> Carregando horários</p>
+                    ): avaibleTimeSlots.length === 0 ? (
+                      <p>Nenhum horário disponível</p>
+                    ):(
+                      <ScheduleTimeList/>
+                    )}
+                </div>
+            </div>
+          )}
+
          {clinic.status ? ( 
              <Button 
              type="submit"
-             className="w-full bg-emerald-500 hover:bg-emerald-400"
+             className="w-full bg-emerald-500 hover:bg-emerald-500"
              disabled={!watch("name") || !watch("email") || !watch("phone") || !watch("date")} 
              >
                Realizar agendamento
