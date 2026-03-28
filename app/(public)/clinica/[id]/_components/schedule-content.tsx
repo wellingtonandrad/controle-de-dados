@@ -14,6 +14,8 @@ import { DateTimePicker } from "./date-picker"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ScheduleTimeList } from "./schedule-time-list"
 import { Label } from "@/components/ui/label"
+import { createNewAppointment } from "../_actions/create-appointment"
+import { toast } from "sonner"
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
   include: {
@@ -26,7 +28,7 @@ interface ScheduleContentProps {
    clinic: UserWithServiceAndSubscription
 }
 
-interface TimeSlot {
+export interface TimeSlot {
   time: string;
   available: boolean;
 }
@@ -79,8 +81,18 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
                   time: time,
                   available: !blocked.includes(time)
                 }))
-
+                  
                 setAvaibleTimeSlots(finalSlots)
+
+                const stillAvaible = finalSlots.find(
+                  (slot) => slot.time === selectedTime && slot.available
+                )  
+
+                if(!stillAvaible) {
+                   setSelectedTime("");
+                }
+
+               
 
              })
           }
@@ -88,8 +100,34 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
         }, [selectedDate, clinic.times, fetchBlockedTimes, selectedTime])
 
       async function handleRegisterAppointment(formData: AppointmentFormData) {
-             console.log(formData)
+             if(!selectedTime){
+              return;
       }
+
+      const response = await createNewAppointment({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        time: selectedTime,
+        date: formData.date,
+        serviceId: formData.serviceId,
+        clinicId: clinic.id
+
+      })
+
+    if(response.error){
+        toast.error(response.error)
+        return;
+    }
+
+    toast.success("Consulta agendada com sucesso!")
+    form.reset();
+    setSelectedTime("")
+
+    }
+  
+
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Faixa verde: altura fixa, largura total */}
@@ -254,14 +292,26 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
 
           {selectedServiceId && (
             <div className="space-y-2" >
-                <Label>Horarios disponíveis:</Label>
+                <Label className="font-semibold" >Horários disponíveis:</Label>
                 <div className="bg-gray-50 p-4 rounded-lg" >
                     {loadingSlots ? (
                       <p> Carregando horários</p>
                     ): avaibleTimeSlots.length === 0 ? (
                       <p>Nenhum horário disponível</p>
                     ):(
-                      <ScheduleTimeList/>
+                      <ScheduleTimeList
+                         onSelectTime={(time) => setSelectedTime(time) }
+                         clinicTimes={clinic.times}
+                         blockedTimes={blockedTimes}
+                         avaibleTimeSlots={avaibleTimeSlots}
+                         selectedTime={selectedTime}
+                         selectedDate={selectedDate}
+                         requiredSlots={
+                          clinic.services.find(service => service.id === selectedServiceId) ? Math.ceil(clinic.services.find(service => 
+                            service.id === selectedServiceId)!.duration /30) : 1
+                          
+                         }
+                      />
                     )}
                 </div>
             </div>
