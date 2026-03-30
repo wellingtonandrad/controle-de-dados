@@ -33,7 +33,7 @@ export interface TimeSlot {
   available: boolean;
 }
 
-export function ScheduleContent({clinic}: ScheduleContentProps)  {
+export function ScheduleContent({clinic}: ScheduleContentProps) {
     
       const form = useAppointmentForm();
       const { watch } = form;
@@ -253,6 +253,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
                   onChange={(date: Date) => {
                     if(date){
                       field.onChange(date)
+                      setSelectedTime("")
                     }
                   } }
                  />
@@ -271,7 +272,10 @@ export function ScheduleContent({clinic}: ScheduleContentProps)  {
              <FormItem className = "" >
                <FormLabel className="font-semibold">Selecione o serviço:</FormLabel>
                <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value} >
+                  <Select onValueChange={(value) => {
+                     field.onChange(value)
+                     setSelectedTime("")
+                  }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione um serviço"/>
                     </SelectTrigger>

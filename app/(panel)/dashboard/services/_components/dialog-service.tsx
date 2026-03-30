@@ -3,6 +3,7 @@
 //valor em centavos = valor em reais * 100
 //valor em reais = valor em centavos / 100
 import { useState } from "react"
+import { X } from "lucide-react"
 import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { useDialogServiceForm, DialogServiceFormValues } from "./dialog-service-form"
 import {
@@ -143,8 +144,19 @@ function handleCloseModal(){
   }
 
     return(
-        <>
-          <DialogHeader>
+        <div className="relative">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="absolute right-0 top-0 z-10 h-9 w-9 text-muted-foreground hover:text-foreground"
+            onClick={handleCloseModal}
+            aria-label="Fechar"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+
+          <DialogHeader className="pr-10">
             <DialogTitle> Novo serviço </DialogTitle>
             <DialogDescription>
                 Adicione um novo serviço
@@ -245,6 +257,6 @@ function handleCloseModal(){
 
             </form>
         </Form>
-        </>
+        </div>
     )
 }
