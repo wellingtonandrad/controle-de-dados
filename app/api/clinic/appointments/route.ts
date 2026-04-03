@@ -15,7 +15,9 @@ export const GET = auth(async function GET(request){
     if(!dateString){
         return NextResponse.json({
             error: "Data não informada"
-        }, {status: 400})
+        }, {
+            status: 400
+        })
     }
 
     if(!clinicId){
@@ -25,9 +27,11 @@ export const GET = auth(async function GET(request){
     try{
 
         const [year, month, day  ] = dateString.split("-").map(Number)
+        const startDate = new Date(Date.UTC(year, month -1, day, 0,0,0,0))
+        const endDate = new Date(Date.UTC(year, month -1, day, 23,59,59,999))
 
-        const startDate = new Date(year, month -1, day, 0,0,0,0)
-        const endDate = new Date(year, month -1, day, 23,59,59,999)
+         
+
 
         const appointments = await prisma.appointment.findMany({
             where: {
