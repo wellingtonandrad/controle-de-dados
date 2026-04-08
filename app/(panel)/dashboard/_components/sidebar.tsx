@@ -17,12 +17,6 @@ import Link from "next/link"
 import Image from "next/image"
 import logoImg from "../../../../public/logo-odonto.png"
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-
 export function SidebarDashboard({
   children,
 }: {
@@ -106,8 +100,7 @@ export function SidebarDashboard({
            )}
 
 
-          <Collapsible open={!isCollapsed}>
-            <CollapsibleContent>
+          {!isCollapsed && (
               <nav className="flex flex-col gap-1 overflow-hidden" >
                 <span className="text-sm text-gray-400 font-medium mt-1 uppercase" >
                    Painel
@@ -151,8 +144,7 @@ export function SidebarDashboard({
 
 
               </nav>
-            </CollapsibleContent>
-          </Collapsible> 
+          )}
         
       </aside>
           

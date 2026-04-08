@@ -4,38 +4,37 @@ import { Button } from "@/components/ui/button"
 import { Plan } from "@/lib/generated/prisma"
 import { createSubscription } from "../_actions/create-subscription"
 import { toast } from "sonner"
-import { getStripeJs } from "@/app/utils/stripe-js"
 
 interface SubscriptionButtonProps {
     type: Plan
 }
 
+
 export function SubscriptionButton({ type }: SubscriptionButtonProps) {
 
-async function handleCreateBilling() {
+    async function handleCreateBilling() {
 
-    const {sessionId, error, url} = await createSubscription({ type: type})
+        const { error, url } = await createSubscription({ type })
 
-     if(error) {
-        toast.error(error)
-        return;
-     }
+        if (error) {
+            toast.error(error)
+            return
+        }
 
-const stripe = await getStripeJs();
+        // Checkout hospedado: basta a url; loadStripe não é obrigatório para redirecionar
+        if (url) {
+            window.location.href = url
+        }
 
-if(stripe && url ){
-    window.location.href = url
-}
+    }
 
-
-
-}
 
 
 
     return (
         <Button 
-        className={`w-full  ${type === "PROFESSIONAL" && "bg-emerald-500 hover:bg-emerald-400"}`}
+        className={`w-full  ${type === "PROFESSIONAL" && "bg-emerald-500 hover:bg-emerald-400"}
+        `}
         onClick={handleCreateBilling}
         >
             Ativar assinatura

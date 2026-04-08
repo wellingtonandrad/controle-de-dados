@@ -5,12 +5,7 @@ import prisma from "@/lib/prisma"
 import { stripe } from "@/app/utils/stripe"
 import { Plan } from "@/lib/generated/prisma"
 
-
-interface SubscriptionProps {
-    type: Plan;
-}
-
-/** Checkout exige `price_...`; no .env pode estar `prod_...` (usa o preço padrão do produto). */
+/** Checkout exige `price_...`; no .env pode estar `prod_...` (usa preço padrão do produto). */
 async function resolveStripePriceId(raw: string | undefined): Promise<string> {
     const id = raw?.trim()
     if (!id) throw new Error("STRIPE_PLAN_BASIC / STRIPE_PLAN_PROFESSIONAL ausente")
@@ -28,26 +23,29 @@ async function resolveStripePriceId(raw: string | undefined): Promise<string> {
     return id
 }
 
-export async function createSubscription({ type }: SubscriptionProps){
+interface SubscriptionProps {
+    type: Plan;
+}
+
+export async function createSubscription({ type }: SubscriptionProps) {
 
     const session = await auth();
-
     const userId = session?.user?.id;
 
-    if(!userId){
+    if (!userId) {
         return {
             sessionId: "",
-        error: "Falha ao ativar plano."
+            error: "Falha ao ativar plano."
         }
     }
 
     const findUser = await prisma.user.findFirst({
-        where: {
+        where:{
             id: userId
         }
     })
 
-    if(!findUser){
+    if (!findUser) {
         return {
             sessionId: "",
             error: "Falha ao ativar plano."
@@ -56,7 +54,7 @@ export async function createSubscription({ type }: SubscriptionProps){
 
     let customerId = findUser.stripe_customer_id;
 
-    if(!customerId) {
+    if (!customerId) {
 
         const stripeCustomer = await stripe.customers.create({
             email: findUser.email
@@ -74,7 +72,7 @@ export async function createSubscription({ type }: SubscriptionProps){
         customerId = stripeCustomer.id;
     }
 
-    try{
+    try {
 
         const priceId = await resolveStripePriceId(
             type === "BASIC" ? process.env.STRIPE_PLAN_BASIC : process.env.STRIPE_PLAN_PROFESSIONAL,
@@ -93,29 +91,29 @@ export async function createSubscription({ type }: SubscriptionProps){
                 quantity: 1,
             }
         ],
-          metadata: {
+         
+        metadata: {
             type: type
-          },
+        },
 
         mode: "subscription",
         allow_promotion_codes: true,
         success_url: successUrl,
-        cancel_url: process.env.STRIPE_CANCEL_URL, 
+        cancel_url: process.env.STRIPE_CANCEL_URL,
      })
-     
+
      return {
-        sessionId: stripeCheckoutSession.id,
+        sessionId: stripeCheckoutSession.id, 
         url: stripeCheckoutSession.url
      }
 
     }catch(err){
-    
-     
-      return {
-        sessionId:"",
-        error: "Falha ao ativar plano."
-      }
+        return {
+            sessionId: "",
+            error: "Falha ao ativar plano."
+        }
 
     }
 
+   
 }
