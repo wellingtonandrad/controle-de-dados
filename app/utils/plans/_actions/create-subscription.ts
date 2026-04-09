@@ -78,8 +78,12 @@ export async function createSubscription({ type }: SubscriptionProps) {
             type === "BASIC" ? process.env.STRIPE_PLAN_BASIC : process.env.STRIPE_PLAN_PROFESSIONAL,
         )
 
-        const successUrl =
-            process.env.STRIPE_SUCCESS_URL ?? process.env.STRIPE_SUCESS_URL
+        const baseSuccess =
+            process.env.STRIPE_SUCCESS_URL ?? process.env.STRIPE_SUCESS_URL ?? ""
+        const successSep = baseSuccess.includes("?") ? "&" : "?"
+        const successUrl = baseSuccess
+            ? `${baseSuccess}${successSep}session_id={CHECKOUT_SESSION_ID}`
+            : baseSuccess
 
      const stripeCheckoutSession = await stripe.checkout.sessions.create({
         customer: customerId,

@@ -1,7 +1,9 @@
 import {NextResponse} from "next/server"
 import Stripe from "stripe"
 import { stripe } from "@/app/utils/stripe"
-
+import { manageSubscription } from "@/app/utils/manage-subscription"
+import { Plan } from "@/lib/generated/prisma"
+import { revalidatePath } from "next/cache"
 
 export const POST = async (request: Request) => {
   const signature = request.headers.get("stripe-signature");
@@ -24,28 +26,53 @@ const text = await request.text();
     case "customer.subscription.deleted":
         const payment = event.data.object as Stripe.Subscription;
 
-        console.log("Assinatura cancelada:", payment)
+        await manageSubscription(
+            payment.id,
+            payment.customer.toString(),
+            false,
+            true
+        )
 
         break;
         case "customer.subscription.updated":
             const paymentIntent = event.data.object as Stripe.Subscription;
              
-            console.log("Atualizar assinatura:", paymentIntent)
+            await manageSubscription(
+                paymentIntent.id,
+                paymentIntent.customer.toString(),
+                false,
+            )
 
 
-
+            revalidatePath("/dashboard/plans", "page")
+            revalidatePath("/dashboard", "layout")
 
         break;
         case "checkout.session.completed":
            const checkoutSession = event.data.object as Stripe.Checkout.Session;
         
-           console.log("Assinatura realizada:", checkoutSession)
+           const type = checkoutSession?.metadata?.type ? checkoutSession?.metadata?.type: 
+           "BASIC";
+
+            if(checkoutSession.subscription && checkoutSession.customer) {
+                await manageSubscription(
+                    checkoutSession.subscription.toString(),
+                    checkoutSession.customer.toString(),
+                    true,
+                    false,
+                    type as Plan
+                )
+            }
+
+            revalidatePath("/dashboard/plans", "page")
+            revalidatePath("/dashboard", "layout")
 
            break;
 
            default:
             console.log("Evento não tratado:", event.type)
   }
+
 
   return NextResponse.json({recived: true})
 

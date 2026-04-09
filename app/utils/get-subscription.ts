@@ -1,10 +1,12 @@
 "use server"
 
+import { unstable_noStore as noStore } from "next/cache"
 import prisma from "@/lib/prisma"
 
 export async function getSubscription({ userId }: { userId: string}) {
-    if(userId){
-        return null;
+    noStore()
+    if (!userId) {
+        return null
     }
 
     try {

@@ -1,33 +1,45 @@
 import { getSubscription } from "@/app/utils/get-subscription"
 import { GridPlans } from "@/app/utils/plans/_components/grid-plans"
+import { SubscriptionDetail } from "@/app/utils/plans/_components/subscription-detail"
+import { syncSubscriptionFromCheckout } from "@/app/utils/sync-subscription-from-checkout"
 import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
 
-export default async function Plans() {
-    const session = await getSession()
-
-if (!session) {
-    redirect("/")
+function hasPaidSubscription(status: string | undefined) {
+    return status === "active" || status === "trialing"
 }
 
-const subscription = await getSubscription({  userId: session?.user?.id! })
+type PageProps = {
+    searchParams: Promise<{ session_id?: string }>
+}
 
-console.log(subscription);
+export const dynamic = "force-dynamic"
 
-    return(
-     
-            <div>
-               {subscription?.status !== "active" && (
-                 <GridPlans />
-               )}
+export default async function Plans({ searchParams }: PageProps) {
+    const session = await getSession()
 
-            {subscription?.status == "active" && (
-                
-             <h1>Você tem uma assinatura ativa</h1>
+    if (!session?.user?.id) {
+        redirect("/")
+    }
 
+    const userId = session.user.id
+    const { session_id: checkoutSessionId } = await searchParams
+
+    if (checkoutSessionId) {
+        await syncSubscriptionFromCheckout(checkoutSessionId, userId)
+    }
+
+    const subscription = await getSubscription({ userId })
+
+    const showActive = hasPaidSubscription(subscription?.status)
+
+    return (
+        <div>
+            {!showActive && <GridPlans />}
+
+            {showActive && subscription && (
+                <SubscriptionDetail subscription={subscription} />
             )}
-
-            </div>
-      
+        </div>
     )
 }
