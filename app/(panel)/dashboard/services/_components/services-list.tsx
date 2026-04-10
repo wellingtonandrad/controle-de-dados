@@ -26,15 +26,21 @@ import { Service } from "@/lib/generated/prisma"
 import { formatCurrency } from "@/app/utils/formatCurrency"
 import { deleteService } from "../_actions/delete-service"
 import { toast } from "sonner"
+import { ResultPermissionProps } from "@/app/utils/permissions/canPermission"
+import Link from "next/link"
 
 interface ServicesListProps{
   services: Service[];
+  permisson: ResultPermissionProps;
 }
 
-export function ServicesList({ services }: ServicesListProps) {
+export function ServicesList({ services, permisson}: ServicesListProps) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingService, setEditingService] = useState<Service | null>(null)
+
+
+const ServicesList = permisson.hasPermission ? services : services.slice(0,3);
 
     async function handleDeleteService( serviceId: string ){
         const response = await deleteService({ serviceId: serviceId })
@@ -66,11 +72,20 @@ export function ServicesList({ services }: ServicesListProps) {
             <Card>
                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-xl md:text-2xl font-bold" > Serviços </CardTitle>
-                    <DialogTrigger asChild >
-                        <Button>
-                           <Plus className="w-4 h-4" />
-                          </Button>
-                      </DialogTrigger>
+                    {permisson.hasPermission &&(
+                     
+                     <DialogTrigger asChild >
+                      <Button>
+                         <Plus className="w-4 h-4" />
+                        </Button>
+                    </DialogTrigger>
+                    )}
+                  
+                  {!permisson.hasPermission && (
+                    <Link href="/dashboard/plans" className="text-red-500" >
+                       Limite de serviços atingido
+                    </Link>
+                  )}
 
                    <DialogContent
                       onInteractOutside={(e) => {
@@ -94,13 +109,11 @@ export function ServicesList({ services }: ServicesListProps) {
                       } : undefined }
                     />
                     </DialogContent>
-
-
                 </CardHeader>
 
                 <CardContent>
                   <section className="space-y-4 mt-5">
-                    {services.map(service => (
+                    {ServicesList.map(service => (
                       <article 
                       key={service.id}
                       className="flex items-center justify-between gap-2"
