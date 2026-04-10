@@ -34,21 +34,22 @@ import {
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Prisma } from "@prisma/client"
+import { Prisma } from "@/lib/generated/prisma"
 import { updateProfile } from "../_actions/update-profile"
 import { toast } from "sonner"
 import { formatPhone, extractPhoneNumber} from "@/app/utils/formatPhone"
 import { signOut, useSession} from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { AvatarProfile } from "./profile-avatar"
 
-type UserWithSubscription = Prisma.UserGetPayLoad<{
-  include:{
-    subscription:true
+type UserWithSubscription = Prisma.UserGetPayload<{
+  include: {
+    subscription: true
   }
 }>
 
-interface ProfileContentProps { 
-    user: any;
+interface ProfileContentProps {
+  user: UserWithSubscription
 }
 
 export function ProfileContent({ user }: ProfileContentProps ) {
@@ -139,14 +140,10 @@ async function handleLogout(){
                         </CardHeader>
                         <CardContent className="space-y-6" >
                             <div className="flex justify-center" >
-                                <div className="bg-gray-200 relative h-40 w-40 rounded-full overflow-hidden " >
-                               <Image
-                                  src={user.image ? user.image : imgTest}
-                                  alt="Foto da clínica"
-                                  fill
-                                  className="object-cover"
-                               />
-                               </div>
+                                <AvatarProfile
+                                   avatarUrl={user.image}
+                                   userId={user.id}
+                                />
                             </div>
 
                             <div className="space-y-4" >

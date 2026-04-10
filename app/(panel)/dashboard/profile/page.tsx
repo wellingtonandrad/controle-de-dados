@@ -7,11 +7,12 @@ import { ProfileContent } from "./_components/profile"
 export default async function Profile() {
   const session = await getSession();
 
-if (!session){
-    redirect("/");
+const userId = session?.user?.id
+if (!userId) {
+    redirect("/")
 }
 
-const user = await getUserData({ userId: session.user.id })
+const user = await getUserData({ userId })
 
   
 if (!user) {
