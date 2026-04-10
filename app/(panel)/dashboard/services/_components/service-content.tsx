@@ -1,5 +1,6 @@
 
 
+import { LabelSubscription } from "@/components/ui/label-subscription";
 import { getAllServices } from "../_data-acess/get-all-services";
 import { ServicesList } from "./services-list";
 import { canPermission } from "@/app/utils/permissions/canPermission";
@@ -15,13 +16,19 @@ export async function ServicesContent( {userId}:
 
     
     const services = await getAllServices({ userId: userId})
-    const permission = await canPermission({ type: "service"})
+    const permissions = await canPermission({ type: "service"})
 
-    console.log( permission)
+    
 
     return(
+        
+       <>
+       {!permissions.hasPermission && (
+         <LabelSubscription expired={permissions.expired} />
+       )}
        <ServicesList 
-        services={services.data || []} permisson={permission}
+        services={services.data || []} permisson={permissions}
        />
+       </>
     )
 }
