@@ -13,12 +13,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { LogIn, Menu } from "lucide-react"
-
-
-
-
+import { cn } from "@/lib/utils"
 export function Header(){
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +24,6 @@ export function Header(){
 const navItems = [
     {href: "#profissionais", label: "Profissionais"},
 ]
-
 
 const NavLinks = () => (
     <>
@@ -56,7 +52,9 @@ const NavLinks = () => (
     ):(
         <Button
           type="button"
-          onClick={() => signIn("github", { callbackUrl: "/dashboard/profile" })}
+          onClick={() =>
+            signIn("google", { callbackUrl: "/dashboard/profile" })
+          }
         >
             <LogIn />
             Fazer login
@@ -85,15 +83,14 @@ const NavLinks = () => (
           </nav>
          
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
-          <SheetTrigger className="md:hidden" >
-             <Button 
-             className="text-black hover:bg-transparent" 
-             variant="ghost"
-             size="icon"
-             >
-                <Menu className="w-6 h-6" />
-             </Button>
-           </SheetTrigger>
+          <SheetTrigger
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "icon" }),
+              "text-black hover:bg-transparent md:hidden",
+            )}
+          >
+            <Menu className="w-6 h-6" />
+          </SheetTrigger>
 
         <SheetContent side="right" className="w-[240px] sm:w-[300px] z-[9999] ">
              <SheetTitle>

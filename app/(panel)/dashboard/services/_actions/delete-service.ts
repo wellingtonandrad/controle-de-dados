@@ -14,7 +14,7 @@ type FromSchema = z.infer<typeof formSchema>
 export async function deleteService(formData: FromSchema) {
     const session = await auth();
 
-    if (!session ?.user?.id ) {
+    if (!session?.user?.id) {
         return {
           error: "Falha ao cadastrar serviço",
         }
@@ -22,7 +22,7 @@ export async function deleteService(formData: FromSchema) {
    
     const schema = formSchema.safeParse(formData);
 
-    if (!schema.sucess) {
+    if (!schema.success) {
         return {
             error: schema.error.issues[0].message
         }
