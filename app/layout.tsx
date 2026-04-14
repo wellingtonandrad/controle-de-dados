@@ -18,11 +18,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Odonto PRO encontre os melhores profissionais",
   description: "Nós somos a melhor plataforma para profissionais da saúde com foco em agilizar o seu agendamento de forma simplificada e organizada.",
-  robots:{
+  robots: {
     index: true,
     follow: true,
-    noacache: true,
-
+    nocache: true,
   },
   openGraph:{
      title: "Odonto PRO encontre os melhores profissionais",
