@@ -1,5 +1,3 @@
-"use server"
-
 import prisma from "@/lib/prisma"
 
 export async function getAllServices({ userId}: {userId: string}) {

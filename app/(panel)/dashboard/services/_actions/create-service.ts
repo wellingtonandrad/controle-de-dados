@@ -1,6 +1,7 @@
 "use server"
 
 import { auth } from "@/lib/auth"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
@@ -22,6 +23,11 @@ export async function createNewService(input: CreateServiceInput) {
     }
   }
 
+  const clinicOwnerId = getClinicOwnerUserId(session)
+  if (!clinicOwnerId) {
+    return { error: "Clínica não identificada" }
+  }
+
   const parsed = formSchema.safeParse(input)
 
   if (!parsed.success) {
@@ -36,7 +42,7 @@ export async function createNewService(input: CreateServiceInput) {
         name: parsed.data.name,
         price: parsed.data.price,
         duration: parsed.data.duration,
-        userId: session.user.id,
+        userId: clinicOwnerId,
       },
     })
 

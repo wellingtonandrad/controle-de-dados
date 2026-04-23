@@ -1,79 +1,97 @@
-import {NextResponse} from "next/server"
+import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { stripe } from "@/app/utils/stripe"
 import { manageSubscription } from "@/app/utils/manage-subscription"
 import { Plan } from "@/lib/generated/prisma"
 import { revalidatePath } from "next/cache"
+import prisma from "@/lib/prisma"
 
-export const POST = async (request: Request) => {
-  const signature = request.headers.get("stripe-signature");
-
-  if(!signature) {
-    return NextResponse.error();
+export async function POST(request: Request) {
+  const signature = request.headers.get("stripe-signature")
+  if (!signature) {
+    return NextResponse.json({ error: "Missing stripe-signature" }, { status: 400 })
   }
 
-  console.log("WEBHOOK INICIANDO...");
+  const webhookSecret = process.env.STRIPE_SECRET_WEBHOOK_KEY
+  if (!webhookSecret) {
+    return NextResponse.json(
+      { error: "Webhook not configured" },
+      { status: 500 },
+    )
+  }
 
-const text = await request.text();
+  let event: Stripe.Event
+  try {
+    const text = await request.text()
+    event = stripe.webhooks.constructEvent(text, signature, webhookSecret)
+  } catch {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
+  }
 
-  const event = stripe.webhooks.constructEvent(
-      text,
-      signature,
-      process.env.STRIPE_SECRET_WEBHOOK_KEY as string,
-  )
-
-  switch(event.type) {
-    case "customer.subscription.deleted":
-        const payment = event.data.object as Stripe.Subscription;
-
+  try {
+    switch (event.type) {
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription
         await manageSubscription(
-            payment.id,
-            payment.customer.toString(),
-            false,
-            true
+          subscription.id,
+          subscription.customer.toString(),
+          false,
+          true,
         )
+        break
+      }
 
-        break;
-        case "customer.subscription.updated":
-            const paymentIntent = event.data.object as Stripe.Subscription;
-             
-            await manageSubscription(
-                paymentIntent.id,
-                paymentIntent.customer.toString(),
-                false,
-            )
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription
+        await manageSubscription(
+          subscription.id,
+          subscription.customer.toString(),
+          false,
+        )
+        revalidatePath("/dashboard/plans", "page")
+        revalidatePath("/dashboard", "layout")
+        break
+      }
 
+      case "checkout.session.completed": {
+        const checkoutSession = event.data.object as Stripe.Checkout.Session
+        const type = checkoutSession.metadata?.type ?? "BASIC"
 
-            revalidatePath("/dashboard/plans", "page")
+        if (type === "appointment_installment") {
+          const installmentId = checkoutSession.metadata?.installmentId
+          if (installmentId) {
+            await prisma.appointmentInstallment.updateMany({
+              where: { id: installmentId, paidAt: null },
+              data: { paidAt: new Date() },
+            })
             revalidatePath("/dashboard", "layout")
+            revalidatePath("/dashboard/reports", "page")
+          }
+          break
+        }
 
-        break;
-        case "checkout.session.completed":
-           const checkoutSession = event.data.object as Stripe.Checkout.Session;
-        
-           const type = checkoutSession?.metadata?.type ? checkoutSession?.metadata?.type: 
-           "BASIC";
+        if (checkoutSession.subscription && checkoutSession.customer) {
+          await manageSubscription(
+            checkoutSession.subscription.toString(),
+            checkoutSession.customer.toString(),
+            true,
+            false,
+            type as Plan,
+          )
+        }
 
-            if(checkoutSession.subscription && checkoutSession.customer) {
-                await manageSubscription(
-                    checkoutSession.subscription.toString(),
-                    checkoutSession.customer.toString(),
-                    true,
-                    false,
-                    type as Plan
-                )
-            }
+        revalidatePath("/dashboard/plans", "page")
+        revalidatePath("/dashboard", "layout")
+        break
+      }
 
-            revalidatePath("/dashboard/plans", "page")
-            revalidatePath("/dashboard", "layout")
-
-           break;
-
-           default:
-            console.log("Evento não tratado:", event.type)
+      default:
+        break
+    }
+  } catch (err) {
+    console.error("[stripe webhook]", err)
+    return NextResponse.json({ error: "Webhook handler failed" }, { status: 500 })
   }
 
-
-  return NextResponse.json({recived: true})
-
+  return NextResponse.json({ received: true })
 }

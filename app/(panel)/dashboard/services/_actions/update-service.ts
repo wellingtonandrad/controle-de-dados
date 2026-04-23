@@ -1,6 +1,7 @@
 "use server"
 
 import { auth } from "@/lib/auth"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
@@ -23,6 +24,11 @@ export async function updateService(formData: FromSchema){
         }
     }
 
+    const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        return { error: "Clínica não identificada" }
+    }
+
     const schema = formSchema.safeParse(formData);
 
     if (!schema.success) {
@@ -36,7 +42,7 @@ export async function updateService(formData: FromSchema){
      await prisma.service.update({
         where: {
             id: formData.serviceId,
-            userId: session?.user?.id,
+            userId: clinicOwnerId,
         },
         data: {
             name: formData.name,

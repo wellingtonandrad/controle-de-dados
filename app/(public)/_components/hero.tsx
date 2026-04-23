@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
 import imgDoctor from "../../../public/doctor-hero.png"
 
 export function Hero(){
@@ -16,8 +16,11 @@ export function Hero(){
                   Nós somos a melhor plataforma para profissionais da saúde com foco
                   em agilizar o seu agendamento de forma simplificada e organizada. 
                 </p>
-                <Button className="bg-emerald-500 hover:bg-emerald-400 w-fit px-6 font-semibold">
-                    Encontre uma clinica
+                <Button
+                  asChild
+                  className="w-fit bg-emerald-500 px-6 font-semibold hover:bg-emerald-400"
+                >
+                  <a href="/#profissionais">Encontre uma clínica</a>
                 </Button>
             </article>
         

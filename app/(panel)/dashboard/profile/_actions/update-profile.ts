@@ -2,8 +2,8 @@
 
 import {auth} from "@/lib/auth"
 import  prisma  from "@/lib/prisma"
-import { error } from "console"
 import { revalidatePath } from "next/cache"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -29,6 +29,11 @@ export async function updateProfile(formData: formSchema){
         }
     }
 
+    const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        return { error: "Clínica não identificada" }
+    }
+
     const schema = formSchema.safeParse( formData)
 
     if(!schema.success){
@@ -41,7 +46,7 @@ export async function updateProfile(formData: formSchema){
 
         await prisma.user.update({
             where:{
-                id: session?.user?.id,
+                id: clinicOwnerId,
             },
             data:{
                 name: formData.name,
@@ -52,10 +57,6 @@ export async function updateProfile(formData: formSchema){
                 times: formData.times || []
             }
         })
-
-        return {
-            data: "Clinica atualizada com sucesso!"
-        }
 
         revalidatePath("/dashboard/profile")
 

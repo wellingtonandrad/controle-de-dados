@@ -47,34 +47,31 @@ try {
             appointmentDate: {
                 gte: startDate,
                 lte: endDate
-            }
+            },
+            status: "SCHEDULED",
         },
         include:{
             service: true
         }
     })
 
-    //Montar com todos os (slots) ocupados
-     const blockedSlots = new Set<string>()
-     
-     for (const apt of appointments){
-        const requiredSlots = Math.ceil(apt.service.duration / 30) 
+    const blockedSlots = new Set<string>()
+
+    for (const apt of appointments) {
+        const requiredSlots = Math.ceil(apt.service.duration / 30)
         const startIndex = user.times.indexOf(apt.time)
 
-        if(startIndex !== -1){
-            for (let i =0; i < requiredSlots; i++){
-              const blockedSlot = user.times[startIndex + 1]
-              if(blockedSlot){
-                blockedSlots.add(blockedSlot)
-              }
+        if (startIndex !== -1) {
+            for (let i = 0; i < requiredSlots; i++) {
+                const blockedSlot = user.times[startIndex + i]
+                if (blockedSlot) {
+                    blockedSlots.add(blockedSlot)
+                }
             }
         }
+    }
 
-     }
-
-     const blockedtimes = Array.from(blockedSlots);
-
-     console.log ("blockedtimes:", blockedtimes)
+     const blockedtimes = Array.from(blockedSlots)
 
      return NextResponse.json(blockedtimes)
 

@@ -58,12 +58,11 @@ async function uploadImage(image: File): Promise<string | null> {
      const formData = new FormData();
 
      formData.append("file", image)
-     formData.append("userId", userId)
 
      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/image/upload`,{
         method: "POST",
-        body: formData
-    
+        body: formData,
+        credentials: "include",
      }) 
 
      const data = await response.json();

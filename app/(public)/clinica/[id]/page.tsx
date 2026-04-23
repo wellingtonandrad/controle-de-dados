@@ -15,7 +15,5 @@ export default async function SchedulePage({
     redirect("/")
   }
 
-  console.log("Dados do usuário para agendamento:", user)
-
   return <ScheduleContent clinic={user} />
 }

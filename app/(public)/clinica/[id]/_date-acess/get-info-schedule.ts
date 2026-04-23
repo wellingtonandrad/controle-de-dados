@@ -11,6 +11,9 @@ export async function getInfoSchedule({userId}: {userId: string}){
     const user = await prisma.user.findFirst({
         where:{
             id: userId,
+            role: "CLINIC",
+            clinicVerified: true,
+            status: true,
         },
         include:{
             subscription: true,

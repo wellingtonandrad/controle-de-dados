@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/lib/auth"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 
 const formSchema = z.object({
@@ -32,24 +33,38 @@ export async function cancelAppointment(formData: FormSchema){
         }
     }
 
+    const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        return { error: "Clínica não identificada" }
+    }
+
     try {
 
-        await prisma.appointment.delete({
-            where:{
-                id: formData.appointmentId, 
-                userId: session.user.id
-            }
+        await prisma.$transaction(async (tx) => {
+          await tx.appointment.update({
+            where: {
+              id: formData.appointmentId,
+              userId: clinicOwnerId,
+            },
+            data: {
+              status: "CANCELED",
+            },
+          })
+          await tx.appointmentInstallment.deleteMany({
+            where: { appointmentId: formData.appointmentId },
+          })
         })
 
         revalidatePath("/dashboard")
+        revalidatePath("/dashboard/reports")
 
         return {
-            data: "Agendamento cancelado com sucesso"
+            data: "Agendamento marcado como cancelado"
         }
 
     }catch(err) {
         return {
-            error: "Ocorreu um erro ao deletar este agendamento."
+            error: "Ocorreu um erro ao cancelar este agendamento."
         }
     }
 

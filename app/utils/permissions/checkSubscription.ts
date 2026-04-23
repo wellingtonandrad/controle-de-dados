@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { addDays, isAfter, differenceInDays } from "date-fns"
-import { TRIAL_DAYS } from "@/app/utils/permissions/trial-limits"
+import { TRIAL_DAYS, TRIAL_LIMITS_DISABLED } from "@/app/utils/permissions/trial-limits"
 
 export async function checkSubscription(userId: string){
     const user = await prisma.user.findFirst({
@@ -27,7 +27,13 @@ export async function checkSubscription(userId: string){
         }
     }
 
-
+    if (TRIAL_LIMITS_DISABLED) {
+        return {
+            subscriptionStatus: "active",
+            message: "",
+            planId: "TRIAL",
+        }
+    }
 
     const trialEndDate = addDays(user.createdAt, TRIAL_DAYS)
 
@@ -43,7 +49,7 @@ const daysRemaining = differenceInDays(trialEndDate, new Date())
 
     return {
         subscriptionStatus: "TRIAL",
-            message: `Você está no período de teste gratuito. Faltam ${daysRemaining} dias.`,
+            message: `Você está no período de teste gratuito. Faltam ${daysRemaining} ${daysRemaining === 1 ? "dia" : "dias"}.`,
             planId: "TRIAL"
         
     

@@ -5,10 +5,8 @@ import Link from "next/link"
 import { signIn, useSession } from "next-auth/react"
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -16,52 +14,65 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button"
 import { LogIn, Menu } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+function canOpenClinicPanel(session: ReturnType<typeof useSession>["data"]) {
+  if (!session?.user) return false
+  const u = session.user
+  if (u.role === "CLINIC" && u.clinicVerified) return true
+  if (u.clinicStaffRole && u.clinicOwnerId) return true
+  return false
+}
+
 export function Header(){
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: session } = useSession();
 
-const navItems = [
-    {href: "#profissionais", label: "Profissionais"},
-]
+const navItems = [{ href: "/#profissionais", label: "Profissionais" }]
 
 const NavLinks = () => (
-    <>
+    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
     {navItems.map((item) => (
       <Button
-      onClick={ () => setIsOpen(false) }
-       key={item.href}
-       asChild
-       className="bg-transparent hover:bg-transparent text-black shadow-none"
+        key={item.href}
+        asChild
+        onClick={() => setIsOpen(false)}
+        className="h-auto bg-transparent px-2 py-1 text-base font-normal text-black shadow-none hover:bg-zinc-100"
       >
-
-        <Link href={item.href} className="text-base" >
-          {item.label}
-        </Link>
+        <a href={item.href}>{item.label}</a>
       </Button>
     ))}
 
-    {session ? (
-        <Link
-         href="/dashboard"
-         className="flex items-center justify-center gap-2"
-        >
-            Acessar clinica
-        
-        </Link>
-    ):(
-        <Button
-          type="button"
-          onClick={() =>
-            signIn("google", { callbackUrl: "/dashboard/profile" })
-          }
-        >
-            <LogIn />
-            Fazer login
-        </Button>
-    )}
+    {session && canOpenClinicPanel(session) ? (
+      <Link
+        href="/dashboard"
+        className="text-base font-medium text-emerald-700 underline-offset-4 hover:underline"
+      >
+        Painel da clínica
+      </Link>
+    ) : null}
 
-    </>
+    {!session ? (
+      <Button
+        type="button"
+        onClick={() => signIn("google", { callbackUrl: "/acesso-clinica" })}
+      >
+        <LogIn className="mr-2 h-4 w-4" />
+        Sou clínica
+      </Button>
+    ) : !canOpenClinicPanel(session) ? (
+      <Button
+        type="button"
+        variant="outline"
+        className="font-normal"
+        onClick={() => signIn("google", { callbackUrl: "/acesso-clinica" })}
+      >
+        <LogIn className="mr-2 h-4 w-4" />
+        Área da clínica
+      </Button>
+    ) : null}
+
+    </div>
 )
 
 
@@ -78,8 +89,8 @@ const NavLinks = () => (
           Odonto<span className="text-emerald-500" >Pro</span>
        </Link>
 
-          <nav className="hidden md:flex items-center space-x-4 " >
-            <NavLinks/>
+          <nav className="hidden md:flex md:items-center md:gap-4">
+            <NavLinks />
           </nav>
          
         <Sheet open={isOpen} onOpenChange={setIsOpen} >
@@ -102,7 +113,7 @@ const NavLinks = () => (
                 Veja nossos links
              </SheetDescription>
 
-             <nav className="flex flex-col space-y-4 mt-6" >
+             <nav className="mt-6 flex flex-col space-y-4">
                 <NavLinks />
              </nav>
 

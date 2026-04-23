@@ -5,6 +5,7 @@ import { PlanDetailInfo } from "./get-plans";
 import prisma from "@/lib/prisma";
 import { canCreateService } from "./canCreateService";
 import { Service } from "@/lib/generated/prisma";
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id";
 
 
 export type PLAN_PROP = "BASIC" | "PROFESSIONAL" | "TRIAL" | "EXPIRED";
@@ -34,9 +35,19 @@ if(!session?.user?.id) {
     }
 }
 
+const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        return {
+            hasPermission: false,
+            planId: "EXPIRED",
+            expired: true,
+            plan: null,
+        }
+    }
+
 const subscription = await prisma.subscription.findFirst({
     where: {
-        userId: session?.user?.id
+        userId: clinicOwnerId
     }
 })
 

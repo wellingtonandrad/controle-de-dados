@@ -7,13 +7,24 @@ import { getPlans } from "./get-plans";
 import { PLANS } from "../plans";
 import { checkSubscriptionExpired } from "@/app/utils/permissions/checkSubscriptionExpired"
 import { ResultPermissionProps } from "./canPermission";
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 export async function canCreateService(subscription: Subscription | null, session: Session): Promise<ResultPermissionProps>{
      
    try {
+      const clinicOwnerId = getClinicOwnerUserId(session)
+      if (!clinicOwnerId) {
+        return {
+          hasPermission: false,
+          planId: "EXPIRED",
+          expired: true,
+          plan: null,
+        }
+      }
+
       const serviceCount = await prisma.service.count({
         where: {
-            userId: session?.user?.id,
+            userId: clinicOwnerId,
             status: true,
         }
       })

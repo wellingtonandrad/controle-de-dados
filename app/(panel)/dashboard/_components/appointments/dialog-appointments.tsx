@@ -1,13 +1,21 @@
+"use client"
+
 import {
   DialogContent,
   DialogHeader,
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog"
-import  { AppointmentWithService } from "./appointments-list"
-import { format } from "date-fns"
+import type { AppointmentWithService } from "./appointments-list"
 import { formatCurrency } from "@/app/utils/formatCurrency"
+import { AppointmentInstallmentsEditor } from "./appointment-installments-editor"
 
+const STATUS_LABELS: Record<AppointmentWithService["status"], string> = {
+  SCHEDULED: "Agendado",
+  COMPLETED: "Concluído",
+  NO_SHOW: "Faltou",
+  CANCELED: "Cancelado",
+}
 
 interface DialogAppointmentProps {
   appointment?: AppointmentWithService | null;
@@ -26,6 +34,12 @@ export function DialogAppointment({ appointment }: DialogAppointmentProps) {
       <div className="py-4">
          {appointment &&  (
            <article>
+              <p className="mb-2">
+                <span className="font-semibold">Status:</span>{" "}
+                <span className="rounded-full bg-zinc-100 px-2 py-1 text-sm">
+                  {STATUS_LABELS[appointment.status ?? "SCHEDULED"]}
+                </span>
+              </p>
               <p><span className="font-semibold" >Horário:</span>{appointment.time}</p>
               <p className="mb-2" ><span className="font-semibold" >Data do agendamento:</span>{new Intl.DateTimeFormat('pt-BR', {
                 timeZone: "UTC",
@@ -42,6 +56,13 @@ export function DialogAppointment({ appointment }: DialogAppointmentProps) {
                 <p><span className="font-semibold">Serviço</span> {appointment.service.name}</p>
                 <p><span className="font-semibold">Valor</span> {formatCurrency((appointment.service.price / 100))}</p>  
               </section>
+
+              <AppointmentInstallmentsEditor
+                appointmentId={appointment.id}
+                servicePriceCents={appointment.service.price}
+                appointmentDate={appointment.appointmentDate}
+                status={appointment.status}
+              />
 
            </article>
          )}

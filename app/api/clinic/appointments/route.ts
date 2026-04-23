@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { NextResponse, NextRequest } from "next/server"
+import type { Session } from "next-auth"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 
 export const GET = auth(async function GET(request){
@@ -10,7 +12,7 @@ export const GET = auth(async function GET(request){
 
     const searchParams = request.nextUrl.searchParams;
     const dateString = searchParams.get("date") as string;
-    const clinicId = request.auth?.user?.id
+    const clinicId = getClinicOwnerUserId(request.auth as Session | null)
 
     if(!dateString){
         return NextResponse.json({
@@ -41,9 +43,12 @@ export const GET = auth(async function GET(request){
                     lte: endDate
                 }
             },
-            include:{
+            include: {
                 service: true,
-            }
+            },
+            orderBy: {
+                time: "asc",
+            },
         })
 
         return NextResponse.json(appointments)

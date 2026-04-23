@@ -8,6 +8,7 @@ import { Reminders } from "./_components/reminder/reminders"
 import { Appointments } from "./_components/appointments/appointments"
 import { checkSubscription } from "@/app/utils/permissions/checkSubscription"
 import { LabelSubscription } from "@/components/ui/label-subscription"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 export default async function Dashboard() {
     const session = await getSession()
@@ -16,13 +17,18 @@ export default async function Dashboard() {
         redirect("/")
     }
 
-    const subscription = await checkSubscription(session?.user?.id!)
+    const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        redirect("/acesso-clinica")
+    }
+
+    const subscription = await checkSubscription(clinicOwnerId)
 
     return(
        <main>
             <div className="space-x-2 flex items-center justify-end" >
                 <Link 
-                href={`/clinica/${session.user?.id}`}
+                href={`/clinica/${clinicOwnerId}`}
                 target='_blank'
                 >
                     <Button className="bg-emerald-500 hover:bg-emerald-400 flex-1 md:flex-[0] " >
@@ -31,7 +37,7 @@ export default async function Dashboard() {
                     </Button>
                 </Link>
 
-                <ButtonCopyLink userId={session.user?.id!}/>             
+                <ButtonCopyLink userId={clinicOwnerId}/>             
                 </div>
 
                 {subscription?.subscriptionStatus === "EXPIRED" && (
@@ -48,9 +54,9 @@ export default async function Dashboard() {
 
                {subscription?.subscriptionStatus !== "EXPIRED" && (
                      <section className="grid grid-cols-1 gap-4 lg:grid-cols-2 mt-4" >
-                     <Appointments userId={session.user?.id!} />
+                     <Appointments userId={clinicOwnerId} />
                        
-                     <Reminders userId={session.user?.id!}/>
+                     <Reminders userId={clinicOwnerId}/>
                  </section>
                )}
 

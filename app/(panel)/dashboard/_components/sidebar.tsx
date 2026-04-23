@@ -12,15 +12,32 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Banknote, CalendarCheck2, ChevronLeft, ChevronRight, Folder, List, Settings } from "lucide-react"
+import {
+  Banknote,
+  CalendarCheck2,
+  ChevronLeft,
+  ChevronRight,
+  ChartColumn,
+  Boxes,
+  Folder,
+  List,
+  Settings,
+  Users,
+} from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import logoImg from "../../../../public/logo-odonto.png"
 
 export function SidebarDashboard({
   children,
+  isClinicOwner = false,
+  canViewReports = true,
 }: {
   children: React.ReactNode
+  /** Dono da clínica: equipe, planos e assinatura. */
+  isClinicOwner?: boolean
+  /** Dono ou dentista da equipe; recepção não vê relatórios financeiros. */
+  canViewReports?: boolean
 }) {
 
 
@@ -79,6 +96,34 @@ export function SidebarDashboard({
                    icon={<Folder className="w-6 h-6" />}
                 />
 
+                {canViewReports && (
+                  <SidebarLink
+                    href="/dashboard/reports"
+                    label="Relatórios"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<ChartColumn className="w-6 h-6" />}
+                  />
+                )}
+
+                <SidebarLink
+                   href="/dashboard/estoque"
+                   label= "Estoque"
+                   pathname={pathname}
+                   isCollapsed={isCollapsed}
+                   icon={<Boxes className="w-6 h-6" />}
+                />
+
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/equipe"
+                    label="Equipe"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Users className="w-6 h-6" />}
+                  />
+                )}
+
                 <SidebarLink
                    href="/dashboard/profile"
                    label= "Meu perfil"
@@ -87,13 +132,15 @@ export function SidebarDashboard({
                    icon={<Settings className="w-6 h-6" />}
                 />
 
-                <SidebarLink
-                   href="/dashboard/plans"
-                   label= "Planos"
-                   pathname={pathname}
-                   isCollapsed={isCollapsed}
-                   icon={<Banknote className="w-6 h-6" />}
-                />
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/plans"
+                    label= "Planos"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Banknote className="w-6 h-6" />}
+                  />
+                )}
 
                </nav>
 
@@ -122,6 +169,34 @@ export function SidebarDashboard({
                    icon={<Folder className="w-6 h-6" />}
                 />
 
+                {canViewReports && (
+                  <SidebarLink
+                    href="/dashboard/reports"
+                    label="Relatórios"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<ChartColumn className="w-6 h-6" />}
+                  />
+                )}
+
+                <SidebarLink
+                   href="/dashboard/estoque"
+                   label= "Estoque"
+                   pathname={pathname}
+                   isCollapsed={isCollapsed}
+                   icon={<Boxes className="w-6 h-6" />}
+                />
+
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/equipe"
+                    label="Equipe"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Users className="w-6 h-6" />}
+                  />
+                )}
+
                 <span className="text-sm text-gray-400 font-medium mt-1 uppercase" >
                   Configurações
                 </span>
@@ -134,14 +209,15 @@ export function SidebarDashboard({
                    icon={<Settings className="w-6 h-6" />}
                 />
 
-                <SidebarLink
-                   href="/dashboard/plans"
-                   label= "Planos"
-                   pathname={pathname}
-                   isCollapsed={isCollapsed}
-                   icon={<Banknote className="w-6 h-6" />}
-                />
-
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/plans"
+                    label= "Planos"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Banknote className="w-6 h-6" />}
+                  />
+                )}
 
               </nav>
           )}
@@ -192,6 +268,34 @@ export function SidebarDashboard({
                    icon={<Folder className="w-6 h-6" />}
                 />
 
+                {canViewReports && (
+                  <SidebarLink
+                    href="/dashboard/reports"
+                    label="Relatórios"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<ChartColumn className="w-6 h-6" />}
+                  />
+                )}
+
+                <SidebarLink
+                   href="/dashboard/estoque"
+                   label= "Estoque"
+                   pathname={pathname}
+                   isCollapsed={isCollapsed}
+                   icon={<Boxes className="w-6 h-6" />}
+                />
+
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/equipe"
+                    label="Equipe"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Users className="w-6 h-6" />}
+                  />
+                )}
+
                 <SidebarLink
                    href="/dashboard/profile"
                    label= "Meu perfil"
@@ -200,15 +304,15 @@ export function SidebarDashboard({
                    icon={<Settings className="w-6 h-6" />}
                 />
 
-                <SidebarLink
-                   href="/dashboard/plans"
-                   label= "Planos"
-                   pathname={pathname}
-                   isCollapsed={isCollapsed}
-                   icon={<Banknote className="w-6 h-6" />}
-                />
-
-
+                {isClinicOwner && (
+                  <SidebarLink
+                    href="/dashboard/plans"
+                    label= "Planos"
+                    pathname={pathname}
+                    isCollapsed={isCollapsed}
+                    icon={<Banknote className="w-6 h-6" />}
+                  />
+                )}
 
               </nav>
             </SheetContent>

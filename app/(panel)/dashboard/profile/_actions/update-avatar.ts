@@ -2,7 +2,8 @@
 
 import prisma from "@/lib/prisma"
 import  { auth } from "@/lib/auth"
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from "next/cache"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 
 export async function updateProfileAvatar({ avatarUrl }: { avatarUrl: string}){
@@ -12,6 +13,11 @@ export async function updateProfileAvatar({ avatarUrl }: { avatarUrl: string}){
         return {
             error: "Usuário não encontrado"
         }
+    }
+
+    const clinicOwnerId = getClinicOwnerUserId(session)
+    if (!clinicOwnerId) {
+        return { error: "Clínica não identificada" }
     }
 
     if(!avatarUrl) {
@@ -24,8 +30,7 @@ export async function updateProfileAvatar({ avatarUrl }: { avatarUrl: string}){
 
         await prisma.user.update({
             where: {
-                id: session?.user?.id,
-
+                id: clinicOwnerId,
             },
             data:{
                 image: avatarUrl,

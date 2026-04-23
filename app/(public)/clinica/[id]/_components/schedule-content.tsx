@@ -1,13 +1,21 @@
 "use client"
 
 import { useState, useCallback, useEffect } from "react"
-import Image from "next/image"
-import imgTest from "../../../../../public/foto1.png"
-import { MapPin } from "lucide-react"
+import { MapPin, MessageCircle, ExternalLink } from "lucide-react"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 import type { Prisma } from "@/lib/generated/prisma"
 import { useAppointmentForm, AppointmentFormData } from "./schedule-form"
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormLabel,
+  FormMessage,
+  FormItem,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { formatPhone} from "@/app/utils/formatPhone"
 import { DateTimePicker } from "./date-picker"
@@ -16,6 +24,29 @@ import { ScheduleTimeList } from "./schedule-time-list"
 import { Label } from "@/components/ui/label"
 import { createNewAppointment } from "../_actions/create-appointment"
 import { toast } from "sonner"
+import { ClinicCardImage } from "@/app/(public)/_components/clinic-card-image"
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+
+function mapsSearchUrl(address: string | null | undefined) {
+  const q = address?.trim()
+  if (!q) return null
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+}
+
+/** Número internacional para wa.me (Brasil: DDD + celular/fixo, com ou sem 55). */
+function whatsappUrlFromDigits(digits: string): string | null {
+  const d = digits.replace(/\D/g, "")
+  if (d.length < 10) return null
+  const n = d.startsWith("55") ? d : `55${d}`
+  if (n.length < 12) return null
+  return `https://wa.me/${n}`
+}
 
 type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
   include: {
@@ -38,12 +69,25 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
       const form = useAppointmentForm();
       const { watch } = form;
 
+      const phoneDigits = clinic.phone?.replace(/\D/g, "") ?? ""
+      const showPhoneLink = Boolean(
+        clinic.phone?.trim() && phoneDigits.length >= 8,
+      )
+      const whatsappUrl = whatsappUrlFromDigits(phoneDigits)
+
       const selectedDate = watch("date")
       const selectedServiceId = watch("serviceId")
 
       const [selectedTime, setSelectedTime] = useState("");
       const [avaibleTimeSlots, setAvaibleTimeSlots] = useState<TimeSlot[]>([]);
       const [loadingSlots, setLoadingSlots] = useState(false);
+      const [confirmation, setConfirmation] = useState<{
+        patientName: string
+        serviceName: string
+        date: Date
+        time: string
+        checkoutUrl: string | null
+      } | null>(null)
       
       //código que busca horários bloqueados 
       const [blockedTimes, setBlockedTimes] = useState<string[]>([])
@@ -53,8 +97,9 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
         setLoadingSlots(true)
         try {
           const dateString = date.toISOString().split("T")[0]
-          const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?userId=${clinic.
-            id}&date=${dateString}&date=${dateString}`)
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?userId=${clinic.id}&date=${dateString}`,
+          )
 
            const json = await response.json();
            setLoadingSlots(false);
@@ -120,65 +165,104 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
         return;
     }
 
-    toast.success("Consulta agendada com sucesso!")
-    form.reset();
-    setSelectedTime("")
+    const serviceName =
+      clinic.services.find((s) => s.id === formData.serviceId)?.name ??
+      "Serviço selecionado"
 
+    setConfirmation({
+      patientName: formData.name,
+      serviceName,
+      date: formData.date,
+      time: selectedTime,
+      checkoutUrl: response.checkoutUrl ?? null,
+    })
+
+    toast.success("Consulta agendada com sucesso!")
+    form.reset()
+    setSelectedTime("")
     }
   
 
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {/* Faixa verde: altura fixa, largura total */}
+    <div className="flex min-h-screen flex-col bg-white">
       <div className="h-40 w-full shrink-0 bg-emerald-500" />
 
-      {/* Bloco que sobe 64px para a foto ficar meio no verde, meio no branco */}
       <section
         className="container mx-auto flex w-full justify-center px-4"
         style={{ marginTop: -64 }}
       >
-        <div className="max-w-2xl flex flex-col items-center">
-          {/* Círculo SEM fill: width/height fixos = foto nunca some */}
-          <div className="mb-8 h-48 w-48 shrink-0 overflow-hidden rounded-full border-4 border-white">
-            <Image
-              src={ clinic.image ? clinic.image : imgTest}
-              alt="Foto da clinica"
-              width={192}
-              height={192}
-              className="h-full w-full object-cover"
-            />
+        <div className="flex max-w-2xl flex-col items-center">
+          <div className="mb-8 h-48 w-48 shrink-0 overflow-hidden rounded-full border-4 border-white bg-zinc-100 shadow-lg">
+            <ClinicCardImage imageUrl={clinic.image} name={clinic.name} />
           </div>
 
-          <h1 className="text-2xl font-bold mb-2">
-             {clinic.name}    
+          <h1 className="mb-2 text-center text-2xl font-bold">
+            {clinic.name ?? "Clínica"}
           </h1>
-          <div className="flex items-center gap-1">
-            <MapPin className="h-5 w-4" />
-            <span>
-             {clinic.address ? clinic.address : "Endereço não informado" }
-            </span>
+          <p className="mb-4 text-center text-sm text-gray-600">
+            Agendamento online
+          </p>
+
+          <div className="w-full max-w-md space-y-3 rounded-xl border border-zinc-100 bg-zinc-50/90 px-4 py-3 text-sm text-zinc-800">
+            <div className="flex gap-2">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+              <span className="leading-snug">
+                {clinic.address?.trim() || "Endereço não informado"}
+              </span>
+            </div>
+            {showPhoneLink ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <MessageCircle className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden />
+                <a
+                  href={whatsappUrl ?? `tel:${phoneDigits}`}
+                  target={whatsappUrl ? "_blank" : undefined}
+                  rel={whatsappUrl ? "noopener noreferrer" : undefined}
+                  className="font-medium text-emerald-700 hover:underline"
+                >
+                  {clinic.phone}
+                </a>
+                {whatsappUrl ? (
+                  <span className="text-xs text-zinc-500">(WhatsApp)</span>
+                ) : null}
+              </div>
+            ) : null}
+            {mapsSearchUrl(clinic.address) ? (
+              <a
+                href={mapsSearchUrl(clinic.address) ?? "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 font-medium text-emerald-700 hover:underline"
+              >
+                <ExternalLink className="h-4 w-4" />
+                Como chegar (Google Maps)
+              </a>
+            ) : null}
           </div>
         </div>
       </section>
 
-      <section className= "max-w-2xl mx-auto w-full mt-6" >
-    {/* Formulário de agendamento */}
-     
+      <section className="mx-auto mt-6 w-full max-w-2xl">
     <Form {...form}>
         <form 
         onSubmit={form.handleSubmit(handleRegisterAppointment)}
-        className= "mx-2 space-y-6 bg-white p-6 border rounded-md shadow-sm"
+        className="mx-2 space-y-6 rounded-md border bg-white p-6 shadow-sm"
          >
 
-          
+          {clinic.services.length === 0 ? (
+            <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+              Não há serviços disponíveis para agendamento online neste momento.
+              Entre em contato com a clínica.
+            </div>
+          ) : null}
+
             
             <FormField 
              control={form.control}
              name="name"
              render={({ field }) => ( 
                
-               <FormItem className = "my-2" >
+               <FormItem className="my-2">
                  <FormLabel className="font-semibold">Nome completo:</FormLabel>
                  <FormControl>
                     <Input 
@@ -200,15 +284,22 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
             name="email"
             render={({ field }) => ( 
               
-              <FormItem className = "my-2" >
-                <FormLabel className="font-semibold">Email:</FormLabel>
+              <FormItem className="my-2">
+                <FormLabel className="font-semibold">E-mail:</FormLabel>
                 <FormControl>
                    <Input 
                      id="email"
-                     placeholder="Digite seu email..."
+                     type="email"
+                     autoComplete="email"
+                     inputMode="email"
+                     placeholder="seu@email.com"
                      {...field}
                    />
                 </FormControl>
+                <FormDescription className="text-xs">
+                  Use um e-mail que você acessa. Endereços falsos ou temporários
+                  não são aceitos.
+                </FormDescription>
                 <FormMessage/>
               </FormItem>
                
@@ -220,7 +311,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
            name="phone"
            render={({ field }) => ( 
              
-             <FormItem className = "my-2" >
+             <FormItem className="my-2">
                <FormLabel className="font-semibold">Telefone:</FormLabel>
                <FormControl>
                   <Input 
@@ -244,7 +335,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
            control={form.control}
            name="date"
            render={({ field }) => ( 
-             <FormItem className = "flex items-center gap-1 space-y-1" >
+             <FormItem className="flex items-center gap-1 space-y-1">
                <FormLabel className="font-semibold">Data do agendamento:</FormLabel>
                <FormControl>
                  <DateTimePicker
@@ -269,7 +360,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
            control={form.control}
            name="serviceId"
            render={({ field }) => ( 
-             <FormItem className = "" >
+             <FormItem>
                <FormLabel className="font-semibold">Selecione o serviço:</FormLabel>
                <FormControl>
                   <Select onValueChange={(value) => {
@@ -294,15 +385,30 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
            )}
           />
 
-          {selectedServiceId && (
-            <div className="space-y-2" >
-                <Label className="font-semibold" >Horários disponíveis:</Label>
-                <div className="bg-gray-50 p-4 rounded-lg" >
+          {selectedServiceId && clinic.services.length > 0 && (
+            <div className="space-y-2">
+                <Label className="font-semibold">Horários disponíveis:</Label>
+                <div className="rounded-lg bg-gray-50 p-4" >
                     {loadingSlots ? (
-                      <p> Carregando horários</p>
-                    ): avaibleTimeSlots.length === 0 ? (
-                      <p>Nenhum horário disponível</p>
-                    ):(
+                      <div className="grid grid-cols-4 gap-2 md:grid-cols-5">
+                        {Array.from({ length: 10 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="h-10 animate-pulse rounded-md bg-zinc-200"
+                          />
+                        ))}
+                      </div>
+                    ) : !(clinic.times && clinic.times.length > 0) ? (
+                      <p className="text-sm text-amber-900">
+                        Esta clínica ainda não cadastrou horários de atendimento. Entre em
+                        contato com a recepção.
+                      </p>
+                    ) : !avaibleTimeSlots.some((s) => s.available) ? (
+                      <p className="text-sm text-zinc-700">
+                        Todos os horários deste dia já estão reservados ou indisponíveis.
+                        Escolha outra data.
+                      </p>
+                    ) : (
                       <ScheduleTimeList
                          onSelectTime={(time) => setSelectedTime(time) }
                          clinicTimes={clinic.times}
@@ -325,7 +431,16 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
              <Button 
              type="submit"
              className="w-full bg-emerald-500 hover:bg-emerald-500"
-             disabled={!watch("name") || !watch("email") || !watch("phone") || !watch("date")} 
+             disabled={
+              clinic.services.length === 0 ||
+              !watch("name") ||
+              !watch("email") ||
+              !watch("phone") ||
+              !watch("date") ||
+              !watch("serviceId") ||
+              !selectedTime ||
+              loadingSlots
+            } 
              >
                Realizar agendamento
              </Button>
@@ -334,8 +449,8 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
           ) : (
 
             
-            <p className="w-full text-center bg-red-500 text-white px-4 py-2 rounded-md">
-              A clinica está fechada neste momento.
+            <p className="w-full rounded-md bg-red-500 px-4 py-2 text-center text-white">
+              A clínica está fechada neste momento.
             </p>
             
          )}
@@ -343,6 +458,77 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
           </form>
         </Form>
       </section>
+
+      <Dialog
+        open={!!confirmation}
+        onOpenChange={(open) => {
+          if (!open) setConfirmation(null)
+        }}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Agendamento confirmado</DialogTitle>
+          </DialogHeader>
+          {confirmation ? (
+            <div className="space-y-3 text-sm text-zinc-700">
+              <p>
+                Olá, <strong>{confirmation.patientName}</strong> — sua consulta em{" "}
+                <strong>{clinic.name ?? "Clínica"}</strong> foi registrada.
+              </p>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Serviço: <strong>{confirmation.serviceName}</strong>
+                </li>
+                <li>
+                  Data:{" "}
+                  <strong>
+                    {format(confirmation.date, "EEEE, d 'de' MMMM 'de' yyyy", {
+                      locale: ptBR,
+                    })}
+                  </strong>
+                </li>
+                <li>
+                  Horário: <strong>{confirmation.time}</strong>
+                </li>
+              </ul>
+              <p className="text-sm text-zinc-600">
+                Recomendamos chegar com cerca de{" "}
+                <strong>10 minutos de antecedência</strong>. Se precisar remarcar ou
+                cancelar, avise a clínica o quanto antes.
+              </p>
+              <div className="rounded-md border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs text-indigo-900">
+                {confirmation.checkoutUrl ? (
+                  <>
+                    Sua consulta foi criada. Você pode seguir para o pagamento agora
+                    pelo Stripe.
+                  </>
+                ) : (
+                  <>
+                    Sua consulta foi criada. No momento, o checkout online não está
+                    disponível; finalize o pagamento diretamente com a clínica.
+                  </>
+                )}
+              </div>
+            </div>
+          ) : null}
+          <DialogFooter>
+            {confirmation?.checkoutUrl ? (
+              <Button
+                type="button"
+                className="bg-indigo-600 hover:bg-indigo-700"
+                onClick={() => {
+                  window.location.href = confirmation.checkoutUrl as string
+                }}
+              >
+                Realizar pagamento
+              </Button>
+            ) : null}
+            <Button type="button" onClick={() => setConfirmation(null)}>
+              Fechar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
     </div>
   )

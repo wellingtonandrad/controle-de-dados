@@ -4,6 +4,7 @@ import { SubscriptionDetail } from "@/app/utils/plans/_components/subscription-d
 import { syncSubscriptionFromCheckout } from "@/app/utils/sync-subscription-from-checkout"
 import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
+import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
 function hasPaidSubscription(status: string | undefined) {
     return status === "active" || status === "trialing"
@@ -22,7 +23,11 @@ export default async function Plans({ searchParams }: PageProps) {
         redirect("/")
     }
 
-    const userId = session.user.id
+    if (session.user.clinicStaffRole !== "OWNER") {
+        redirect("/dashboard")
+    }
+
+    const userId = getClinicOwnerUserId(session) ?? session.user.id
     const { session_id: checkoutSessionId } = await searchParams
 
     if (checkoutSessionId) {

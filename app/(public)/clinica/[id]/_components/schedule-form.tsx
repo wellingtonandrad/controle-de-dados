@@ -6,7 +6,12 @@ import { useForm} from "react-hook-form"
 
 export const appointmentSchema = z.object({
     name: z.string().min(1, "O nome é obrigatório"),
-    email: z.string().email("O email é obrigatório"),
+    email: z
+      .string()
+      .trim()
+      .min(1, "O e-mail é obrigatório")
+      .email("Digite um e-mail válido")
+      .transform((s) => s.toLowerCase()),
     phone: z.string().min(1, "O telefone é obrigatório"),
     date: z.date(),
     serviceId: z.string().min(1, "O serviço é obrigatório"),
