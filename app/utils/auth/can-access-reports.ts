@@ -1,10 +1,9 @@
 import type { Session } from "next-auth"
 
 /**
- * Relatórios financeiros: apenas dono da clínica e dentistas da equipe.
- * Recepção não acessa.
+ * Relatorios financeiros: apenas owner e equipe operacional (STAFF).
  */
 export function canAccessReports(session: Session | null): boolean {
-  const role = session?.user?.clinicStaffRole
-  return role === "OWNER" || role === "DENTIST"
+  const role = session?.user?.organizationRole
+  return role === "OWNER" || role === "STAFF"
 }

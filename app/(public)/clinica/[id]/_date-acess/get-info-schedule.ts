@@ -2,37 +2,72 @@
 
 import prisma from "@/lib/prisma"
 
-export async function getInfoSchedule({userId}: {userId: string}){
-   try{
-    if(!userId){
-        return null;
+export type PublicScheduleClinic = {
+  id: string
+  name: string | null
+  phone: string | null
+  address: string | null
+  image: string | null
+  times: string[]
+  status: boolean
+  services: {
+    id: string
+    name: string
+    price: number
+    duration: number
+    status: boolean
+  }[]
+}
+
+export async function getInfoSchedule({
+  organizationId,
+}: {
+  organizationId: string
+}): Promise<PublicScheduleClinic | null> {
+  try {
+    if (!organizationId) {
+      return null
     }
 
-    const user = await prisma.user.findFirst({
-        where:{
-            id: userId,
-            role: "CLINIC",
-            clinicVerified: true,
+    const org = await prisma.organization.findFirst({
+      where: {
+        id: organizationId,
+        verified: true,
+        active: true,
+      },
+      include: {
+        owner: {
+          select: {
+            name: true,
+            phone: true,
+            address: true,
+            image: true,
             status: true,
+            times: true,
+          },
         },
-        include:{
-            subscription: true,
-            services: {
-               where: {
-                 status: true
-               }
-            },
-        }
+        services: {
+          where: { status: true },
+        },
+      },
     })
 
-    if(!user){
-        return null;
+    if (!org?.owner) {
+      return null
     }
 
-    return user;
-
-   }catch(err){
+    return {
+      id: org.id,
+      name: org.name,
+      phone: org.phone ?? org.owner.phone,
+      address: org.owner.address,
+      image: org.owner.image,
+      times: org.owner.times,
+      status: org.owner.status,
+      services: org.services,
+    }
+  } catch (err) {
     console.error(err)
     return null
-   }
+  }
 }

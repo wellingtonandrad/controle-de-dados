@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 
 const createItemSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -26,25 +26,25 @@ const consumptionSchema = z.object({
   quantity: z.number().int().positive(),
 })
 
-async function clinicOwnerIdOrError() {
+async function organizationIdOrError() {
   const session = await auth()
   if (!session?.user?.id) return { error: "Usuário não encontrado" as const }
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) return { error: "Clínica não identificada" as const }
-  return { clinicOwnerId }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) return { error: "Empresa não identificada" as const }
+  return { organizationId }
 }
 
 export async function createStockItem(raw: z.infer<typeof createItemSchema>) {
   const parsed = createItemSchema.safeParse(raw)
   if (!parsed.success) return { error: parsed.error.issues[0]?.message }
-  const ctx = await clinicOwnerIdOrError()
+  const ctx = await organizationIdOrError()
   if ("error" in ctx) return { error: ctx.error }
 
   try {
     const data = parsed.data
     const item = await prisma.stockItem.create({
       data: {
-        userId: ctx.clinicOwnerId,
+        organizationId: ctx.organizationId,
         name: data.name.trim(),
         unit: data.unit.trim(),
         currentQuantity: data.currentQuantity,
@@ -73,13 +73,13 @@ export async function createStockItem(raw: z.infer<typeof createItemSchema>) {
 export async function createStockMovement(raw: z.infer<typeof movementSchema>) {
   const parsed = movementSchema.safeParse(raw)
   if (!parsed.success) return { error: parsed.error.issues[0]?.message }
-  const ctx = await clinicOwnerIdOrError()
+  const ctx = await organizationIdOrError()
   if ("error" in ctx) return { error: ctx.error }
 
   try {
     await prisma.$transaction(async (tx) => {
       const item = await tx.stockItem.findFirst({
-        where: { id: parsed.data.stockItemId, userId: ctx.clinicOwnerId, active: true },
+        where: { id: parsed.data.stockItemId, organizationId: ctx.organizationId, active: true },
       })
       if (!item) throw new Error("Material não encontrado")
 
@@ -117,20 +117,20 @@ export async function createStockMovement(raw: z.infer<typeof movementSchema>) {
 export async function upsertServiceConsumption(raw: z.infer<typeof consumptionSchema>) {
   const parsed = consumptionSchema.safeParse(raw)
   if (!parsed.success) return { error: parsed.error.issues[0]?.message }
-  const ctx = await clinicOwnerIdOrError()
+  const ctx = await organizationIdOrError()
   if ("error" in ctx) return { error: ctx.error }
 
   try {
     const service = await prisma.service.findFirst({
-      where: { id: parsed.data.serviceId, userId: ctx.clinicOwnerId },
+      where: { id: parsed.data.serviceId, organizationId: ctx.organizationId },
       select: { id: true },
     })
     const stockItem = await prisma.stockItem.findFirst({
-      where: { id: parsed.data.stockItemId, userId: ctx.clinicOwnerId, active: true },
+      where: { id: parsed.data.stockItemId, organizationId: ctx.organizationId, active: true },
       select: { id: true },
     })
     if (!service || !stockItem) {
-      return { error: "Serviço ou material inválido para esta clínica." }
+      return { error: "Servico ou material invalido para esta empresa." }
     }
 
     await prisma.serviceStockConsumption.upsert({
@@ -152,14 +152,14 @@ export async function upsertServiceConsumption(raw: z.infer<typeof consumptionSc
 }
 
 export async function removeServiceConsumption(id: string) {
-  const ctx = await clinicOwnerIdOrError()
+  const ctx = await organizationIdOrError()
   if ("error" in ctx) return { error: ctx.error }
 
   try {
     const found = await prisma.serviceStockConsumption.findFirst({
       where: {
         id,
-        service: { userId: ctx.clinicOwnerId },
+        service: { organizationId: ctx.organizationId },
       },
       select: { id: true },
     })

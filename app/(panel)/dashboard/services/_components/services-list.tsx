@@ -27,7 +27,6 @@ import { formatCurrency } from "@/app/utils/formatCurrency"
 import { deleteService } from "../_actions/delete-service"
 import { toast } from "sonner"
 import { ResultPermissionProps } from "@/app/utils/permissions/canPermission"
-import Link from "next/link"
 
 interface ServicesListProps{
   services: Service[];
@@ -82,9 +81,9 @@ const ServicesList = permisson.hasPermission ? services : services.slice(0,3);
                     )}
                   
                   {!permisson.hasPermission && (
-                    <Link href="/dashboard/plans" className="text-red-500" >
-                       Limite de serviços atingido
-                    </Link>
+                    <span className="text-sm font-medium text-red-600">
+                      Limite de serviços atingido
+                    </span>
                   )}
 
                    <DialogContent

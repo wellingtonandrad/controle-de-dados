@@ -1,8 +1,10 @@
 import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
 import prisma from "@/lib/prisma"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { InviteStaffForm } from "./_components/invite-staff-form"
+import { ErpPageHeader } from "../_components/erp-page-header"
+import { erpTableWrap, erpTableHead } from "@/lib/erp-shell"
 
 export default async function EquipePage() {
   const session = await getSession()
@@ -10,59 +12,70 @@ export default async function EquipePage() {
     redirect("/")
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    redirect("/acesso-clinica")
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    redirect("/acesso-empresa")
   }
 
-  const members = await prisma.clinicMember.findMany({
-    where: { clinicOwnerId },
+  const members = await prisma.organizationMember.findMany({
+    where: { organizationId },
     include: {
-      staffUser: { select: { id: true, name: true, email: true, image: true } },
+      user: { select: { id: true, name: true, email: true, image: true } },
     },
     orderBy: { createdAt: "asc" },
   })
 
-  const isOwner = session.user.clinicStaffRole === "OWNER"
+  const isOwner = session.user.organizationRole === "OWNER"
 
   return (
-    <main className="mx-auto max-w-2xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-zinc-900">Equipe da clínica</h1>
-        <p className="mt-1 text-sm text-zinc-600">
-          Recepção e doutores(as) podem usar o painel com a mesma agenda e serviços
-          da clínica. Cada pessoa precisa ter uma conta (login) no site antes de
-          ser adicionada aqui.
-        </p>
-      </div>
+    <div className="mx-auto max-w-7xl space-y-8">
+      <ErpPageHeader
+        title="Equipe"
+        description="Membros usam o painel com os mesmos dados da empresa. Cada pessoa precisa de uma conta (login) antes de ser adicionada."
+      />
 
       {isOwner ? (
         <InviteStaffForm />
       ) : (
-        <p className="rounded-md border bg-zinc-50 p-3 text-sm text-zinc-700">
-          Somente o dono pode convidar ou alterar papéis. Peça ao dono da clínica
-          para adicionar novos membros.
+        <p className="rounded-xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-sm text-amber-950">
+          Somente o dono pode convidar ou alterar papéis. Peça ao titular da conta para
+          adicionar novos membros.
         </p>
       )}
 
-      <section className="rounded-lg border">
-        <h2 className="border-b px-4 py-3 text-lg font-medium">Membros</h2>
-        <ul className="divide-y">
-          {members.map((m) => (
-            <li key={m.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-3">
-              <div>
-                <p className="font-medium">{m.staffUser.name ?? "Sem nome"}</p>
-                <p className="text-sm text-zinc-600">{m.staffUser.email}</p>
-              </div>
-              <span className="rounded-full bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-800">
-                {m.role === "OWNER" && "Dono"}
-                {m.role === "RECEPTION" && "Recepção"}
-                {m.role === "DENTIST" && "Doutor(a)"}
-              </span>
-            </li>
-          ))}
-        </ul>
+      <section>
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Membros ativos
+        </h2>
+        <div className={erpTableWrap}>
+          <table className="w-full min-w-[320px] text-left text-sm">
+            <thead className={erpTableHead}>
+              <tr>
+                <th className="px-4 py-3">Nome</th>
+                <th className="px-4 py-3">E-mail</th>
+                <th className="px-4 py-3 text-right">Papel</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 bg-white">
+              {members.map((m) => (
+                <tr key={m.id}>
+                  <td className="px-4 py-3 font-medium text-slate-900">
+                    {m.user.name ?? "Sem nome"}
+                  </td>
+                  <td className="px-4 py-3 text-slate-600">{m.user.email}</td>
+                  <td className="px-4 py-3 text-right">
+                    <span className="inline-flex rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-800">
+                      {m.role === "OWNER" && "Dono"}
+                      {m.role === "MANAGER" && "Gestão"}
+                      {m.role === "STAFF" && "Equipe operacional"}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
-    </main>
+    </div>
   )
 }

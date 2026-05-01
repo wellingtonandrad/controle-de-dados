@@ -1,6 +1,5 @@
 "use client"
 
-import { Subscription } from "@/lib/generated/prisma";
 import { toast } from "sonner";
 import {
     Card,
@@ -10,13 +9,17 @@ import {
     CardTitle,
     CardFooter,
 } from "@/components/ui/card"
-import {subscriptionPlans} from "@/app/utils/plans"
-import { features } from "process";
-import { Button } from "@/components/ui/button";
+import { subscriptionPlans } from "@/app/utils/plans"
+import { Button } from "@/components/ui/button"
 import { createPortalCustomer } from "../_actions/create-portal-customer";
 
+type SubscriptionSnapshot = {
+  plan: string
+  status: string
+}
+
 interface SubscriptionDetailProps {
-    subscription: Subscription;
+  subscription: SubscriptionSnapshot
 }
 
 export function SubscriptionDetail({ subscription}: SubscriptionDetailProps) {

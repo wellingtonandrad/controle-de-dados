@@ -2,7 +2,6 @@ import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { stripe } from "@/app/utils/stripe"
 import { manageSubscription } from "@/app/utils/manage-subscription"
-import { Plan } from "@/lib/generated/prisma"
 import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
 
@@ -48,7 +47,6 @@ export async function POST(request: Request) {
           subscription.customer.toString(),
           false,
         )
-        revalidatePath("/dashboard/plans", "page")
         revalidatePath("/dashboard", "layout")
         break
       }
@@ -76,11 +74,10 @@ export async function POST(request: Request) {
             checkoutSession.customer.toString(),
             true,
             false,
-            type as Plan,
+            type,
           )
         }
 
-        revalidatePath("/dashboard/plans", "page")
         revalidatePath("/dashboard", "layout")
         break
       }

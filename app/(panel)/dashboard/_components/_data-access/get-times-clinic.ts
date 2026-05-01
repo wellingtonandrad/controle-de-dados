@@ -1,46 +1,45 @@
 "use server"
 
-import  prisma from "@/lib/prisma"
+import prisma from "@/lib/prisma"
 
-export async function getTimesClinic({ userId }: {userId: string}){
-
-if(!userId){
-    return{
-        times:[],
-        userId: "",
+export async function getTimesClinic({
+  organizationId,
+}: {
+  organizationId: string
+}) {
+  if (!organizationId) {
+    return {
+      times: [] as string[],
+      organizationId: "",
     }
-}
+  }
 
-try{
-
-    const user = await prisma.user.findFirst({
-         where:{
-            id: userId
-         },
-         select:{
-            id: true,
-            times: true,
-         }
+  try {
+    const org = await prisma.organization.findUnique({
+      where: { id: organizationId },
+      include: {
+        owner: {
+          select: { id: true, times: true },
+        },
+      },
     })
 
-    if(!user){
-        return {
-            times: [],
-            userId: "",
-        }
+    if (!org?.owner) {
+      return {
+        times: [] as string[],
+        organizationId: "",
+      }
     }
 
     return {
-        times: user.times,
-        userId: user.id
+      times: org.owner.times,
+      organizationId: org.id,
     }
-
-}catch(err){
-    console.log(err);
-    return{
-        times: [],
-        userId: "",
+  } catch (err) {
+    console.log(err)
+    return {
+      times: [] as string[],
+      organizationId: "",
     }
-}
-
+  }
 }

@@ -1,7 +1,8 @@
 "use server"
 
-import { Plan } from "@/lib/generated/prisma"
-import { PlansProps } from "@/app/utils/plans/index"
+import type { PlansProps } from "@/app/utils/plans/index"
+
+export type PlanTier = keyof PlansProps
 
 export interface PlanDetailInfo{
     maxServices: number;
@@ -16,6 +17,6 @@ const PLANS_LIMITS: PlansProps = {
     }
 }
 
-export async function getPlans(planId: Plan) {
-   return PLANS_LIMITS[planId]
+export async function getPlans(planId: PlanTier) {
+  return PLANS_LIMITS[planId]
 }

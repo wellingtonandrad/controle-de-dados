@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { stripe } from "@/app/utils/stripe"
 
 const installmentRowSchema = z.object({
@@ -47,21 +47,21 @@ export async function saveAppointmentInstallmentPlan(
   if (!session?.user?.id) {
     return { error: "Usuário não encontrado" }
   }
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   const { appointmentId, installments } = parsed.data
 
   try {
     const appt = await prisma.appointment.findFirst({
-      where: { id: appointmentId, userId: clinicOwnerId, status: "COMPLETED" },
+      where: { id: appointmentId, organizationId, status: "COMPLETED" },
       include: { service: true },
     })
     if (!appt) {
       return {
-        error: "Só é possível parcelar consultas concluídas desta clínica.",
+        error: "So e possivel parcelar atendimentos concluidos desta empresa.",
       }
     }
 
@@ -99,14 +99,14 @@ export async function setInstallmentPaid(installmentId: string) {
   if (!session?.user?.id) {
     return { error: "Usuário não encontrado" }
   }
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   try {
     const row = await prisma.appointmentInstallment.findFirst({
-      where: { id: installmentId, appointment: { userId: clinicOwnerId } },
+      where: { id: installmentId, appointment: { organizationId } },
     })
     if (!row) {
       return { error: "Parcela não encontrada." }
@@ -131,14 +131,14 @@ export async function setInstallmentUnpaid(installmentId: string) {
   if (!session?.user?.id) {
     return { error: "Usuário não encontrado" }
   }
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   try {
     const row = await prisma.appointmentInstallment.findFirst({
-      where: { id: installmentId, appointment: { userId: clinicOwnerId } },
+      where: { id: installmentId, appointment: { organizationId } },
     })
     if (!row) {
       return { error: "Parcela não encontrada." }
@@ -163,9 +163,9 @@ export async function createInstallmentStripeCheckout(installmentId: string) {
   if (!session?.user?.id) {
     return { error: "Usuário não encontrado" }
   }
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   try {
@@ -173,7 +173,7 @@ export async function createInstallmentStripeCheckout(installmentId: string) {
       where: {
         id: installmentId,
         paidAt: null,
-        appointment: { userId: clinicOwnerId, status: "COMPLETED" },
+        appointment: { organizationId, status: "COMPLETED" },
       },
       include: {
         appointment: {

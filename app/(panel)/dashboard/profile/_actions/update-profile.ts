@@ -1,73 +1,45 @@
 "use server"
 
-import {auth} from "@/lib/auth"
-import  prisma  from "@/lib/prisma"
+import { auth } from "@/lib/auth"
+import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 import { z } from "zod"
 
 const formSchema = z.object({
-    name: z.string().min(1, {message:"O nome é obrigatório"}),
-    address: z.string().optional(),
-    phone: z.string().optional(),
-    status: z.boolean(),
-    timeZone: z.string(),
-    times: z.array(z.string()),
-    
+  name: z.string().min(1, { message: "O nome é obrigatório" }),
+  address: z.string().optional(),
+  phone: z.string().optional(),
 })
 
-type formSchema = z.infer<typeof formSchema>
+type FormInput = z.infer<typeof formSchema>
 
+export async function updateProfile(formData: FormInput) {
+  const session = await auth()
 
-export async function updateProfile(formData: formSchema){
+  if (!session?.user?.id) {
+    return { error: "Sessão inválida. Entre novamente." }
+  }
 
-    const session = await auth();
+  const parsed = formSchema.safeParse(formData)
+  if (!parsed.success) {
+    return { error: "Confira os campos obrigatórios." }
+  }
 
-    if(!session?.user?.id){
-        return{
-            error: "Usuário não encontrado",
-        }
-    }
+  try {
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        name: parsed.data.name,
+        address: parsed.data.address ?? "",
+        phone: parsed.data.phone ?? "",
+      },
+    })
 
-    const clinicOwnerId = getClinicOwnerUserId(session)
-    if (!clinicOwnerId) {
-        return { error: "Clínica não identificada" }
-    }
+    revalidatePath("/dashboard/profile")
 
-    const schema = formSchema.safeParse( formData)
-
-    if(!schema.success){
-        return{
-            error: "Preencha todos os campos"
-        }
-    }
-   
-    try{
-
-        await prisma.user.update({
-            where:{
-                id: clinicOwnerId,
-            },
-            data:{
-                name: formData.name,
-                address: formData.address,
-                phone: formData.phone,
-                status: formData.status,
-                timeZone: formData.timeZone,
-                times: formData.times || []
-            }
-        })
-
-        revalidatePath("/dashboard/profile")
-
-        return {
-            data: "Clinica atualizada com sucesso!"
-        }
-
-    }catch(err){
-        console.log(err);
-        return{
-            error: "Falha ao atualizar clinica",
-        }
-    }
+    return { data: "Dados salvos." }
+  } catch (err) {
+    console.error(err)
+    return { error: "Não foi possível salvar." }
+  }
 }

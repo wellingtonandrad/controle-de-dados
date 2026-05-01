@@ -16,18 +16,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Odonto PRO encontre os melhores profissionais",
-  description: "Nós somos a melhor plataforma para profissionais da saúde com foco em agilizar o seu agendamento de forma simplificada e organizada.",
+  title: "Controle de dados — gestão e agendamento",
+  description:
+    "Plataforma para gestão empresarial, agendamento e operação do dia a dia.",
   robots: {
     index: true,
     follow: true,
     nocache: true,
   },
-  openGraph:{
-     title: "Odonto PRO encontre os melhores profissionais",
-     description: "Nós somos a melhor plataforma para profissionais da saúde com foco em agilizar o seu agendamento de forma simplificada e organizada.",
-     images: [`${process.env.NEXT_PUBLIC_URL}/doctor-hero.png`]
-  }
+  openGraph: {
+    title: "Controle de dados — gestão e agendamento",
+    description:
+      "Plataforma para gestão empresarial, agendamento e operação do dia a dia.",
+    images: [`${process.env.NEXT_PUBLIC_URL}/doctor-hero.png`],
+  },
 };
 
 export default function RootLayout({

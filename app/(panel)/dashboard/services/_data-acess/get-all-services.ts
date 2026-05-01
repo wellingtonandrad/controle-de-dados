@@ -1,8 +1,12 @@
 import prisma from "@/lib/prisma"
 
-export async function getAllServices({ userId}: {userId: string}) {
+export async function getAllServices({
+  organizationId,
+}: {
+  organizationId: string
+}) {
 
-    if (!userId){
+    if (!organizationId){
         return{
             error: "Falha as buscar serviços"
         }
@@ -11,7 +15,7 @@ export async function getAllServices({ userId}: {userId: string}) {
 
        const services = await prisma.service.findMany({
         where:{
-            userId: userId,
+            organizationId,
             status: true
         }
        })

@@ -1,40 +1,16 @@
 import prisma from "@/lib/prisma"
-import type { PrismaClient } from "@/lib/generated/prisma"
 import { eachDayOfInterval, format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { utcCalendarDateKey } from "@/app/utils/utc-calendar-date-key"
 import type {
   CashFlowSnapshot,
   DailyRevenuePoint,
+  DraftSalesSnapshot,
   DreDashboardPayload,
   PeriodComparisonSnapshot,
   ReportPeriod,
-  ScheduledPipelineItem,
-  ScheduledPipelineSnapshot,
+  ServicePerformanceSnapshot,
   ServiceRevenueRow,
 } from "../_types/dashboard"
-
-/**
- * Se o servidor ainda estiver com um Prisma Client gerado antes do modelo
- * `AppointmentInstallment`, o delegate não existe em runtime → evita crash.
- * Corrija com `npx prisma generate` e reinicie o `next dev`.
- */
-function appointmentInstallmentDelegate(
-  client: PrismaClient,
-): PrismaClient["appointmentInstallment"] | null {
-  const d = (
-    client as unknown as {
-      appointmentInstallment?: PrismaClient["appointmentInstallment"]
-    }
-  ).appointmentInstallment
-  if (d && typeof d.aggregate === "function") return d
-  if (process.env.NODE_ENV === "development") {
-    console.warn(
-      "[reports] Cliente Prisma sem `appointmentInstallment`. Execute `npx prisma generate` e reinicie o servidor.",
-    )
-  }
-  return null
-}
 
 export type {
   CashFlowSnapshot,
@@ -44,35 +20,31 @@ export type {
   ServiceRevenueRow,
 } from "../_types/dashboard"
 
-export async function getPermissionUserToReports({ userId }: { userId: string}){
-
-
-
-
-const user = await prisma.user.findFirst({
-    where:{
-        id: userId
-    },
-    include: {
-        subscription: true,
-    }
-})
-
-if(!user?.subscription || user.subscription.plan !== "PROFESSIONAL") {
-    return null;
+export async function getPermissionUserToReports({
+  billingUserId,
+}: {
+  billingUserId: string
+}) {
+  const user = await prisma.user.findFirst({
+    where: { id: billingUserId },
+  })
+  if (!user) {
+    return null
+  }
+  return user
 }
 
-return user;
-
-}
-
-export async function getMostProfitableService({ userId }: { userId: string }) {
-  return getServicePerformance({ userId, period: "month" }).then(
+export async function getMostProfitableService({
+  organizationId,
+}: {
+  organizationId: string
+}) {
+  return getServicePerformance({ organizationId, period: "month" }).then(
     (data) => data.topService,
   )
 }
 
-function getPeriodRange(period: ReportPeriod) {
+export function getPeriodRange(period: ReportPeriod) {
   const now = new Date()
 
   if (period === "30d") {
@@ -88,7 +60,7 @@ function getPeriodRange(period: ReportPeriod) {
 }
 
 /** Janela imediatamente anterior à atual (mês civil anterior ou 30 dias antes). */
-function getPreviousComparisonRange(period: ReportPeriod, now = new Date()) {
+export function getPreviousComparisonRange(period: ReportPeriod, now = new Date()) {
   if (period === "month") {
     const start = new Date(now.getFullYear(), now.getMonth() - 1, 1, 0, 0, 0, 0)
     const end = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999)
@@ -106,53 +78,36 @@ function getPreviousComparisonRange(period: ReportPeriod, now = new Date()) {
   return { start: prevStart, end: prevEnd }
 }
 
-async function getCompletedRevenueSum(
-  userId: string,
-  start: Date,
-  end: Date,
-): Promise<number> {
-  const rows = await prisma.appointment.findMany({
-    where: {
-      userId,
-      status: "COMPLETED",
-      updatedAt: { gte: start, lte: end },
-    },
-    select: { service: { select: { price: true } } },
-  })
-  return rows.reduce((s, r) => s + r.service.price, 0)
-}
-
 function buildComparisonSnapshot(
   currentNet: number,
-  previousGross: number,
+  previousNet: number,
 ): PeriodComparisonSnapshot {
-  const previousNetResult = previousGross
   let netResultChangePct: number | null = null
-  if (previousNetResult !== 0) {
-    netResultChangePct =
-      ((currentNet - previousNetResult) / previousNetResult) * 100
+  if (previousNet !== 0) {
+    netResultChangePct = ((currentNet - previousNet) / previousNet) * 100
   } else if (currentNet !== 0) {
-    netResultChangePct = 100
+    netResultChangePct = null
   }
   return {
-    previousGrossRevenue: previousGross,
-    previousNetResult,
+    previousGrossRevenue: previousNet,
+    previousNetResult: previousNet,
     netResultChangePct,
   }
 }
 
+/** Usado pelo módulo legado de Serviços (insights por agendamento). */
 export async function getServicePerformance({
-  userId,
+  organizationId,
   period,
 }: {
-  userId: string
+  organizationId: string
   period: ReportPeriod
 }) {
   const { start, end } = getPeriodRange(period)
 
   const services = await prisma.service.findMany({
     where: {
-      userId,
+      organizationId,
       status: true,
     },
     select: {
@@ -253,125 +208,164 @@ export async function getServicePerformance({
   }
 }
 
-/** Série diária: receita por dia em que a consulta foi marcada como concluída (`updatedAt`). */
-/**
- * Janela para contar agendamentos SCHEDULED (ainda não faturados).
- * No mês corrente inclui o calendário inteiro (inclusive datas futuras no mês),
- * para não “sumir” consultas já marcadas para daqui a duas semanas.
- */
-function getScheduledPipelineDateRange(period: ReportPeriod) {
-  const now = new Date()
-  if (period === "month") {
-    const start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0)
-    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
-    return { start, end }
-  }
-  const start = new Date(now)
-  start.setDate(now.getDate() - 30)
-  const end = new Date(now)
-  end.setHours(23, 59, 59, 999)
-  return { start, end }
+async function sumConfirmedSalesCents(
+  organizationId: string,
+  start: Date,
+  end: Date,
+): Promise<number> {
+  const agg = await prisma.sale.aggregate({
+    where: {
+      organizationId,
+      status: "CONFIRMED",
+      createdAt: { gte: start, lte: end },
+    },
+    _sum: { totalCents: true },
+  })
+  return agg._sum.totalCents ?? 0
 }
 
-/** Valor “na fila”: agendado na janela, ainda não contabilizado como receita. */
-export async function getScheduledPipelineInPeriod({
-  userId,
-  period,
-}: {
-  userId: string
-  period: ReportPeriod
-}): Promise<ScheduledPipelineSnapshot> {
-  const { start, end } = getScheduledPipelineDateRange(period)
-
-  const rows = await prisma.appointment.findMany({
+async function sumConfirmedPurchasesCents(
+  organizationId: string,
+  start: Date,
+  end: Date,
+): Promise<number> {
+  const agg = await prisma.purchase.aggregate({
     where: {
-      userId,
-      status: "SCHEDULED",
-      appointmentDate: {
-        gte: start,
-        lte: end,
+      organizationId,
+      status: "CONFIRMED",
+      createdAt: { gte: start, lte: end },
+    },
+    _sum: { totalCents: true },
+  })
+  return agg._sum.totalCents ?? 0
+}
+
+async function countConfirmedSales(
+  organizationId: string,
+  start: Date,
+  end: Date,
+): Promise<number> {
+  return prisma.sale.count({
+    where: {
+      organizationId,
+      status: "CONFIRMED",
+      createdAt: { gte: start, lte: end },
+    },
+  })
+}
+
+async function getProductRevenueRows(
+  organizationId: string,
+  start: Date,
+  end: Date,
+): Promise<ServiceRevenueRow[]> {
+  const lines = await prisma.saleLine.findMany({
+    where: {
+      sale: {
+        organizationId,
+        status: "CONFIRMED",
+        createdAt: { gte: start, lte: end },
       },
     },
     select: {
-      id: true,
-      name: true,
-      appointmentDate: true,
-      time: true,
-      service: { select: { name: true, price: true } },
+      quantity: true,
+      lineTotalCents: true,
+      saleId: true,
+      product: { select: { id: true, name: true } },
     },
-    orderBy: { appointmentDate: "asc" },
   })
 
-  const valueInCents = rows.reduce((sum, r) => sum + r.service.price, 0)
+  type Acc = {
+    name: string
+    qty: number
+    revenue: number
+    saleIds: Set<string>
+  }
+  const map = new Map<string, Acc>()
+  for (const row of lines) {
+    const pid = row.product.id
+    const cur = map.get(pid) ?? {
+      name: row.product.name,
+      qty: 0,
+      revenue: 0,
+      saleIds: new Set<string>(),
+    }
+    cur.qty += row.quantity
+    cur.revenue += row.lineTotalCents
+    cur.saleIds.add(row.saleId)
+    map.set(pid, cur)
+  }
 
-  const pendingItems: ScheduledPipelineItem[] = rows.map((r) => ({
-    id: r.id,
-    patientName: r.name,
-    appointmentDayUtc: utcCalendarDateKey(r.appointmentDate),
-    time: r.time,
-    serviceName: r.service.name,
-    priceInCents: r.service.price,
+  return [...map.entries()].map(([id, v]) => ({
+    id,
+    name: v.name,
+    completedCount: v.qty,
+    appointmentsCount: v.saleIds.size,
+    estimatedRevenue: v.revenue,
   }))
-
-  return { count: rows.length, valueInCents, pendingItems }
 }
 
-async function getInstallmentCashByDay(
-  userId: string,
+function buildMetricsFromProductLines(
+  lines: ServiceRevenueRow[],
+): ServicePerformanceSnapshot {
+  const sorted = [...lines]
+    .filter((l) => l.estimatedRevenue > 0)
+    .sort((a, b) => b.estimatedRevenue - a.estimatedRevenue)
+  const topProfitableServices = sorted.slice(0, 3)
+  const topService = topProfitableServices[0] ?? null
+
+  const mostSoldCandidates = [...lines].sort((a, b) => {
+    if (b.completedCount !== a.completedCount) return b.completedCount - a.completedCount
+    return b.appointmentsCount - a.appointmentsCount
+  })
+  const mostSold = mostSoldCandidates[0]
+  const mostSoldFiltered =
+    mostSold && (mostSold.completedCount > 0 || mostSold.appointmentsCount > 0)
+      ? mostSold
+      : null
+
+  return {
+    topService,
+    mostSoldService: mostSoldFiltered,
+    topProfitableServices,
+    allServicesByRevenue: sorted.length ? sorted : lines,
+  }
+}
+
+async function getErpDailySeries(
+  organizationId: string,
   start: Date,
   end: Date,
-): Promise<Map<string, number>> {
-  const inst = appointmentInstallmentDelegate(prisma)
-  if (!inst) return new Map()
-
-  const rows = await inst.findMany({
-    where: {
-      paidAt: { gte: start, lte: end },
-      appointment: { userId, status: "COMPLETED" },
-    },
-    select: { amountCents: true, paidAt: true },
-  })
-
-  const byDay = new Map<string, number>()
-  for (const r of rows) {
-    if (!r.paidAt) continue
-    const key = format(r.paidAt, "yyyy-MM-dd")
-    byDay.set(key, (byDay.get(key) ?? 0) + r.amountCents)
-  }
-  return byDay
-}
-
-export async function getDailyRevenueSeries({
-  userId,
-  period,
-}: {
-  userId: string
-  period: ReportPeriod
-}): Promise<DailyRevenuePoint[]> {
-  const { start, end } = getPeriodRange(period)
-
-  const [appointments, cashByDay] = await Promise.all([
-    prisma.appointment.findMany({
+): Promise<DailyRevenuePoint[]> {
+  const [sales, purchases] = await Promise.all([
+    prisma.sale.findMany({
       where: {
-        userId,
-        status: "COMPLETED",
-        updatedAt: {
-          gte: start,
-          lte: end,
-        },
+        organizationId,
+        status: "CONFIRMED",
+        createdAt: { gte: start, lte: end },
       },
-      select: {
-        updatedAt: true,
-        service: { select: { price: true } },
-      },
+      select: { createdAt: true, totalCents: true },
     }),
-    getInstallmentCashByDay(userId, start, end),
+    prisma.purchase.findMany({
+      where: {
+        organizationId,
+        status: "CONFIRMED",
+        createdAt: { gte: start, lte: end },
+      },
+      select: { createdAt: true, totalCents: true },
+    }),
   ])
 
-  const byDay = new Map<string, number>()
-  for (const a of appointments) {
-    const key = format(a.updatedAt, "yyyy-MM-dd")
-    byDay.set(key, (byDay.get(key) ?? 0) + a.service.price)
+  const revenueByDay = new Map<string, number>()
+  for (const s of sales) {
+    const key = format(s.createdAt, "yyyy-MM-dd")
+    revenueByDay.set(key, (revenueByDay.get(key) ?? 0) + s.totalCents)
+  }
+
+  const purchasesByDay = new Map<string, number>()
+  for (const p of purchases) {
+    const key = format(p.createdAt, "yyyy-MM-dd")
+    purchasesByDay.set(key, (purchasesByDay.get(key) ?? 0) + p.totalCents)
   }
 
   const days = eachDayOfInterval({ start, end })
@@ -380,90 +374,100 @@ export async function getDailyRevenueSeries({
     return {
       dateKey,
       displayLabel: format(d, "dd/MM", { locale: ptBR }),
-      revenue: byDay.get(dateKey) ?? 0,
-      cashReceived: cashByDay.get(dateKey) ?? 0,
+      revenue: revenueByDay.get(dateKey) ?? 0,
+      cashReceived: purchasesByDay.get(dateKey) ?? 0,
     }
   })
 }
 
-export async function getCashFlowSnapshot({
-  userId,
-  period,
-}: {
-  userId: string
-  period: ReportPeriod
-}): Promise<CashFlowSnapshot> {
-  const { start, end } = getPeriodRange(period)
-
-  const inst = appointmentInstallmentDelegate(prisma)
-  if (!inst) {
-    return {
-      receivedInPeriodCents: 0,
-      outstandingReceivableCents: 0,
-    }
+async function getDraftSalesPipeline(
+  organizationId: string,
+  start: Date,
+  end: Date,
+): Promise<DraftSalesSnapshot> {
+  const where = {
+    organizationId,
+    status: "DRAFT" as const,
+    createdAt: { gte: start, lte: end },
   }
 
-  const [receivedAgg, outstandingAgg] = await Promise.all([
-    inst.aggregate({
-      where: {
-        paidAt: { gte: start, lte: end },
-        appointment: { userId, status: "COMPLETED" },
-      },
-      _sum: { amountCents: true },
+  const [sumAgg, countDraft, rows] = await Promise.all([
+    prisma.sale.aggregate({
+      where,
+      _sum: { totalCents: true },
     }),
-    inst.aggregate({
-      where: {
-        paidAt: null,
-        appointment: { userId, status: "COMPLETED" },
+    prisma.sale.count({ where }),
+    prisma.sale.findMany({
+      where,
+      select: {
+        id: true,
+        createdAt: true,
+        totalCents: true,
+        customer: { select: { name: true } },
       },
-      _sum: { amountCents: true },
+      orderBy: { createdAt: "desc" },
+      take: 40,
     }),
   ])
 
   return {
-    receivedInPeriodCents: receivedAgg._sum.amountCents ?? 0,
-    outstandingReceivableCents: outstandingAgg._sum.amountCents ?? 0,
+    count: countDraft,
+    valueInCents: sumAgg._sum.totalCents ?? 0,
+    items: rows.map((r) => ({
+      id: r.id,
+      customerName: r.customer?.name ?? null,
+      createdAt: r.createdAt.toISOString(),
+      totalCents: r.totalCents,
+    })),
   }
 }
 
 export async function getReportsDashboardData({
-  userId,
+  organizationId,
   period,
 }: {
-  userId: string
+  organizationId: string
   period: ReportPeriod
 }): Promise<DreDashboardPayload> {
+  const { start, end } = getPeriodRange(period)
   const prev = getPreviousComparisonRange(period)
 
-  const [metrics, dailySeries, scheduledPipeline, previousGross, cashFlow] =
-    await Promise.all([
-      getServicePerformance({ userId, period }),
-      getDailyRevenueSeries({ userId, period }),
-      getScheduledPipelineInPeriod({ userId, period }),
-      getCompletedRevenueSum(userId, prev.start, prev.end),
-      getCashFlowSnapshot({ userId, period }),
-    ])
+  const [
+    salesCents,
+    purchasesCents,
+    prevSales,
+    prevPurchases,
+    productLines,
+    dailySeries,
+    draftPipeline,
+    confirmedSalesCount,
+  ] = await Promise.all([
+    sumConfirmedSalesCents(organizationId, start, end),
+    sumConfirmedPurchasesCents(organizationId, start, end),
+    sumConfirmedSalesCents(organizationId, prev.start, prev.end),
+    sumConfirmedPurchasesCents(organizationId, prev.start, prev.end),
+    getProductRevenueRows(organizationId, start, end),
+    getErpDailySeries(organizationId, start, end),
+    getDraftSalesPipeline(organizationId, start, end),
+    countConfirmedSales(organizationId, start, end),
+  ])
 
-  const serviceLines = metrics.allServicesByRevenue.filter(
-    (s) => s.estimatedRevenue > 0,
-  )
-
-  const grossRevenue = serviceLines.reduce(
-    (sum, s) => sum + s.estimatedRevenue,
-    0,
-  )
-
+  const grossRevenue = salesCents
+  const purchaseTotal = purchasesCents
   const deductions: { label: string; amount: number }[] = [
-    {
-      label: "Custos e deduções (não cadastrados no sistema)",
-      amount: 0,
-    },
+    { label: "Compras confirmadas (período)", amount: purchaseTotal },
   ]
+  const netResult = grossRevenue - purchaseTotal
+  const previousNet = prevSales - prevPurchases
+  const comparison = buildComparisonSnapshot(netResult, previousNet)
 
-  const totalDeductions = deductions.reduce((s, d) => s + d.amount, 0)
-  const netResult = grossRevenue - totalDeductions
+  const metrics = buildMetricsFromProductLines(productLines)
+  const serviceLines = productLines.filter((s) => s.estimatedRevenue > 0)
 
-  const comparison = buildComparisonSnapshot(netResult, previousGross)
+  const cashFlow: CashFlowSnapshot = {
+    receivedInPeriodCents: salesCents,
+    outstandingReceivableCents: draftPipeline.valueInCents,
+  }
 
   return {
     period,
@@ -473,8 +477,9 @@ export async function getReportsDashboardData({
     serviceLines,
     dailySeries,
     metrics,
-    scheduledPipeline,
+    draftSalesPipeline: draftPipeline,
     comparison,
     cashFlow,
+    confirmedSalesCount,
   }
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { v2 as cloudinary } from "cloudinary"
 import { auth } from "@/lib/auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getBillingUserId } from "@/app/utils/auth/organization-context"
 
 const MAX_FILE_BYTES = 5 * 1024 * 1024
 
@@ -18,9 +18,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return NextResponse.json({ error: "Clínica não identificada" }, { status: 403 })
+  const billingUserId = getBillingUserId(session)
+  if (!billingUserId) {
+    return NextResponse.json({ error: "Empresa não identificada" }, { status: 403 })
   }
 
   const formData = await request.formData()
@@ -44,13 +44,13 @@ export async function POST(request: Request) {
   const arrayBuffer = await file.arrayBuffer()
   const buffer = new Uint8Array(arrayBuffer)
 
-  const publicId = `avatar_${clinicOwnerId}_${Date.now()}`
+  const publicId = `avatar_${billingUserId}_${Date.now()}`
 
   const results = await new Promise<{ secure_url?: string }>((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
         {
-          tags: [`user_${clinicOwnerId}`],
+          tags: [`user_${billingUserId}`],
           public_id: publicId,
           folder: "odontopro/avatars",
           overwrite: true,

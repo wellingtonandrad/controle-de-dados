@@ -5,10 +5,10 @@ import { LinkIcon } from "lucide-react"
 import { toast } from "sonner"
 
 
-export function ButtonCopyLink({ userId }: {userId: string}){
+export function ButtonCopyLink({ organizationId }: { organizationId: string }) {
    
   async function handleCopyLink() {
-        await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/clinica/${userId}`)
+        await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/empresa/${organizationId}`)
 
         toast("Link de agendamento copiado com sucesso!")
     }

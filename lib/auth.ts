@@ -1,29 +1,19 @@
 import NextAuth from "next-auth"
+import type { Session } from "next-auth"
 import prisma from "./prisma"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { Adapter } from "next-auth/adapters"
-import GitHub from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
-import { shouldAutoApproveClinic } from "@/app/utils/auth/clinic-access"
+import { getDemoPanelSession } from "@/lib/auth/demo-panel-session"
+import { buildAuthProviders } from "@/lib/auth/build-providers"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+const nextAuth = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
   trustHost: true,
-  // Em produção o Auth.js exige secret; no Vercel usa AUTH_SECRET (ou legados abaixo).
   secret:
     process.env.AUTH_SECRET ??
     process.env.NEXTAUTH_SECRET ??
     process.env.BETTER_AUTH_SECRET,
-  providers: [
-    GitHub,
-    Google({
-      authorization: {
-        params: {
-          prompt: "select_account",
-        },
-      },
-    }),
-  ],
+  providers: buildAuthProviders(),
   callbacks: {
     async signIn({ user }) {
       try {
@@ -31,32 +21,58 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const dbUser = await prisma.user.findUnique({
           where: { email: user.email },
-          select: { role: true, clinicVerified: true },
+          select: { role: true, id: true, name: true, email: true },
         })
 
         if (!dbUser) return true
 
-        if (shouldAutoApproveClinic(user.email)) {
-          if (dbUser.role !== "CLINIC" || !dbUser.clinicVerified) {
-            await prisma.user.update({
-              where: { email: user.email },
-              data: {
-                role: "CLINIC",
-                clinicVerified: true,
-              },
-            })
-          }
-        } else if (dbUser.role === "PATIENT" && dbUser.clinicVerified) {
-          await prisma.user.update({
-            where: { email: user.email },
+        await prisma.user.update({
+          where: { email: user.email },
+          data: { role: "ACCOUNT_HOLDER" },
+        })
+
+        const u = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { id: true, name: true, email: true },
+        })
+        if (!u) return true
+
+        const existingOrg = await prisma.organization.findFirst({
+          where: { ownerUserId: u.id },
+        })
+
+        if (!existingOrg) {
+          const baseSlug = (u.email ?? u.id)
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "")
+            .slice(0, 40)
+          const slug = `${baseSlug || "empresa"}-${u.id.slice(-8)}`
+
+          const org = await prisma.organization.create({
             data: {
-              clinicVerified: false,
+              ownerUserId: u.id,
+              name: u.name?.trim() || u.email || "Nova empresa",
+              slug,
+              verified: true,
+              active: true,
             },
+          })
+          await prisma.organizationMember.create({
+            data: {
+              organizationId: org.id,
+              userId: u.id,
+              role: "OWNER",
+            },
+          })
+        } else {
+          await prisma.organization.update({
+            where: { id: existingOrg.id },
+            data: { verified: true, active: true },
           })
         }
       } catch (error) {
-        // Do not block OAuth login if role sync fails temporarily.
-        console.error("Auth role sync failed:", error)
+        console.error("Auth organization sync failed:", error)
       }
 
       return true
@@ -65,31 +81,37 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         session.user.id = user.id
         session.user.role = user.role
-        session.user.clinicVerified = user.clinicVerified
-        session.user.clinicOwnerId = null
-        session.user.clinicStaffRole = null
+        session.user.activeOrganizationId = null
+        session.user.organizationRole = null
+        session.user.organizationVerified = false
+        session.user.billingUserId = null
 
-        if (user.role === "CLINIC" && user.clinicVerified) {
-          session.user.clinicOwnerId = user.id
-          session.user.clinicStaffRole = "OWNER"
-        } else {
-          const membership = await prisma.clinicMember.findFirst({
-            where: { userId: user.id },
+        if (user.role === "ACCOUNT_HOLDER") {
+          const ownedOrg = await prisma.organization.findFirst({
+            where: { ownerUserId: user.id },
+            select: { id: true, verified: true, ownerUserId: true },
           })
 
-          if (membership) {
-            const owner = await prisma.user.findUnique({
-              where: { id: membership.clinicOwnerId },
-              select: { role: true, clinicVerified: true, status: true },
+          if (ownedOrg) {
+            session.user.activeOrganizationId = ownedOrg.id
+            session.user.organizationRole = "OWNER"
+            session.user.organizationVerified = ownedOrg.verified
+            session.user.billingUserId = ownedOrg.ownerUserId
+          } else {
+            const membership = await prisma.organizationMember.findFirst({
+              where: { userId: user.id },
+              include: {
+                organization: {
+                  select: { id: true, verified: true, ownerUserId: true },
+                },
+              },
             })
 
-            if (
-              owner?.role === "CLINIC" &&
-              owner.clinicVerified &&
-              owner.status
-            ) {
-              session.user.clinicOwnerId = membership.clinicOwnerId
-              session.user.clinicStaffRole = membership.role
+            if (membership?.organization) {
+              session.user.activeOrganizationId = membership.organization.id
+              session.user.organizationRole = membership.role
+              session.user.organizationVerified = membership.organization.verified
+              session.user.billingUserId = membership.organization.ownerUserId
             }
           }
         }
@@ -100,4 +122,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 })
 
+export const { handlers, signIn, signOut } = nextAuth
 
+/** Sessão real ou, com `PANEL_NO_AUTH=true`, sessão demo (sem OAuth). */
+export async function auth(): Promise<Session | null> {
+  const session = await nextAuth.auth()
+  if (session) {
+    return session
+  }
+  return getDemoPanelSession()
+}

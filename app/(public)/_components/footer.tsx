@@ -8,7 +8,7 @@ export function Footer() {
         Todos os direitos reservados © {new Date().getFullYear()}
         <span className="duration-300 hover:text-foreground">
           {" "}
-          — @wellingtonandrade
+          — wellingtonandrade
         </span>
       </p>
     </footer>

@@ -9,11 +9,11 @@ function formatCurrency(valueInCents: number) {
 }
 
 interface ServicesInsightsProps {
-  userId: string
+  organizationId: string
 }
 
-export async function ServicesInsights({ userId }: ServicesInsightsProps) {
-  const metrics = await getServicePerformance({ userId, period: "month" })
+export async function ServicesInsights({ organizationId }: ServicesInsightsProps) {
+  const metrics = await getServicePerformance({ organizationId, period: "month" })
 
   return (
     <section className="space-y-3">

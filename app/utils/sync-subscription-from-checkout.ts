@@ -2,7 +2,6 @@ import type Stripe from "stripe"
 import prisma from "@/lib/prisma"
 import { stripe } from "@/app/utils/stripe"
 import { manageSubscription } from "@/app/utils/manage-subscription"
-import type { Plan } from "@/lib/generated/prisma"
 
 /**
  * Após o Checkout, o utilizador volta antes do webhook gravar no DB.
@@ -30,7 +29,7 @@ export async function syncSubscriptionFromCheckout(
   const subscriptionId = stripeObjectId(checkoutSession.subscription)
   if (!subscriptionId) return
 
-  const type = (checkoutSession.metadata?.type as Plan | undefined) ?? "BASIC"
+  const type = checkoutSession.metadata?.type ?? "BASIC"
 
   await manageSubscription(subscriptionId, customerId, true, false, type)
 }

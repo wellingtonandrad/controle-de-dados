@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -11,6 +5,29 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum UserRole {
+  EXTERNAL
+  ACCOUNT_HOLDER
+}
+
+enum OrganizationMemberRole {
+  OWNER
+  MANAGER
+  STAFF
+}
+
+enum SaleStatus {
+  DRAFT
+  CONFIRMED
+  CANCELLED
+}
+
+enum PurchaseStatus {
+  DRAFT
+  CONFIRMED
+  CANCELLED
 }
 
 enum AppointmentStatus {
@@ -27,241 +44,596 @@ enum StockMovementKind {
   APPOINTMENT_CONSUMPTION
 }
 
-model Appointment{
-   id String @id @default(uuid())
-   name String //nome do paciente
-   email String
-   phone String
-   appointmentDate DateTime //data do agendamento
-   time String //horário escolhido
+enum ProductItemType {
+  MP
+  PI
+  PA
+  EM
+  SV
+}
 
-   serviceId String
-   service Service @relation(fields: [serviceId], references: [id])
+enum ProductionOrderStatus {
+  PLANNED
+  RELEASED
+  IN_PROGRESS
+  PAUSED
+  FINISHED
+  CANCELLED
+}
 
-   userId String //id da clinica (user)
-   user User @relation(fields: [userId], references: [id])
-   status AppointmentStatus @default(SCHEDULED)
+model Organization {
+  id          String @id @default(cuid())
+  ownerUserId String
+  owner       User   @relation("OrganizationOwner", fields: [ownerUserId], references: [id], onDelete: Restrict)
+
+  name     String
+  slug     String  @unique
+  document String?
+  email    String?
+  phone    String?
+
+  verified Boolean @default(false)
+  active   Boolean @default(true)
+
+  members          OrganizationMember[]
+  customers        Customer[]
+  products         Product[]
+  sales            Sale[]
+  salesGoals       SalesGoal[]
+  suppliers        Supplier[]
+  purchases        Purchase[]
+  appointments     Appointment[]
+  services         Service[]
+  stockItems       StockItem[]
+  reminders        Reminder[]
+  receivables      Receivable[]
+  workCenters      WorkCenter[]
+  billsOfMaterials BillOfMaterial[]
+  productionOrders ProductionOrder[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerUserId])
+}
+
+model OrganizationMember {
+  id             String                 @id @default(cuid())
+  organizationId String
+  userId         String
+  role           OrganizationMemberRole
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+}
+
+model Customer {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name       String
+  email      String?
+  phone      String?
+  document   String?
+  address    String?
+  city       String?
+  state      String?
+  postalCode String?
+  notes      String?
+  active     Boolean @default(true)
+
+  sales Sale[]
+  receivables Receivable[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, name])
+}
+
+model Product {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name       String
+  sku        String
+  unit       String          @default("un")
+  itemType   ProductItemType @default(PA)
+  priceCents Int
+  costCents  Int?
+  active     Boolean         @default(true)
+
+  saleLines        SaleLine[]
+  purchaseLines    PurchaseLine[]
+  bomParents       BillOfMaterial[]  @relation("BomProduct")
+  bomComponents    BomItem[]         @relation("BomComponentProduct")
+  productionOrders ProductionOrder[]
+  materialPlanLines ProductionMaterialPlan[] @relation("MaterialPlanComponent")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, sku])
+  @@index([organizationId, active])
+}
+
+model Supplier {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name     String
+  email    String?
+  phone    String?
+  document String?
+  notes    String?
+  active   Boolean @default(true)
+
+  purchases Purchase[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, name])
+}
+
+model Sale {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  status     SaleStatus @default(CONFIRMED)
+  totalCents Int
+  notes      String?
+
+  lines SaleLine[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([customerId])
+}
+
+model SaleLine {
+  id        String  @id @default(cuid())
+  saleId    String
+  sale      Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  quantity       Int
+  unitPriceCents Int
+  lineTotalCents Int
+
+  @@index([saleId])
+}
+
+model SalesGoal {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  year       Int
+  month      Int
+  revenueCents Int @default(0)
+  ordersCount  Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, year, month])
+  @@index([organizationId, year, month])
+}
+
+model Purchase {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+
+  status     PurchaseStatus @default(CONFIRMED)
+  totalCents Int
+  notes      String?
+
+  lines PurchaseLine[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, createdAt])
+  @@index([supplierId])
+}
+
+model PurchaseLine {
+  id         String   @id @default(cuid())
+  purchaseId String
+  purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  quantity       Int
+  unitCostCents  Int
+  lineTotalCents Int
+
+  @@index([purchaseId])
+}
+
+model Appointment {
+  id              String   @id @default(cuid())
+  name            String
+  email           String
+  phone           String
+  appointmentDate DateTime
+  time            String
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  status AppointmentStatus @default(SCHEDULED)
 
   installments AppointmentInstallment[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt 
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id       String  @id @default(cuid())
+  name     String
+  price    Int
+  duration Int
+  status   Boolean @default(true)
+
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  appointment              Appointment[]
+  serviceStockConsumptions ServiceStockConsumption[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model StockItem {
-  id              String    @id @default(cuid())
+  id              String  @id @default(cuid())
   name            String
-  unit            String    @default("un")
-  currentQuantity Int       @default(0)
-  minimumQuantity Int       @default(0)
-  active          Boolean   @default(true)
+  unit            String  @default("un")
+  currentQuantity Int     @default(0)
+  minimumQuantity Int     @default(0)
+  active          Boolean @default(true)
 
-  userId String
-  user   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  movements         StockMovement[]
+  movements           StockMovement[]
   serviceConsumptions ServiceStockConsumption[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId, active])
-  @@unique([userId, name])
+  @@unique([organizationId, name])
+  @@index([organizationId, active])
 }
 
 model StockMovement {
-  id          String            @id @default(cuid())
+  id          String    @id @default(cuid())
   stockItemId String
-  stockItem   StockItem         @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
-  kind        StockMovementKind
-  quantity    Int
-  note        String?
-  appointmentId String?
+  stockItem   StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
+
+  kind            StockMovementKind
+  quantity        Int
+  note            String?
+  appointmentId   String?
   createdByUserId String?
-  createdAt   DateTime          @default(now())
+
+  createdAt DateTime @default(now())
 
   @@index([stockItemId, createdAt])
 }
 
 model ServiceStockConsumption {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   serviceId   String
-  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  service     Service   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   stockItemId String
   stockItem   StockItem @relation(fields: [stockItemId], references: [id], onDelete: Cascade)
-  quantity    Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+  quantity Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([serviceId, stockItemId])
-  @@index([stockItemId])
 }
 
-/** Parcelas de pagamento (caixa / a receber); receita reconhecida segue no Appointment + Service. */
 model AppointmentInstallment {
-  id             String    @id @default(cuid())
-  appointmentId  String
-  appointment    Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
-  sequence       Int
-  amountCents    Int
-  dueDate        DateTime
-  paidAt         DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            String      @id @default(cuid())
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  sequence    Int
+  amountCents Int
+  dueDate     DateTime
+  paidAt      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([appointmentId, sequence])
-  @@index([appointmentId])
 }
 
-model Reminder{
-  id String @id @default(uuid())
+model Receivable {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  customerId String?
+  customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
   description String
+  amountCents Int
+  dueDate     DateTime
+  paidAt      DateTime?
+  notes       String?
+  createdByUserId String?
 
-  userId String
-  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, dueDate])
+  @@index([organizationId, paidAt])
+}
+
+model Reminder {
+  id             String       @id @default(cuid())
+  description    String
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Service{
-  id       String @id @default(uuid())
+model WorkCenter {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name              String
+  code              String?
+  capacityPerDayMin Int     @default(480)
+  active            Boolean @default(true)
+
+  routingSteps      RoutingStep[]
+  productionReports ProductionReport[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId, active])
+}
+
+model BillOfMaterial {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  productId String
+  product   Product @relation("BomProduct", fields: [productId], references: [id], onDelete: Cascade)
+
+  version String
+  active  Boolean @default(true)
+  notes   String?
+
+  items            BomItem[]
+  routingSteps     RoutingStep[]
+  productionOrders ProductionOrder[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, productId, version])
+  @@index([organizationId, active])
+}
+
+model BomItem {
+  id String @id @default(cuid())
+
+  bomId String
+  bom   BillOfMaterial @relation(fields: [bomId], references: [id], onDelete: Cascade)
+
+  componentProductId String
+  componentProduct   Product @relation("BomComponentProduct", fields: [componentProductId], references: [id], onDelete: Restrict)
+
+  quantity    Float
+  lossPercent Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([bomId, componentProductId])
+  @@index([bomId])
+}
+
+model RoutingStep {
+  id String @id @default(cuid())
+
+  bomId String
+  bom   BillOfMaterial @relation(fields: [bomId], references: [id], onDelete: Cascade)
+
+  workCenterId String
+  workCenter   WorkCenter @relation(fields: [workCenterId], references: [id], onDelete: Restrict)
+
+  sequence Int
   name     String
-  price    Int
-  duration Int
-  status Boolean @default(true)
-
-userId String
-user User @relation(fields: [userId], references: [id])
-
-appointment Appointment[]
-serviceStockConsumptions ServiceStockConsumption[]
-
-createdAt DateTime @default(now())
-updatedAt DateTime @updatedAt
-
-
-}
-
-enum Plan {
-  BASIC
-  PROFESSIONAL
-}
-
-enum UserRole {
-  PATIENT
-  CLINIC
-}
-
-enum ClinicMemberRole {
-  OWNER
-  RECEPTION
-  DENTIST
-}
-
-model ClinicMember {
-  id            String           @id @default(cuid())
-  clinicOwnerId String
-  userId        String
-  role          ClinicMemberRole
-
-  clinicOwner User @relation("ClinicOwnedStaff", fields: [clinicOwnerId], references: [id], onDelete: Cascade)
-  staffUser   User @relation("ClinicStaffMembership", fields: [userId], references: [id], onDelete: Cascade)
+  setupMin Int    @default(0)
+  cycleMin Int    @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([clinicOwnerId, userId])
+  @@unique([bomId, sequence])
+  @@index([bomId])
 }
 
-model Subscription {
-  id String @id @default(uuid())
-  status  String
-  plan    Plan
-  priceId String
+model ProductionOrder {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  bomId String
+  bom   BillOfMaterial @relation(fields: [bomId], references: [id], onDelete: Restrict)
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  status           ProductionOrderStatus @default(PLANNED)
+  plannedQuantity  Int
+  producedQuantity Int                   @default(0)
+  scrapQuantity    Int                   @default(0)
+
+  plannedStart DateTime?
+  plannedEnd   DateTime?
+  startedAt    DateTime?
+  finishedAt   DateTime?
+  notes        String?
+
+  reports       ProductionReport[]
+  materialPlans ProductionMaterialPlan[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  @@index([organizationId, status, createdAt])
+}
+
+model ProductionMaterialPlan {
+  id String @id @default(cuid())
+
+  productionOrderId String
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id], onDelete: Cascade)
+
+  componentProductId String
+  componentProduct   Product @relation("MaterialPlanComponent", fields: [componentProductId], references: [id], onDelete: Restrict)
+
+  plannedQty  Float
+  consumedQty Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productionOrderId, componentProductId])
+  @@index([productionOrderId])
+}
+
+model ProductionReport {
+  id String @id @default(cuid())
+
+  productionOrderId String
+  productionOrder   ProductionOrder @relation(fields: [productionOrderId], references: [id], onDelete: Cascade)
+
+  workCenterId String?
+  workCenter   WorkCenter? @relation(fields: [workCenterId], references: [id], onDelete: SetNull)
+
+  goodQuantity    Int     @default(0)
+  scrapQuantity   Int     @default(0)
+  runtimeMin      Int     @default(0)
+  notes           String?
+  createdByUserId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([productionOrderId, createdAt])
 }
 
 model User {
-  id                 String          @id @default(cuid())
-  name               String?
-  email              String          @unique
-  emailVerified      DateTime?
-  image              String?
-  role               UserRole        @default(PATIENT)
-  clinicVerified     Boolean         @default(false)
-  address            String? @default("")
-  phone              String? @default("")
-  status             Boolean @default(true)
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  role    UserRole @default(EXTERNAL)
+  address String?  @default("")
+  phone   String?  @default("")
+  status  Boolean  @default(true)
+
   timeZone           String?
   stripe_customer_id String?
-  times              String[]@default([])
-
-subscription Subscription? //relacionamento onde 1 user pode ter 1 assinatura
-services Service[]
-reminders Reminder[]
-appointments Appointment[]
-stockItems StockItem[]
+  times              String[] @default([])
 
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  ownedClinicStaff   ClinicMember[] @relation("ClinicOwnedStaff")
-  clinicMemberships  ClinicMember[] @relation("ClinicStaffMembership")
- 
+  organizationsOwned      Organization[]       @relation("OrganizationOwner")
+  organizationMemberships OrganizationMember[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
- 
+
+  refresh_token String?
+  access_token  String?
+  expires_at    Int?
+  token_type    String?
+  scope         String?
+  id_token      String?
+  session_state String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
- 
-// Optional for WebAuthn support
+
 model Authenticator {
-  credentialID         String  @unique
+  credentialID         String
   userId               String
   providerAccountId    String
   credentialPublicKey  String
@@ -269,9 +641,9 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
-  @@id([userId, credentialID])
-}
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+  @@unique([credentialID])
+}

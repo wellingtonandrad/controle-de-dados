@@ -1,51 +1,30 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import  { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
 
+export async function updateProfileAvatar({ avatarUrl }: { avatarUrl: string }) {
+  const session = await auth()
 
-export async function updateProfileAvatar({ avatarUrl }: { avatarUrl: string}){
-    const session = await auth();
+  if (!session?.user?.id) {
+    return { error: "Sessão inválida." }
+  }
 
-    if(!session?.user?.id){
-        return {
-            error: "Usuário não encontrado"
-        }
-    }
+  if (!avatarUrl) {
+    return { error: "URL da imagem inválida." }
+  }
 
-    const clinicOwnerId = getClinicOwnerUserId(session)
-    if (!clinicOwnerId) {
-        return { error: "Clínica não identificada" }
-    }
+  try {
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { image: avatarUrl },
+    })
 
-    if(!avatarUrl) {
-        return {
-            error: "Falha ao alterar imagem"
-        }
-    } 
+    revalidatePath("/dashboard/profile")
 
-    try{
-
-        await prisma.user.update({
-            where: {
-                id: clinicOwnerId,
-            },
-            data:{
-                image: avatarUrl,
-            }
-        })
-
-        revalidatePath("/dashboard/profile")
-
-        return {
-            data: "Imagem alterada com sucesso!"
-        }
-
-    }catch(err){
-        return {
-            error: "Falha ao alterar imagem"
-        }
-    }
+    return { data: "Foto atualizada." }
+  } catch {
+    return { error: "Não foi possível atualizar a foto." }
+  }
 }

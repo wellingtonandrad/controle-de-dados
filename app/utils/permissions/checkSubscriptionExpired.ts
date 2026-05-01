@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { addDays, isAfter } from "date-fns";
 import { ResultPermissionProps } from "./canPermission";
 import { TRIAL_DAYS, TRIAL_LIMITS_DISABLED } from "@/app/utils/permissions/trial-limits"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getBillingUserId } from "@/app/utils/auth/organization-context"
 import prisma from "@/lib/prisma"
 
 export async function checkSubscriptionExpired(session: Session): 
@@ -19,9 +19,9 @@ Promise<ResultPermissionProps> {
      }
    }
    
-   const clinicOwnerId = getClinicOwnerUserId(session) ?? session.user.id
+   const billingUserId = getBillingUserId(session) ?? session.user.id
    const ownerRow = await prisma.user.findUnique({
-     where: { id: clinicOwnerId },
+     where: { id: billingUserId },
      select: { createdAt: true },
    })
    if (!ownerRow) {

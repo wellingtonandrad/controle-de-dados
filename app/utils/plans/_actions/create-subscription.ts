@@ -3,7 +3,9 @@
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { stripe } from "@/app/utils/stripe"
-import { Plan } from "@/lib/generated/prisma"
+import type { PlansProps } from "@/app/utils/plans/index"
+
+type PlanTier = keyof PlansProps
 
 /** Checkout exige `price_...`; no .env pode estar `prod_...` (usa preço padrão do produto). */
 async function resolveStripePriceId(raw: string | undefined): Promise<string> {
@@ -24,7 +26,7 @@ async function resolveStripePriceId(raw: string | undefined): Promise<string> {
 }
 
 interface SubscriptionProps {
-    type: Plan;
+  type: PlanTier
 }
 
 export async function createSubscription({ type }: SubscriptionProps) {

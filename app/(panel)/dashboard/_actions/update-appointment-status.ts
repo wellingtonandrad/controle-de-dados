@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/lib/auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import {
   deleteInstallmentsForAppointment,
   ensureDefaultInstallmentAfterComplete,
@@ -34,9 +34,9 @@ export async function updateAppointmentStatus(formData: FormSchema) {
     }
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   try {
@@ -44,7 +44,7 @@ export async function updateAppointmentStatus(formData: FormSchema) {
       const currentAppointment = await tx.appointment.findFirst({
         where: {
           id: formData.appointmentId,
-          userId: clinicOwnerId,
+          organizationId,
         },
         include: {
           service: { select: { id: true, name: true } },
@@ -98,7 +98,7 @@ export async function updateAppointmentStatus(formData: FormSchema) {
       await tx.appointment.update({
         where: {
           id: formData.appointmentId,
-          userId: clinicOwnerId,
+          organizationId,
         },
         data: {
           status: formData.status,

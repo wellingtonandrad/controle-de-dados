@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { canAccessReports } from "@/app/utils/auth/can-access-reports"
 import { getReportsDashboardData } from "@/app/(panel)/dashboard/reports/_data_access/get-permission-report"
 import type { ReportPeriod } from "@/app/(panel)/dashboard/reports/_types/dashboard"
@@ -15,14 +15,14 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 401 })
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
   }
 
   if (!canAccessReports(session)) {
     return NextResponse.json(
-      { error: "Relatórios restritos a dentistas e ao dono da clínica." },
+      { error: "Sem permissão para ver relatórios financeiros." },
       { status: 403 },
     )
   }
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
     raw === "30d" || raw === "month" ? raw : "month"
 
   const data = await getReportsDashboardData({
-    userId: clinicOwnerId,
+    organizationId,
     period,
   })
 

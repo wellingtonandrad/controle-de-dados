@@ -9,22 +9,11 @@ export async function checkSubscription(userId: string){
         where: {
             id: userId,
         },
-        include: {
-            subscription: true,
-        }
     })
 
     if(!user) {
         throw new Error("Usuário não encontrado")
 
-    }
-
-    if(user.subscription && user.subscription.status === "active") {
-        return {
-            subscriptionStatus: "active",
-            message: "Assinatura ativa",
-            planId: "user.subscription.plan",
-        }
     }
 
     if (TRIAL_LIMITS_DISABLED) {

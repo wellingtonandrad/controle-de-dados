@@ -1,17 +1,17 @@
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { NextResponse } from "next/server"
-import type { Session } from "next-auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 
-export const GET = auth(async function GET(request) {
-  if (!request.auth) {
-    return NextResponse.json({ error: "Acesso não autorizado" }, { status: 401 })
+export async function GET() {
+  const session = await auth()
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Acesso n�o autorizado" }, { status: 401 })
   }
 
-  const clinicId = getClinicOwnerUserId(request.auth as Session | null)
-  if (!clinicId) {
-    return NextResponse.json({ error: "Usuário não encontrado" })
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return NextResponse.json({ error: "Usu�rio n�o encontrado" }, { status: 403 })
   }
 
   try {
@@ -32,7 +32,7 @@ export const GET = auth(async function GET(request) {
 
     const appointments = await prisma.appointment.findMany({
       where: {
-        userId: clinicId,
+        organizationId,
         status: "SCHEDULED",
         appointmentDate: {
           gte: start,
@@ -53,4 +53,4 @@ export const GET = auth(async function GET(request) {
       { status: 400 },
     )
   }
-})
+}

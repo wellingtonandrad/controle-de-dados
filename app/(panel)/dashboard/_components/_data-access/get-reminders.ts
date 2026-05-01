@@ -4,18 +4,18 @@ import prisma from "@/lib/prisma"
 import type { Reminder } from "@/lib/generated/prisma"
 
 export async function getReminders({
-  userId,
+  organizationId,
 }: {
-  userId: string
+  organizationId: string
 }): Promise<Reminder[]> {
-  if (!userId) {
+  if (!organizationId) {
     return []
   }
 
   try {
     const reminders = await prisma.reminder.findMany({
       where: {
-        userId,
+        organizationId,
       },
     })
     return reminders

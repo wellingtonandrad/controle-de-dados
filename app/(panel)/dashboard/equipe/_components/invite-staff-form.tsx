@@ -9,7 +9,7 @@ import { toast } from "sonner"
 
 export function InviteStaffForm() {
   const [email, setEmail] = useState("")
-  const [role, setRole] = useState<"RECEPTION" | "DENTIST">("RECEPTION")
+  const [role, setRole] = useState<"MANAGER" | "STAFF">("MANAGER")
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
@@ -38,7 +38,7 @@ export function InviteStaffForm() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="recepcao@clinica.com"
+          placeholder="operacao@empresa.com"
           required
         />
       </div>
@@ -47,19 +47,19 @@ export function InviteStaffForm() {
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
-            variant={role === "RECEPTION" ? "default" : "outline"}
+            variant={role === "MANAGER" ? "default" : "outline"}
             className="flex-1 sm:flex-none"
-            onClick={() => setRole("RECEPTION")}
+            onClick={() => setRole("MANAGER")}
           >
-            Recepção
+            Gestão
           </Button>
           <Button
             type="button"
-            variant={role === "DENTIST" ? "default" : "outline"}
+            variant={role === "STAFF" ? "default" : "outline"}
             className="flex-1 sm:flex-none"
-            onClick={() => setRole("DENTIST")}
+            onClick={() => setRole("STAFF")}
           >
-            Doutor(a)
+            Operacional
           </Button>
         </div>
       </div>

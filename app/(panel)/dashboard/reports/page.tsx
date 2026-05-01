@@ -2,9 +2,10 @@ import { connection } from "next/server"
 import { redirect } from "next/navigation"
 import { getReportsDashboardData } from "./_data_access/get-permission-report"
 import getSession from "@/lib/getSession"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { canAccessReports } from "@/app/utils/auth/can-access-reports"
 import { ReportsDrePanel } from "./_components/reports-dre-panel"
+import { ErpPageHeader } from "../_components/erp-page-header"
 import type { ReportPeriod } from "./_types/dashboard"
 
 export const dynamic = "force-dynamic"
@@ -36,34 +37,33 @@ export default async function Reports({
     redirect("/")
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    redirect("/acesso-clinica")
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    redirect("/acesso-empresa")
   }
 
   if (!canAccessReports(session)) {
-    redirect("/dashboard")
+    redirect("/dashboard/overview")
   }
 
   const dashboard = await getReportsDashboardData({
-    userId: clinicOwnerId,
+    organizationId,
     period,
   })
 
   return (
-    <main className="space-y-6">
-      <header className="mb-2 space-y-1">
-        <h1 className="text-xl font-semibold text-zinc-900">Relatórios</h1>
-        <p className="text-sm text-zinc-500">
-          A <strong>receita reconhecida</strong> usa consultas{" "}
-          <strong>Concluídas</strong> na data em que você marcou concluído. O{" "}
-          <strong>caixa</strong> e o <strong>a receber</strong> vêm das parcelas no
-          detalhe da consulta (pagamento único ou parcelado). O aviso amarelo some
-          quando não há mais agendamentos pendentes.
-        </p>
-      </header>
+    <div className="mx-auto max-w-7xl">
+      <div className="dark rounded-2xl border border-slate-800/90 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 p-5 shadow-[0_24px_80px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.04] sm:p-8">
+        <div className="space-y-8">
+          <ErpPageHeader
+            variant="dark"
+            title="Relatórios"
+            description="Resultado a partir das vendas e compras que você confirma no sistema. Escolha o período abaixo."
+          />
 
-      <ReportsDrePanel initialData={dashboard} period={period} />
-    </main>
+          <ReportsDrePanel initialData={dashboard} period={period} />
+        </div>
+      </div>
+    </div>
   )
 }

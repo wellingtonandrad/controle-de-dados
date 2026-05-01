@@ -17,9 +17,6 @@ export async function getUserData({ userId }: GetUserDataProps) {
           where:{
             id: userId,
           },
-            include: {
-            subscription:true,
-            }
        })
 
        if (!user){

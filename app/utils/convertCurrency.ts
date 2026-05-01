@@ -18,3 +18,26 @@ export function convertRealToCents(amount: string){
 
     return priceInCents;
 }
+
+export function formatCentsToBrl(cents: number): string {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(cents / 100)
+}
+
+/** Aceita "10,50" / "1.234,56" (pt-BR) ou "10.5" (decimal com ponto). */
+export function parseMoneyToCents(raw: string): number {
+  const s = raw.trim()
+  if (!s) {
+    throw new Error("Valor vazio")
+  }
+  if (s.includes(",")) {
+    return convertRealToCents(s)
+  }
+  const n = Number.parseFloat(s)
+  if (Number.isNaN(n)) {
+    throw new Error("Valor inválido")
+  }
+  return Math.round(n * 100)
+}

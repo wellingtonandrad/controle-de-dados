@@ -1,52 +1,54 @@
 import { redirect } from "next/navigation"
 import getSession from "@/lib/getSession"
 import prisma from "@/lib/prisma"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { ensureDefaultOrganizationForAccountHolder } from "@/lib/organization/ensure-default-organization"
 
-export async function requireClinicUser() {
+/** Acesso ao painel: usuário titular ou membro de organização verificada e ativa. */
+export async function requireOrganizationUser() {
   const session = await getSession()
 
   if (!session?.user?.id) {
-    redirect("/acesso-clinica")
+    redirect("/acesso-empresa")
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-
-  if (!clinicOwnerId) {
-    redirect("/acesso-clinica")
+  if (session.user.role !== "ACCOUNT_HOLDER") {
+    redirect("/acesso-empresa")
   }
 
-  const owner = await prisma.user.findUnique({
-    where: { id: clinicOwnerId },
-    select: {
-      id: true,
-      email: true,
-      role: true,
-      clinicVerified: true,
-      status: true,
-    },
+  let organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    organizationId = await ensureDefaultOrganizationForAccountHolder(session.user.id)
+  }
+
+  if (!organizationId) {
+    redirect("/acesso-empresa")
+  }
+
+  const organization = await prisma.organization.findUnique({
+    where: { id: organizationId },
+    select: { id: true, verified: true, active: true, ownerUserId: true },
   })
 
-  if (!owner?.status || owner.role !== "CLINIC" || !owner.clinicVerified) {
-    redirect("/acesso-clinica")
+  if (!organization?.active || !organization.verified) {
+    redirect("/acesso-empresa")
   }
 
-  if (session.user.role === "CLINIC" && session.user.id === owner.id) {
-    return owner
-  }
-
-  const membership = await prisma.clinicMember.findUnique({
+  const membership = await prisma.organizationMember.findUnique({
     where: {
-      clinicOwnerId_userId: {
-        clinicOwnerId: owner.id,
+      organizationId_userId: {
+        organizationId: organization.id,
         userId: session.user.id,
       },
     },
   })
 
   if (!membership) {
-    redirect("/acesso-clinica")
+    redirect("/acesso-empresa")
   }
 
-  return owner
+  return { organization, membership }
 }
+
+/** @deprecated use requireOrganizationUser */
+export const requireClinicUser = requireOrganizationUser

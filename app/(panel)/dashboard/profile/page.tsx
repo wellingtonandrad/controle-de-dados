@@ -2,27 +2,28 @@ import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
 import { getUserData } from "./_data-access/get-info-user"
 import { ProfileContent } from "./_components/profile"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
-
+import { ErpPageHeader } from "../_components/erp-page-header"
 
 export default async function Profile() {
-  const session = await getSession();
+  const session = await getSession()
 
-if (!session?.user?.id) {
+  if (!session?.user?.id) {
     redirect("/")
-}
+  }
 
-const clinicOwnerId = getClinicOwnerUserId(session)
-if (!clinicOwnerId) {
-    redirect("/acesso-clinica")
-}
+  const user = await getUserData({ userId: session.user.id })
 
-const user = await getUserData({ userId: clinicOwnerId })
+  if (!user) {
+    redirect("/")
+  }
 
-  
-if (!user) {
-    redirect("/");
-}
-
-    return <ProfileContent user={user} />
+  return (
+    <div className="mx-auto max-w-7xl space-y-8">
+      <ErpPageHeader
+        title="Configurações"
+        description="Ajuste seu nome, contato e foto. Cadastros e operação da empresa ficam nos módulos do menu."
+      />
+      <ProfileContent user={user} />
+    </div>
+  )
 }

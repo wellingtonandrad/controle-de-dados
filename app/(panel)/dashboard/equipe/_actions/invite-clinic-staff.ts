@@ -3,12 +3,15 @@
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { z } from "zod"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import {
+  getActiveOrganizationId,
+  getBillingUserId,
+} from "@/app/utils/auth/organization-context"
 import { revalidatePath } from "next/cache"
 
 const schema = z.object({
   email: z.string().email("E-mail inválido"),
-  role: z.enum(["RECEPTION", "DENTIST"]),
+  role: z.enum(["MANAGER", "STAFF"]),
 })
 
 export async function inviteClinicStaff(form: z.infer<typeof schema>) {
@@ -22,12 +25,13 @@ export async function inviteClinicStaff(form: z.infer<typeof schema>) {
     return { error: "Sessão inválida" }
   }
 
-  if (session.user.clinicStaffRole !== "OWNER") {
-    return { error: "Apenas o dono da clínica pode adicionar pessoas à equipe." }
+  if (session.user.organizationRole !== "OWNER") {
+    return { error: "Apenas o dono da empresa pode adicionar pessoas à equipe." }
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId || clinicOwnerId !== session.user.id) {
+  const organizationId = getActiveOrganizationId(session)
+  const billingUserId = getBillingUserId(session)
+  if (!organizationId || billingUserId !== session.user.id) {
     return { error: "Operação não permitida." }
   }
 
@@ -45,24 +49,24 @@ export async function inviteClinicStaff(form: z.infer<typeof schema>) {
     }
   }
 
-  if (staff.id === clinicOwnerId) {
-    return { error: "Você já é o dono desta clínica." }
+  if (staff.id === billingUserId) {
+    return { error: "Você já é o titular desta empresa." }
   }
 
-  if (staff.role === "CLINIC") {
-    return { error: "Contas de clínica não podem ser adicionadas como recepção." }
+  if (staff.role === "ACCOUNT_HOLDER") {
+    return { error: "Contas titulares de outra empresa não podem ser adicionadas como equipe." }
   }
 
   try {
-    await prisma.clinicMember.upsert({
+    await prisma.organizationMember.upsert({
       where: {
-        clinicOwnerId_userId: {
-          clinicOwnerId,
+        organizationId_userId: {
+          organizationId,
           userId: staff.id,
         },
       },
       create: {
-        clinicOwnerId,
+        organizationId,
         userId: staff.id,
         role: parsed.data.role,
       },

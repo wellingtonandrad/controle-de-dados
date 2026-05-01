@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/lib/auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 
 const formSchema = z.object({
   reminderId: z.string().min(1, "O id do lembrete é obrigatório"),
@@ -19,9 +19,9 @@ export async function deleteReminder(formData: FormSchema) {
     return { error: "Sessão inválida" }
   }
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) {
-    return { error: "Clínica não identificada" }
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) {
+    return { error: "Empresa não identificada" }
   }
 
   const schema = formSchema.safeParse(formData)
@@ -36,7 +36,7 @@ export async function deleteReminder(formData: FormSchema) {
     const deleted = await prisma.reminder.deleteMany({
       where: {
         id: schema.data.reminderId,
-        userId: clinicOwnerId,
+        organizationId,
       },
     })
 

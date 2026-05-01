@@ -1,65 +1,52 @@
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
-import { NextResponse, NextRequest } from "next/server"
-import type { Session } from "next-auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { NextResponse, type NextRequest } from "next/server"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 
+export async function GET(request: NextRequest) {
+  const session = await auth()
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Acesso n�o autorizado" }, { status: 401 })
+  }
 
-export const GET = auth(async function GET(request){
-    if(!request.auth){
-        return NextResponse.json({ error: "Acesso não autorizado" }, {status: 401 })
-    }
+  const dateString = request.nextUrl.searchParams.get("date")
+  const organizationId = getActiveOrganizationId(session)
 
-    const searchParams = request.nextUrl.searchParams;
-    const dateString = searchParams.get("date") as string;
-    const clinicId = getClinicOwnerUserId(request.auth as Session | null)
+  if (!dateString) {
+    return NextResponse.json({ error: "Data n�o informada" }, { status: 400 })
+  }
 
-    if(!dateString){
-        return NextResponse.json({
-            error: "Data não informada"
-        }, {
-            status: 400
-        })
-    }
+  if (!organizationId) {
+    return NextResponse.json({ error: "Usu�rio n�o encontrado" }, { status: 403 })
+  }
 
-    if(!clinicId){
-        return NextResponse.json({error: "Usuário não encontrado"})
-    }
+  try {
+    const [year, month, day] = dateString.split("-").map(Number)
+    const startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
+    const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999))
 
-    try{
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        organizationId,
+        appointmentDate: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      include: {
+        service: true,
+      },
+      orderBy: {
+        time: "asc",
+      },
+    })
 
-        const [year, month, day  ] = dateString.split("-").map(Number)
-        const startDate = new Date(Date.UTC(year, month -1, day, 0,0,0,0))
-        const endDate = new Date(Date.UTC(year, month -1, day, 23,59,59,999))
-
-         
-
-
-        const appointments = await prisma.appointment.findMany({
-            where: {
-                userId: clinicId,
-                appointmentDate: {
-                    gte: startDate,
-                    lte: endDate
-                }
-            },
-            include: {
-                service: true,
-            },
-            orderBy: {
-                time: "asc",
-            },
-        })
-
-        return NextResponse.json(appointments)
-
-    }catch(err){
-        console.log(err)
-        return NextResponse.json({ error: "Falha ao buscar agendamentos" }, 
-            {status: 400}
-        )
-    }
-
-    
-
-})
+    return NextResponse.json(appointments)
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json(
+      { error: "Falha ao buscar agendamentos" },
+      { status: 400 },
+    )
+  }
+}

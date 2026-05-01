@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from "react"
 import { MapPin, MessageCircle, ExternalLink } from "lucide-react"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import type { Prisma } from "@/lib/generated/prisma"
+import type { PublicScheduleClinic } from "../_date-acess/get-info-schedule"
 import { useAppointmentForm, AppointmentFormData } from "./schedule-form"
 import { Button } from "@/components/ui/button"
 import {
@@ -48,15 +48,8 @@ function whatsappUrlFromDigits(digits: string): string | null {
   return `https://wa.me/${n}`
 }
 
-type UserWithServiceAndSubscription = Prisma.UserGetPayload<{
-  include: {
-    subscription: true,
-    services: true,
-  }
-}>
-
 interface ScheduleContentProps {
-   clinic: UserWithServiceAndSubscription
+  clinic: PublicScheduleClinic
 }
 
 export interface TimeSlot {
@@ -98,7 +91,7 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
         try {
           const dateString = date.toISOString().split("T")[0]
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?userId=${clinic.id}&date=${dateString}`,
+            `${process.env.NEXT_PUBLIC_URL}/api/schedule/get-appointments?organizationId=${clinic.id}&date=${dateString}`,
           )
 
            const json = await response.json();

@@ -84,7 +84,7 @@ async function uploadImage(image: File): Promise<string | null> {
      return(
         <div className="relative w-40 h-40 md:w-48 md:h-48" >
               <div className="relative flex items-center justify-center w-full h-full" >
-                <span className="absolute cursor-pointer z-[2] bg-slate-50/80 p-2 rounded-full shadow-xl" >
+                <span className="absolute cursor-pointer z-2 bg-slate-50/80 p-2 rounded-full shadow-xl" >
                       {loading ? <Loader size={16} color="#131313" 
                       className="animate-spin"/> : <Upload size=
                       {16} color="#131313"/>}
@@ -101,7 +101,7 @@ async function uploadImage(image: File): Promise<string | null> {
             {previewImage ?(
                 <Image
                  src={previewImage}
-                 alt="Foto de perfil da clinica"
+                 alt="Foto de perfil da empresa"
                  fill
                  className="w-full h-48 object-cover rounded-full bg-slate-200"
                  quality={100}
@@ -111,7 +111,7 @@ async function uploadImage(image: File): Promise<string | null> {
             ): (
                 <Image
                 src={semFoto}
-                alt="Foto de perfil da clinica"
+                alt="Foto de perfil da empresa"
                 fill
                 className="w-full h-48 object-cover rounded-full bg-slate-200"
                 quality={100}

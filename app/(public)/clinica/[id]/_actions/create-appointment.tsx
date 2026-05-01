@@ -56,7 +56,7 @@ export async function createNewAppointment(formData: FormSchema){
                 time: schema.data.time,
                 appointmentDate: appointmentDate,
                 serviceId: schema.data.serviceId,
-                userId: schema.data.clinicId
+                organizationId: schema.data.clinicId,
             },
             include: {
                 service: true,
@@ -100,8 +100,8 @@ export async function createNewAppointment(formData: FormSchema){
                         },
                     },
                 ],
-                success_url: `${baseUrl}/clinica/${encodeURIComponent(schema.data.clinicId)}?payment=success&session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${baseUrl}/clinica/${encodeURIComponent(schema.data.clinicId)}?payment=cancelled`,
+                success_url: `${baseUrl}/empresa/${encodeURIComponent(schema.data.clinicId)}?payment=success&session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${baseUrl}/empresa/${encodeURIComponent(schema.data.clinicId)}?payment=cancelled`,
                 metadata: {
                     type: "appointment_installment",
                     installmentId: installment.id,

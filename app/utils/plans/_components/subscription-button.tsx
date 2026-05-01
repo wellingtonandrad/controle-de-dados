@@ -1,12 +1,14 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Plan } from "@/lib/generated/prisma"
+import type { PlansProps } from "@/app/utils/plans/index"
 import { createSubscription } from "../_actions/create-subscription"
+
+type PlanTier = keyof PlansProps
 import { toast } from "sonner"
 
 interface SubscriptionButtonProps {
-    type: Plan
+  type: PlanTier
 }
 
 

@@ -1,6 +1,13 @@
 /** `month`: do 1º dia do mês corrente até agora. `30d`: janela móvel dos últimos 30 dias. */
 export type ReportPeriod = "month" | "30d"
 
+/**
+ * Receita por produto no período (vendas confirmadas).
+ * Nomes legados `estimatedRevenue` / `completedCount` / `appointmentsCount` mantidos para o gráfico:
+ * - `estimatedRevenue`: total em centavos
+ * - `completedCount`: unidades vendidas (soma das quantidades nas linhas)
+ * - `appointmentsCount`: número de pedidos (vendas) distintos com esse produto
+ */
 export type ServiceRevenueRow = {
   id: string
   name: string
@@ -12,15 +19,17 @@ export type ServiceRevenueRow = {
 export type DailyRevenuePoint = {
   dateKey: string
   displayLabel: string
-  /** Receita reconhecida (competência): concluídos no dia (`updatedAt`). */
+  /** Faturamento: vendas confirmadas registradas neste dia (`createdAt`). */
   revenue: number
-  /** Entrada de caixa: soma das parcelas com `paidAt` neste dia. */
+  /** Saídas: compras confirmadas registradas neste dia (`createdAt`). */
   cashReceived: number
 }
 
-/** Caixa vs contas a receber (parcelas). */
+/** Resumo de caixa a partir do que foi registrado no ERP. */
 export type CashFlowSnapshot = {
+  /** Total de vendas confirmadas no período (entrada reconhecida). */
   receivedInPeriodCents: number
+  /** Valor ainda em pedidos rascunho (não confirmados). */
   outstandingReceivableCents: number
 }
 
@@ -38,41 +47,39 @@ export type ServicePerformanceSnapshot = {
   allServicesByRevenue: ServiceRevenueRow[]
 }
 
-/** Uma linha que o sistema ainda enxerga como agendada (status SCHEDULED). */
-export type ScheduledPipelineItem = {
+/** Pedido em rascunho ainda não contabilizado como faturamento. */
+export type DraftSalePipelineItem = {
   id: string
-  patientName: string
-  /** Data do slot no calendário (YYYY-MM-DD, UTC — igual à agenda por dia). */
-  appointmentDayUtc: string
-  time: string
-  serviceName: string
-  priceInCents: number
+  customerName: string | null
+  createdAt: string
+  totalCents: number
 }
 
-/** Agendamentos no período ainda em SCHEDULED (não entram na receita até concluir). */
-export type ScheduledPipelineSnapshot = {
+export type DraftSalesSnapshot = {
   count: number
   valueInCents: number
-  pendingItems: ScheduledPipelineItem[]
+  items: DraftSalePipelineItem[]
 }
 
-/** Mês anterior (inteiro) ou janela de 30 dias anterior, para KPI estilo dashboard. */
+/** Período anterior para comparação do resultado (vendas − compras). */
 export type PeriodComparisonSnapshot = {
   previousGrossRevenue: number
   previousNetResult: number
-  /** Variação do resultado vs período anterior; null se não há base para comparar. */
   netResultChangePct: number | null
 }
 
 export type DreDashboardPayload = {
   period: ReportPeriod
+  /** Soma das vendas confirmadas no período (centavos). */
   grossRevenue: number
   deductions: { label: string; amount: number }[]
   netResult: number
   serviceLines: ServiceRevenueRow[]
   dailySeries: DailyRevenuePoint[]
   metrics: ServicePerformanceSnapshot
-  scheduledPipeline: ScheduledPipelineSnapshot
+  draftSalesPipeline: DraftSalesSnapshot
   comparison: PeriodComparisonSnapshot
   cashFlow: CashFlowSnapshot
+  /** Quantidade de vendas confirmadas no período. */
+  confirmedSalesCount: number
 }

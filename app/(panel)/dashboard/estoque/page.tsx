@@ -1,15 +1,15 @@
 import getSession from "@/lib/getSession"
 import prisma from "@/lib/prisma"
 import { redirect } from "next/navigation"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { StockContent } from "./_components/stock-content"
 
 export default async function EstoquePage() {
   const session = await getSession()
   if (!session) redirect("/")
 
-  const clinicOwnerId = getClinicOwnerUserId(session)
-  if (!clinicOwnerId) redirect("/acesso-clinica")
+  const organizationId = getActiveOrganizationId(session)
+  if (!organizationId) redirect("/acesso-empresa")
 
   const stockReady =
     typeof (prisma as unknown as { stockItem?: { findMany?: unknown } }).stockItem
@@ -32,9 +32,9 @@ export default async function EstoquePage() {
     )
   }
 
-  const [stockItems, services, consumptions] = await Promise.all([
+  const [stockItems, services, consumptions, movements] = await Promise.all([
     prisma.stockItem.findMany({
-      where: { userId: clinicOwnerId, active: true },
+      where: { organizationId, active: true },
       orderBy: { name: "asc" },
       select: {
         id: true,
@@ -45,12 +45,12 @@ export default async function EstoquePage() {
       },
     }),
     prisma.service.findMany({
-      where: { userId: clinicOwnerId, status: true },
+      where: { organizationId, status: true },
       orderBy: { name: "asc" },
       select: { id: true, name: true },
     }),
     prisma.serviceStockConsumption.findMany({
-      where: { service: { userId: clinicOwnerId } },
+      where: { service: { organizationId } },
       orderBy: [{ service: { name: "asc" } }, { stockItem: { name: "asc" } }],
       select: {
         id: true,
@@ -59,14 +59,28 @@ export default async function EstoquePage() {
         stockItem: { select: { id: true, name: true, unit: true } },
       },
     }),
+    prisma.stockMovement.findMany({
+      where: { stockItem: { organizationId } },
+      orderBy: { createdAt: "desc" },
+      take: 300,
+      select: {
+        id: true,
+        kind: true,
+        quantity: true,
+        note: true,
+        createdAt: true,
+        stockItem: { select: { id: true, name: true, unit: true } },
+      },
+    }),
   ])
 
   return (
-    <main>
+    <main className="min-h-0 bg-slate-50/50 px-4 py-6 sm:px-6 lg:py-8">
       <StockContent
         stockItems={stockItems}
         services={services}
         consumptions={consumptions}
+        movements={movements.map((m) => ({ ...m, createdAt: m.createdAt.toISOString() }))}
       />
     </main>
   )

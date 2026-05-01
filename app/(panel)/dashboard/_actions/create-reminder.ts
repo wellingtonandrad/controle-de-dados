@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma"
 import { z } from "zod"
 import { revalidatePath } from "next/cache"
 import { auth } from "@/lib/auth"
-import { getClinicOwnerUserId } from "@/app/utils/auth/clinic-owner-id"
+import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 
 
 const formSchema = z.object({
@@ -24,9 +24,9 @@ export async function createReminder(formData: FormSchema) {
         }
     }
 
-    const clinicOwnerId = getClinicOwnerUserId(session)
-    if (!clinicOwnerId) {
-        return { error: "Clínica não identificada" }
+    const organizationId = getActiveOrganizationId(session)
+    if (!organizationId) {
+        return { error: "Empresa não identificada" }
     }
 
     const schema = formSchema.safeParse(formData)
@@ -42,7 +42,7 @@ export async function createReminder(formData: FormSchema) {
         await prisma.reminder.create({
             data:{
                 description:formData.description,
-                userId: clinicOwnerId
+                organizationId,
             }
         })
 
