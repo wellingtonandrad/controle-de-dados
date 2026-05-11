@@ -13,6 +13,7 @@ async function resolveStripePriceId(raw: string | undefined): Promise<string> {
     if (!id) throw new Error("STRIPE_PLAN_BASIC / STRIPE_PLAN_PROFESSIONAL ausente")
     if (id.startsWith("price_")) return id
     if (id.startsWith("prod_")) {
+        if (!stripe) throw new Error("Stripe not configured (STRIPE_SECRET_KEY ausente).")
         const product = await stripe.products.retrieve(id, { expand: ["default_price"] })
         const dp = product.default_price
         if (typeof dp === "string") return dp
@@ -52,6 +53,10 @@ export async function createSubscription({ type }: SubscriptionProps) {
             sessionId: "",
             error: "Falha ao ativar plano."
         }
+    }
+
+    if (!stripe) {
+        return { sessionId: "", error: "Stripe não configurado." }
     }
 
     let customerId = findUser.stripe_customer_id;
@@ -113,7 +118,7 @@ export async function createSubscription({ type }: SubscriptionProps) {
         url: stripeCheckoutSession.url
      }
 
-    }catch(err){
+    }catch {
         return {
             sessionId: "",
             error: "Falha ao ativar plano."

@@ -36,6 +36,13 @@ export async function createPortalCustomer() {
         }
     }
 
+    if (!stripe) {
+        return {
+            sessionId: "",
+            error: "Stripe não configurado (STRIPE_SECRET_KEY ausente)."
+        }
+    }
+
     try{
 
         const portalSession = await stripe.billingPortal.sessions.create({

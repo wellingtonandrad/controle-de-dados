@@ -16,6 +16,8 @@ export async function syncSubscriptionFromCheckout(
   const user = await prisma.user.findFirst({ where: { id: userId } })
   if (!user?.stripe_customer_id) return
 
+  if (!stripe) return
+
   const checkoutSession = await stripe.checkout.sessions.retrieve(
     checkoutSessionId.trim(),
     { expand: ["subscription", "customer"] },

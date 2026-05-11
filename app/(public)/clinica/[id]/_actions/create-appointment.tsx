@@ -77,6 +77,7 @@ export async function createNewAppointment(formData: FormSchema){
         let checkoutUrl: string | null = null
         try {
             const baseUrl = process.env.NEXT_PUBLIC_URL?.trim() || "http://localhost:3000"
+            if (!stripe) throw new Error("Stripe not configured (STRIPE_SECRET_KEY ausente).")
             const checkout = await stripe.checkout.sessions.create({
                 mode: "payment",
                 payment_method_types: ["card"],

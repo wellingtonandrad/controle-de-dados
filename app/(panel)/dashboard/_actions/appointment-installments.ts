@@ -168,6 +168,10 @@ export async function createInstallmentStripeCheckout(installmentId: string) {
     return { error: "Empresa não identificada" }
   }
 
+  if (!stripe) {
+    return { error: "Stripe não configurado (STRIPE_SECRET_KEY ausente)." }
+  }
+
   try {
     const row = await prisma.appointmentInstallment.findFirst({
       where: {
