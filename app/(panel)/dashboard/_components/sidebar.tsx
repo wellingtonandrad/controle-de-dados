@@ -32,6 +32,7 @@ import {
   Factory,
   ClipboardList,
   HandCoins,
+  Shield,
 } from "lucide-react"
 import Link from "next/link"
 import { ClientOnly } from "@/components/client-only"
@@ -59,6 +60,7 @@ export function SidebarDashboard({
   userEmail = null,
   userImage = null,
   notificationsCount = 0,
+  canManageRbac = false,
 }: {
   children: React.ReactNode
   /** Dono da empresa: equipe. */
@@ -69,6 +71,7 @@ export function SidebarDashboard({
   userEmail?: string | null
   userImage?: string | null
   notificationsCount?: number
+  canManageRbac?: boolean
 }) {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -170,6 +173,15 @@ export function SidebarDashboard({
             icon={<Users className="size-5 shrink-0" />}
           />
         </>
+      )}
+      {canManageRbac && (
+        <SidebarLink
+          href="/dashboard/cargos"
+          label="Cargos"
+          pathname={pathname}
+          isCollapsed={isCollapsed}
+          icon={<Shield className="size-5 shrink-0" />}
+        />
       )}
 
       <span className="mt-4 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
@@ -273,6 +285,15 @@ export function SidebarDashboard({
           pathname={pathname}
           isCollapsed={isCollapsed}
           icon={<Users className="size-5 shrink-0" />}
+        />
+      )}
+      {canManageRbac && (
+        <SidebarLink
+          href="/dashboard/cargos"
+          label="Cargos"
+          pathname={pathname}
+          isCollapsed={isCollapsed}
+          icon={<Shield className="size-5 shrink-0" />}
         />
       )}
       <SidebarLink

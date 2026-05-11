@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import getSession from "@/lib/getSession"
 import prisma from "@/lib/prisma"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import { ReceivablesContent } from "./_components/receivables-content"
 
 export default async function ContasReceberPage() {
@@ -10,6 +11,13 @@ export default async function ContasReceberPage() {
 
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) redirect("/acesso-empresa")
+
+  const canViewReceivables = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "receivables:view",
+  })
+  if (!canViewReceivables) redirect("/dashboard/overview")
 
   const [customers, manualReceivables, installments] = await Promise.all([
     prisma.customer.findMany({

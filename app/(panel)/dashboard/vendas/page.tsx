@@ -1,6 +1,7 @@
 import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
 import { VendasListContent } from "./_components/vendas-list-content"
 
@@ -14,6 +15,15 @@ export default async function VendasPage() {
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) {
     redirect("/acesso-empresa")
+  }
+
+  const canViewSales = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "sales:view",
+  })
+  if (!canViewSales) {
+    redirect("/dashboard/overview")
   }
 
   const sales = await prisma.sale.findMany({

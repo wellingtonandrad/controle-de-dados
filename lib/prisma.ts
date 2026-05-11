@@ -17,6 +17,9 @@ function hasErpDelegates(client: PrismaClient): boolean {
     productionOrder?: unknown
     productionMaterialPlan?: unknown
     salesGoal?: unknown
+    accountGroup?: unknown
+    permission?: unknown
+    organizationMemberGroup?: unknown
   }
   return Boolean(
     c.supplier &&
@@ -26,7 +29,10 @@ function hasErpDelegates(client: PrismaClient): boolean {
       c.workCenter &&
       c.productionOrder &&
       c.productionMaterialPlan &&
-      c.salesGoal,
+      c.salesGoal &&
+      c.accountGroup &&
+      c.permission &&
+      c.organizationMemberGroup,
   )
 }
 

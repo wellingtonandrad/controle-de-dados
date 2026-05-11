@@ -1,9 +1,9 @@
 import type { Session } from "next-auth"
+import { hasOrganizationPermission } from "./rbac"
 
 /**
  * Relatorios financeiros: apenas owner e equipe operacional (STAFF).
  */
-export function canAccessReports(session: Session | null): boolean {
-  const role = session?.user?.organizationRole
-  return role === "OWNER" || role === "STAFF"
+export async function canAccessReports(session: Session | null): Promise<boolean> {
+  return hasOrganizationPermission({ session, permission: "reports:view" })
 }

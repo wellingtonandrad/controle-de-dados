@@ -5,6 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { Adapter } from "next-auth/adapters"
 import { getDemoPanelSession } from "@/lib/auth/demo-panel-session"
 import { buildAuthProviders } from "@/lib/auth/build-providers"
+import { ensureRbacDefaults } from "@/app/utils/auth/rbac"
 
 const nextAuth = NextAuth({
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -65,11 +66,13 @@ const nextAuth = NextAuth({
               role: "OWNER",
             },
           })
+          await ensureRbacDefaults(org.id, u.id)
         } else {
           await prisma.organization.update({
             where: { id: existingOrg.id },
             data: { verified: true, active: true },
           })
+          await ensureRbacDefaults(existingOrg.id, u.id)
         }
       } catch (error) {
         console.error("Auth organization sync failed:", error)

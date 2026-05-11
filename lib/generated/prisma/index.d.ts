@@ -24,6 +24,26 @@ export type Organization = $Result.DefaultSelection<Prisma.$OrganizationPayload>
  */
 export type OrganizationMember = $Result.DefaultSelection<Prisma.$OrganizationMemberPayload>
 /**
+ * Model Permission
+ * 
+ */
+export type Permission = $Result.DefaultSelection<Prisma.$PermissionPayload>
+/**
+ * Model AccountGroup
+ * 
+ */
+export type AccountGroup = $Result.DefaultSelection<Prisma.$AccountGroupPayload>
+/**
+ * Model AccountGroupPermission
+ * 
+ */
+export type AccountGroupPermission = $Result.DefaultSelection<Prisma.$AccountGroupPermissionPayload>
+/**
+ * Model OrganizationMemberGroup
+ * 
+ */
+export type OrganizationMemberGroup = $Result.DefaultSelection<Prisma.$OrganizationMemberGroupPayload>
+/**
  * Model Customer
  * 
  */
@@ -419,6 +439,46 @@ export class PrismaClient<
     * ```
     */
   get organizationMember(): Prisma.OrganizationMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.permission`: Exposes CRUD operations for the **Permission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Permissions
+    * const permissions = await prisma.permission.findMany()
+    * ```
+    */
+  get permission(): Prisma.PermissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accountGroup`: Exposes CRUD operations for the **AccountGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccountGroups
+    * const accountGroups = await prisma.accountGroup.findMany()
+    * ```
+    */
+  get accountGroup(): Prisma.AccountGroupDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accountGroupPermission`: Exposes CRUD operations for the **AccountGroupPermission** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccountGroupPermissions
+    * const accountGroupPermissions = await prisma.accountGroupPermission.findMany()
+    * ```
+    */
+  get accountGroupPermission(): Prisma.AccountGroupPermissionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.organizationMemberGroup`: Exposes CRUD operations for the **OrganizationMemberGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrganizationMemberGroups
+    * const organizationMemberGroups = await prisma.organizationMemberGroup.findMany()
+    * ```
+    */
+  get organizationMemberGroup(): Prisma.OrganizationMemberGroupDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
@@ -1135,6 +1195,10 @@ export namespace Prisma {
   export const ModelName: {
     Organization: 'Organization',
     OrganizationMember: 'OrganizationMember',
+    Permission: 'Permission',
+    AccountGroup: 'AccountGroup',
+    AccountGroupPermission: 'AccountGroupPermission',
+    OrganizationMemberGroup: 'OrganizationMemberGroup',
     Customer: 'Customer',
     Product: 'Product',
     Supplier: 'Supplier',
@@ -1178,7 +1242,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organization" | "organizationMember" | "customer" | "product" | "supplier" | "sale" | "saleLine" | "salesGoal" | "purchase" | "purchaseLine" | "appointment" | "service" | "stockItem" | "stockMovement" | "serviceStockConsumption" | "appointmentInstallment" | "receivable" | "reminder" | "workCenter" | "billOfMaterial" | "bomItem" | "routingStep" | "productionOrder" | "productionMaterialPlan" | "productionReport" | "user" | "account" | "session" | "verificationToken" | "authenticator"
+      modelProps: "organization" | "organizationMember" | "permission" | "accountGroup" | "accountGroupPermission" | "organizationMemberGroup" | "customer" | "product" | "supplier" | "sale" | "saleLine" | "salesGoal" | "purchase" | "purchaseLine" | "appointment" | "service" | "stockItem" | "stockMovement" | "serviceStockConsumption" | "appointmentInstallment" | "receivable" | "reminder" | "workCenter" | "billOfMaterial" | "bomItem" | "routingStep" | "productionOrder" | "productionMaterialPlan" | "productionReport" | "user" | "account" | "session" | "verificationToken" | "authenticator"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1327,6 +1391,302 @@ export namespace Prisma {
           count: {
             args: Prisma.OrganizationMemberCountArgs<ExtArgs>
             result: $Utils.Optional<OrganizationMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      Permission: {
+        payload: Prisma.$PermissionPayload<ExtArgs>
+        fields: Prisma.PermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.PermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          findMany: {
+            args: Prisma.PermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          create: {
+            args: Prisma.PermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          createMany: {
+            args: Prisma.PermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PermissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          delete: {
+            args: Prisma.PermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          update: {
+            args: Prisma.PermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PermissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.PermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.PermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePermission>
+          }
+          groupBy: {
+            args: Prisma.PermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<PermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccountGroup: {
+        payload: Prisma.$AccountGroupPayload<ExtArgs>
+        fields: Prisma.AccountGroupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccountGroupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccountGroupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          findFirst: {
+            args: Prisma.AccountGroupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccountGroupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          findMany: {
+            args: Prisma.AccountGroupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>[]
+          }
+          create: {
+            args: Prisma.AccountGroupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          createMany: {
+            args: Prisma.AccountGroupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccountGroupCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>[]
+          }
+          delete: {
+            args: Prisma.AccountGroupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          update: {
+            args: Prisma.AccountGroupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccountGroupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccountGroupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccountGroupUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccountGroupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPayload>
+          }
+          aggregate: {
+            args: Prisma.AccountGroupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccountGroup>
+          }
+          groupBy: {
+            args: Prisma.AccountGroupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccountGroupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccountGroupCountArgs<ExtArgs>
+            result: $Utils.Optional<AccountGroupCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccountGroupPermission: {
+        payload: Prisma.$AccountGroupPermissionPayload<ExtArgs>
+        fields: Prisma.AccountGroupPermissionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccountGroupPermissionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccountGroupPermissionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          findFirst: {
+            args: Prisma.AccountGroupPermissionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccountGroupPermissionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          findMany: {
+            args: Prisma.AccountGroupPermissionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>[]
+          }
+          create: {
+            args: Prisma.AccountGroupPermissionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          createMany: {
+            args: Prisma.AccountGroupPermissionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccountGroupPermissionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>[]
+          }
+          delete: {
+            args: Prisma.AccountGroupPermissionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          update: {
+            args: Prisma.AccountGroupPermissionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          deleteMany: {
+            args: Prisma.AccountGroupPermissionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccountGroupPermissionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccountGroupPermissionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>[]
+          }
+          upsert: {
+            args: Prisma.AccountGroupPermissionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccountGroupPermissionPayload>
+          }
+          aggregate: {
+            args: Prisma.AccountGroupPermissionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccountGroupPermission>
+          }
+          groupBy: {
+            args: Prisma.AccountGroupPermissionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccountGroupPermissionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccountGroupPermissionCountArgs<ExtArgs>
+            result: $Utils.Optional<AccountGroupPermissionCountAggregateOutputType> | number
+          }
+        }
+      }
+      OrganizationMemberGroup: {
+        payload: Prisma.$OrganizationMemberGroupPayload<ExtArgs>
+        fields: Prisma.OrganizationMemberGroupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrganizationMemberGroupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrganizationMemberGroupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          findFirst: {
+            args: Prisma.OrganizationMemberGroupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrganizationMemberGroupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          findMany: {
+            args: Prisma.OrganizationMemberGroupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>[]
+          }
+          create: {
+            args: Prisma.OrganizationMemberGroupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          createMany: {
+            args: Prisma.OrganizationMemberGroupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrganizationMemberGroupCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>[]
+          }
+          delete: {
+            args: Prisma.OrganizationMemberGroupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          update: {
+            args: Prisma.OrganizationMemberGroupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrganizationMemberGroupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrganizationMemberGroupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OrganizationMemberGroupUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>[]
+          }
+          upsert: {
+            args: Prisma.OrganizationMemberGroupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrganizationMemberGroupPayload>
+          }
+          aggregate: {
+            args: Prisma.OrganizationMemberGroupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrganizationMemberGroup>
+          }
+          groupBy: {
+            args: Prisma.OrganizationMemberGroupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrganizationMemberGroupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrganizationMemberGroupCountArgs<ExtArgs>
+            result: $Utils.Optional<OrganizationMemberGroupCountAggregateOutputType> | number
           }
         }
       }
@@ -3512,6 +3872,10 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     organization?: OrganizationOmit
     organizationMember?: OrganizationMemberOmit
+    permission?: PermissionOmit
+    accountGroup?: AccountGroupOmit
+    accountGroupPermission?: AccountGroupPermissionOmit
+    organizationMemberGroup?: OrganizationMemberGroupOmit
     customer?: CustomerOmit
     product?: ProductOmit
     supplier?: SupplierOmit
@@ -3621,6 +3985,8 @@ export namespace Prisma {
 
   export type OrganizationCountOutputType = {
     members: number
+    accountGroups: number
+    roleAssignments: number
     customers: number
     products: number
     sales: number
@@ -3639,6 +4005,8 @@ export namespace Prisma {
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | OrganizationCountOutputTypeCountMembersArgs
+    accountGroups?: boolean | OrganizationCountOutputTypeCountAccountGroupsArgs
+    roleAssignments?: boolean | OrganizationCountOutputTypeCountRoleAssignmentsArgs
     customers?: boolean | OrganizationCountOutputTypeCountCustomersArgs
     products?: boolean | OrganizationCountOutputTypeCountProductsArgs
     sales?: boolean | OrganizationCountOutputTypeCountSalesArgs
@@ -3671,6 +4039,20 @@ export namespace Prisma {
    */
   export type OrganizationCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrganizationMemberWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountAccountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountGroupWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountRoleAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizationMemberGroupWhereInput
   }
 
   /**
@@ -3769,6 +4151,108 @@ export namespace Prisma {
    */
   export type OrganizationCountOutputTypeCountProductionOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductionOrderWhereInput
+  }
+
+
+  /**
+   * Count Type OrganizationMemberCountOutputType
+   */
+
+  export type OrganizationMemberCountOutputType = {
+    accountGroups: number
+  }
+
+  export type OrganizationMemberCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    accountGroups?: boolean | OrganizationMemberCountOutputTypeCountAccountGroupsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OrganizationMemberCountOutputType without action
+   */
+  export type OrganizationMemberCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberCountOutputType
+     */
+    select?: OrganizationMemberCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OrganizationMemberCountOutputType without action
+   */
+  export type OrganizationMemberCountOutputTypeCountAccountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizationMemberGroupWhereInput
+  }
+
+
+  /**
+   * Count Type PermissionCountOutputType
+   */
+
+  export type PermissionCountOutputType = {
+    groups: number
+  }
+
+  export type PermissionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    groups?: boolean | PermissionCountOutputTypeCountGroupsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PermissionCountOutputType without action
+   */
+  export type PermissionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PermissionCountOutputType
+     */
+    select?: PermissionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PermissionCountOutputType without action
+   */
+  export type PermissionCountOutputTypeCountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountGroupPermissionWhereInput
+  }
+
+
+  /**
+   * Count Type AccountGroupCountOutputType
+   */
+
+  export type AccountGroupCountOutputType = {
+    permissions: number
+    members: number
+  }
+
+  export type AccountGroupCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    permissions?: boolean | AccountGroupCountOutputTypeCountPermissionsArgs
+    members?: boolean | AccountGroupCountOutputTypeCountMembersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AccountGroupCountOutputType without action
+   */
+  export type AccountGroupCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupCountOutputType
+     */
+    select?: AccountGroupCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AccountGroupCountOutputType without action
+   */
+  export type AccountGroupCountOutputTypeCountPermissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountGroupPermissionWhereInput
+  }
+
+  /**
+   * AccountGroupCountOutputType without action
+   */
+  export type AccountGroupCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizationMemberGroupWhereInput
   }
 
 
@@ -4506,6 +4990,8 @@ export namespace Prisma {
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
     members?: boolean | Organization$membersArgs<ExtArgs>
+    accountGroups?: boolean | Organization$accountGroupsArgs<ExtArgs>
+    roleAssignments?: boolean | Organization$roleAssignmentsArgs<ExtArgs>
     customers?: boolean | Organization$customersArgs<ExtArgs>
     products?: boolean | Organization$productsArgs<ExtArgs>
     sales?: boolean | Organization$salesArgs<ExtArgs>
@@ -4571,6 +5057,8 @@ export namespace Prisma {
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     members?: boolean | Organization$membersArgs<ExtArgs>
+    accountGroups?: boolean | Organization$accountGroupsArgs<ExtArgs>
+    roleAssignments?: boolean | Organization$roleAssignmentsArgs<ExtArgs>
     customers?: boolean | Organization$customersArgs<ExtArgs>
     products?: boolean | Organization$productsArgs<ExtArgs>
     sales?: boolean | Organization$salesArgs<ExtArgs>
@@ -4599,6 +5087,8 @@ export namespace Prisma {
     objects: {
       owner: Prisma.$UserPayload<ExtArgs>
       members: Prisma.$OrganizationMemberPayload<ExtArgs>[]
+      accountGroups: Prisma.$AccountGroupPayload<ExtArgs>[]
+      roleAssignments: Prisma.$OrganizationMemberGroupPayload<ExtArgs>[]
       customers: Prisma.$CustomerPayload<ExtArgs>[]
       products: Prisma.$ProductPayload<ExtArgs>[]
       sales: Prisma.$SalePayload<ExtArgs>[]
@@ -5022,6 +5512,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     members<T extends Organization$membersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accountGroups<T extends Organization$accountGroupsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$accountGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    roleAssignments<T extends Organization$roleAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$roleAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     customers<T extends Organization$customersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$customersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     products<T extends Organization$productsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sales<T extends Organization$salesArgs<ExtArgs> = {}>(args?: Subset<T, Organization$salesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5498,6 +5990,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OrganizationMemberScalarFieldEnum | OrganizationMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.accountGroups
+   */
+  export type Organization$accountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    where?: AccountGroupWhereInput
+    orderBy?: AccountGroupOrderByWithRelationInput | AccountGroupOrderByWithRelationInput[]
+    cursor?: AccountGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountGroupScalarFieldEnum | AccountGroupScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.roleAssignments
+   */
+  export type Organization$roleAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    where?: OrganizationMemberGroupWhereInput
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
   }
 
   /**
@@ -6029,6 +6569,8 @@ export namespace Prisma {
     updatedAt?: boolean
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    accountGroups?: boolean | OrganizationMember$accountGroupsArgs<ExtArgs>
+    _count?: boolean | OrganizationMemberCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organizationMember"]>
 
   export type OrganizationMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6066,6 +6608,8 @@ export namespace Prisma {
   export type OrganizationMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    accountGroups?: boolean | OrganizationMember$accountGroupsArgs<ExtArgs>
+    _count?: boolean | OrganizationMemberCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizationMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
@@ -6081,6 +6625,7 @@ export namespace Prisma {
     objects: {
       organization: Prisma.$OrganizationPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      accountGroups: Prisma.$OrganizationMemberGroupPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6485,6 +7030,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    accountGroups<T extends OrganizationMember$accountGroupsArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationMember$accountGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6921,6 +7467,30 @@ export namespace Prisma {
   }
 
   /**
+   * OrganizationMember.accountGroups
+   */
+  export type OrganizationMember$accountGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    where?: OrganizationMemberGroupWhereInput
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
+  }
+
+  /**
    * OrganizationMember without action
    */
   export type OrganizationMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6936,6 +7506,4365 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: OrganizationMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Permission
+   */
+
+  export type AggregatePermission = {
+    _count: PermissionCountAggregateOutputType | null
+    _min: PermissionMinAggregateOutputType | null
+    _max: PermissionMaxAggregateOutputType | null
+  }
+
+  export type PermissionMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    label: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PermissionMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    label: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PermissionCountAggregateOutputType = {
+    id: number
+    key: number
+    label: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PermissionMinAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PermissionMaxAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PermissionCountAggregateInputType = {
+    id?: true
+    key?: true
+    label?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Permission to aggregate.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Permissions
+    **/
+    _count?: true | PermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PermissionMaxAggregateInputType
+  }
+
+  export type GetPermissionAggregateType<T extends PermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePermission[P]>
+      : GetScalarType<T[P], AggregatePermission[P]>
+  }
+
+
+
+
+  export type PermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PermissionWhereInput
+    orderBy?: PermissionOrderByWithAggregationInput | PermissionOrderByWithAggregationInput[]
+    by: PermissionScalarFieldEnum[] | PermissionScalarFieldEnum
+    having?: PermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PermissionCountAggregateInputType | true
+    _min?: PermissionMinAggregateInputType
+    _max?: PermissionMaxAggregateInputType
+  }
+
+  export type PermissionGroupByOutputType = {
+    id: string
+    key: string
+    label: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PermissionCountAggregateOutputType | null
+    _min: PermissionMinAggregateOutputType | null
+    _max: PermissionMaxAggregateOutputType | null
+  }
+
+  type GetPermissionGroupByPayload<T extends PermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], PermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    groups?: boolean | Permission$groupsArgs<ExtArgs>
+    _count?: boolean | PermissionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["permission"]>
+
+  export type PermissionSelectScalar = {
+    id?: boolean
+    key?: boolean
+    label?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "label" | "createdAt" | "updatedAt", ExtArgs["result"]["permission"]>
+  export type PermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    groups?: boolean | Permission$groupsArgs<ExtArgs>
+    _count?: boolean | PermissionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PermissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PermissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Permission"
+    objects: {
+      groups: Prisma.$AccountGroupPermissionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      label: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["permission"]>
+    composites: {}
+  }
+
+  type PermissionGetPayload<S extends boolean | null | undefined | PermissionDefaultArgs> = $Result.GetResult<Prisma.$PermissionPayload, S>
+
+  type PermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PermissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PermissionCountAggregateInputType | true
+    }
+
+  export interface PermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Permission'], meta: { name: 'Permission' } }
+    /**
+     * Find zero or one Permission that matches the filter.
+     * @param {PermissionFindUniqueArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PermissionFindUniqueArgs>(args: SelectSubset<T, PermissionFindUniqueArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Permission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PermissionFindUniqueOrThrowArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, PermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Permission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindFirstArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PermissionFindFirstArgs>(args?: SelectSubset<T, PermissionFindFirstArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Permission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindFirstOrThrowArgs} args - Arguments to find a Permission
+     * @example
+     * // Get one Permission
+     * const permission = await prisma.permission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, PermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Permissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Permissions
+     * const permissions = await prisma.permission.findMany()
+     * 
+     * // Get first 10 Permissions
+     * const permissions = await prisma.permission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const permissionWithIdOnly = await prisma.permission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PermissionFindManyArgs>(args?: SelectSubset<T, PermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Permission.
+     * @param {PermissionCreateArgs} args - Arguments to create a Permission.
+     * @example
+     * // Create one Permission
+     * const Permission = await prisma.permission.create({
+     *   data: {
+     *     // ... data to create a Permission
+     *   }
+     * })
+     * 
+     */
+    create<T extends PermissionCreateArgs>(args: SelectSubset<T, PermissionCreateArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Permissions.
+     * @param {PermissionCreateManyArgs} args - Arguments to create many Permissions.
+     * @example
+     * // Create many Permissions
+     * const permission = await prisma.permission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PermissionCreateManyArgs>(args?: SelectSubset<T, PermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Permissions and returns the data saved in the database.
+     * @param {PermissionCreateManyAndReturnArgs} args - Arguments to create many Permissions.
+     * @example
+     * // Create many Permissions
+     * const permission = await prisma.permission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Permissions and only return the `id`
+     * const permissionWithIdOnly = await prisma.permission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PermissionCreateManyAndReturnArgs>(args?: SelectSubset<T, PermissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Permission.
+     * @param {PermissionDeleteArgs} args - Arguments to delete one Permission.
+     * @example
+     * // Delete one Permission
+     * const Permission = await prisma.permission.delete({
+     *   where: {
+     *     // ... filter to delete one Permission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PermissionDeleteArgs>(args: SelectSubset<T, PermissionDeleteArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Permission.
+     * @param {PermissionUpdateArgs} args - Arguments to update one Permission.
+     * @example
+     * // Update one Permission
+     * const permission = await prisma.permission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PermissionUpdateArgs>(args: SelectSubset<T, PermissionUpdateArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Permissions.
+     * @param {PermissionDeleteManyArgs} args - Arguments to filter Permissions to delete.
+     * @example
+     * // Delete a few Permissions
+     * const { count } = await prisma.permission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PermissionDeleteManyArgs>(args?: SelectSubset<T, PermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Permissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Permissions
+     * const permission = await prisma.permission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PermissionUpdateManyArgs>(args: SelectSubset<T, PermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Permissions and returns the data updated in the database.
+     * @param {PermissionUpdateManyAndReturnArgs} args - Arguments to update many Permissions.
+     * @example
+     * // Update many Permissions
+     * const permission = await prisma.permission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Permissions and only return the `id`
+     * const permissionWithIdOnly = await prisma.permission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PermissionUpdateManyAndReturnArgs>(args: SelectSubset<T, PermissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Permission.
+     * @param {PermissionUpsertArgs} args - Arguments to update or create a Permission.
+     * @example
+     * // Update or create a Permission
+     * const permission = await prisma.permission.upsert({
+     *   create: {
+     *     // ... data to create a Permission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Permission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PermissionUpsertArgs>(args: SelectSubset<T, PermissionUpsertArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Permissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionCountArgs} args - Arguments to filter Permissions to count.
+     * @example
+     * // Count the number of Permissions
+     * const count = await prisma.permission.count({
+     *   where: {
+     *     // ... the filter for the Permissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends PermissionCountArgs>(
+      args?: Subset<T, PermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Permission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PermissionAggregateArgs>(args: Subset<T, PermissionAggregateArgs>): Prisma.PrismaPromise<GetPermissionAggregateType<T>>
+
+    /**
+     * Group by Permission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PermissionGroupByArgs['orderBy'] }
+        : { orderBy?: PermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Permission model
+   */
+  readonly fields: PermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Permission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    groups<T extends Permission$groupsArgs<ExtArgs> = {}>(args?: Subset<T, Permission$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Permission model
+   */
+  interface PermissionFieldRefs {
+    readonly id: FieldRef<"Permission", 'String'>
+    readonly key: FieldRef<"Permission", 'String'>
+    readonly label: FieldRef<"Permission", 'String'>
+    readonly createdAt: FieldRef<"Permission", 'DateTime'>
+    readonly updatedAt: FieldRef<"Permission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Permission findUnique
+   */
+  export type PermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission findUniqueOrThrow
+   */
+  export type PermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission findFirst
+   */
+  export type PermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission findFirstOrThrow
+   */
+  export type PermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permission to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission findMany
+   */
+  export type PermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which Permissions to fetch.
+     */
+    where?: PermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Permissions to fetch.
+     */
+    orderBy?: PermissionOrderByWithRelationInput | PermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Permissions.
+     */
+    cursor?: PermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Permissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Permissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
+    distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission create
+   */
+  export type PermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Permission.
+     */
+    data: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
+  }
+
+  /**
+   * Permission createMany
+   */
+  export type PermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Permissions.
+     */
+    data: PermissionCreateManyInput | PermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Permission createManyAndReturn
+   */
+  export type PermissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Permissions.
+     */
+    data: PermissionCreateManyInput | PermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Permission update
+   */
+  export type PermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Permission.
+     */
+    data: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
+    /**
+     * Choose, which Permission to update.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission updateMany
+   */
+  export type PermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Permissions.
+     */
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Permissions to update
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission updateManyAndReturn
+   */
+  export type PermissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * The data used to update Permissions.
+     */
+    data: XOR<PermissionUpdateManyMutationInput, PermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which Permissions to update
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission upsert
+   */
+  export type PermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Permission to update in case it exists.
+     */
+    where: PermissionWhereUniqueInput
+    /**
+     * In case the Permission found by the `where` argument doesn't exist, create a new Permission with this data.
+     */
+    create: XOR<PermissionCreateInput, PermissionUncheckedCreateInput>
+    /**
+     * In case the Permission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PermissionUpdateInput, PermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * Permission delete
+   */
+  export type PermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+    /**
+     * Filter which Permission to delete.
+     */
+    where: PermissionWhereUniqueInput
+  }
+
+  /**
+   * Permission deleteMany
+   */
+  export type PermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Permissions to delete
+     */
+    where?: PermissionWhereInput
+    /**
+     * Limit how many Permissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Permission.groups
+   */
+  export type Permission$groupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    where?: AccountGroupPermissionWhereInput
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountGroupPermissionScalarFieldEnum | AccountGroupPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * Permission without action
+   */
+  export type PermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Permission
+     */
+    select?: PermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Permission
+     */
+    omit?: PermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccountGroup
+   */
+
+  export type AggregateAccountGroup = {
+    _count: AccountGroupCountAggregateOutputType | null
+    _min: AccountGroupMinAggregateOutputType | null
+    _max: AccountGroupMaxAggregateOutputType | null
+  }
+
+  export type AccountGroupMinAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    name: string | null
+    description: string | null
+    isSystem: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccountGroupMaxAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    name: string | null
+    description: string | null
+    isSystem: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AccountGroupCountAggregateOutputType = {
+    id: number
+    organizationId: number
+    name: number
+    description: number
+    isSystem: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AccountGroupMinAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    description?: true
+    isSystem?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccountGroupMaxAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    description?: true
+    isSystem?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AccountGroupCountAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    description?: true
+    isSystem?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AccountGroupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountGroup to aggregate.
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroups to fetch.
+     */
+    orderBy?: AccountGroupOrderByWithRelationInput | AccountGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccountGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccountGroups
+    **/
+    _count?: true | AccountGroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccountGroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccountGroupMaxAggregateInputType
+  }
+
+  export type GetAccountGroupAggregateType<T extends AccountGroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccountGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccountGroup[P]>
+      : GetScalarType<T[P], AggregateAccountGroup[P]>
+  }
+
+
+
+
+  export type AccountGroupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountGroupWhereInput
+    orderBy?: AccountGroupOrderByWithAggregationInput | AccountGroupOrderByWithAggregationInput[]
+    by: AccountGroupScalarFieldEnum[] | AccountGroupScalarFieldEnum
+    having?: AccountGroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccountGroupCountAggregateInputType | true
+    _min?: AccountGroupMinAggregateInputType
+    _max?: AccountGroupMaxAggregateInputType
+  }
+
+  export type AccountGroupGroupByOutputType = {
+    id: string
+    organizationId: string
+    name: string
+    description: string | null
+    isSystem: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: AccountGroupCountAggregateOutputType | null
+    _min: AccountGroupMinAggregateOutputType | null
+    _max: AccountGroupMaxAggregateOutputType | null
+  }
+
+  type GetAccountGroupGroupByPayload<T extends AccountGroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccountGroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccountGroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccountGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], AccountGroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccountGroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    permissions?: boolean | AccountGroup$permissionsArgs<ExtArgs>
+    members?: boolean | AccountGroup$membersArgs<ExtArgs>
+    _count?: boolean | AccountGroupCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroup"]>
+
+  export type AccountGroupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroup"]>
+
+  export type AccountGroupSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroup"]>
+
+  export type AccountGroupSelectScalar = {
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    description?: boolean
+    isSystem?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AccountGroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "name" | "description" | "isSystem" | "createdAt" | "updatedAt", ExtArgs["result"]["accountGroup"]>
+  export type AccountGroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    permissions?: boolean | AccountGroup$permissionsArgs<ExtArgs>
+    members?: boolean | AccountGroup$membersArgs<ExtArgs>
+    _count?: boolean | AccountGroupCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AccountGroupIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+  export type AccountGroupIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+
+  export type $AccountGroupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccountGroup"
+    objects: {
+      organization: Prisma.$OrganizationPayload<ExtArgs>
+      permissions: Prisma.$AccountGroupPermissionPayload<ExtArgs>[]
+      members: Prisma.$OrganizationMemberGroupPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      organizationId: string
+      name: string
+      description: string | null
+      isSystem: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["accountGroup"]>
+    composites: {}
+  }
+
+  type AccountGroupGetPayload<S extends boolean | null | undefined | AccountGroupDefaultArgs> = $Result.GetResult<Prisma.$AccountGroupPayload, S>
+
+  type AccountGroupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccountGroupFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccountGroupCountAggregateInputType | true
+    }
+
+  export interface AccountGroupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccountGroup'], meta: { name: 'AccountGroup' } }
+    /**
+     * Find zero or one AccountGroup that matches the filter.
+     * @param {AccountGroupFindUniqueArgs} args - Arguments to find a AccountGroup
+     * @example
+     * // Get one AccountGroup
+     * const accountGroup = await prisma.accountGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccountGroupFindUniqueArgs>(args: SelectSubset<T, AccountGroupFindUniqueArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccountGroup that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccountGroupFindUniqueOrThrowArgs} args - Arguments to find a AccountGroup
+     * @example
+     * // Get one AccountGroup
+     * const accountGroup = await prisma.accountGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccountGroupFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountGroupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupFindFirstArgs} args - Arguments to find a AccountGroup
+     * @example
+     * // Get one AccountGroup
+     * const accountGroup = await prisma.accountGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccountGroupFindFirstArgs>(args?: SelectSubset<T, AccountGroupFindFirstArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountGroup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupFindFirstOrThrowArgs} args - Arguments to find a AccountGroup
+     * @example
+     * // Get one AccountGroup
+     * const accountGroup = await prisma.accountGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccountGroupFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountGroupFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccountGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccountGroups
+     * const accountGroups = await prisma.accountGroup.findMany()
+     * 
+     * // Get first 10 AccountGroups
+     * const accountGroups = await prisma.accountGroup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accountGroupWithIdOnly = await prisma.accountGroup.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccountGroupFindManyArgs>(args?: SelectSubset<T, AccountGroupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccountGroup.
+     * @param {AccountGroupCreateArgs} args - Arguments to create a AccountGroup.
+     * @example
+     * // Create one AccountGroup
+     * const AccountGroup = await prisma.accountGroup.create({
+     *   data: {
+     *     // ... data to create a AccountGroup
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccountGroupCreateArgs>(args: SelectSubset<T, AccountGroupCreateArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccountGroups.
+     * @param {AccountGroupCreateManyArgs} args - Arguments to create many AccountGroups.
+     * @example
+     * // Create many AccountGroups
+     * const accountGroup = await prisma.accountGroup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccountGroupCreateManyArgs>(args?: SelectSubset<T, AccountGroupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccountGroups and returns the data saved in the database.
+     * @param {AccountGroupCreateManyAndReturnArgs} args - Arguments to create many AccountGroups.
+     * @example
+     * // Create many AccountGroups
+     * const accountGroup = await prisma.accountGroup.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccountGroups and only return the `id`
+     * const accountGroupWithIdOnly = await prisma.accountGroup.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccountGroupCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountGroupCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccountGroup.
+     * @param {AccountGroupDeleteArgs} args - Arguments to delete one AccountGroup.
+     * @example
+     * // Delete one AccountGroup
+     * const AccountGroup = await prisma.accountGroup.delete({
+     *   where: {
+     *     // ... filter to delete one AccountGroup
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccountGroupDeleteArgs>(args: SelectSubset<T, AccountGroupDeleteArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccountGroup.
+     * @param {AccountGroupUpdateArgs} args - Arguments to update one AccountGroup.
+     * @example
+     * // Update one AccountGroup
+     * const accountGroup = await prisma.accountGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccountGroupUpdateArgs>(args: SelectSubset<T, AccountGroupUpdateArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccountGroups.
+     * @param {AccountGroupDeleteManyArgs} args - Arguments to filter AccountGroups to delete.
+     * @example
+     * // Delete a few AccountGroups
+     * const { count } = await prisma.accountGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccountGroupDeleteManyArgs>(args?: SelectSubset<T, AccountGroupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccountGroups
+     * const accountGroup = await prisma.accountGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccountGroupUpdateManyArgs>(args: SelectSubset<T, AccountGroupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountGroups and returns the data updated in the database.
+     * @param {AccountGroupUpdateManyAndReturnArgs} args - Arguments to update many AccountGroups.
+     * @example
+     * // Update many AccountGroups
+     * const accountGroup = await prisma.accountGroup.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccountGroups and only return the `id`
+     * const accountGroupWithIdOnly = await prisma.accountGroup.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccountGroupUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountGroupUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccountGroup.
+     * @param {AccountGroupUpsertArgs} args - Arguments to update or create a AccountGroup.
+     * @example
+     * // Update or create a AccountGroup
+     * const accountGroup = await prisma.accountGroup.upsert({
+     *   create: {
+     *     // ... data to create a AccountGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccountGroup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccountGroupUpsertArgs>(args: SelectSubset<T, AccountGroupUpsertArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccountGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupCountArgs} args - Arguments to filter AccountGroups to count.
+     * @example
+     * // Count the number of AccountGroups
+     * const count = await prisma.accountGroup.count({
+     *   where: {
+     *     // ... the filter for the AccountGroups we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccountGroupCountArgs>(
+      args?: Subset<T, AccountGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccountGroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccountGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccountGroupAggregateArgs>(args: Subset<T, AccountGroupAggregateArgs>): Prisma.PrismaPromise<GetAccountGroupAggregateType<T>>
+
+    /**
+     * Group by AccountGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccountGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccountGroupGroupByArgs['orderBy'] }
+        : { orderBy?: AccountGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccountGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccountGroup model
+   */
+  readonly fields: AccountGroupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccountGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccountGroupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    permissions<T extends AccountGroup$permissionsArgs<ExtArgs> = {}>(args?: Subset<T, AccountGroup$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    members<T extends AccountGroup$membersArgs<ExtArgs> = {}>(args?: Subset<T, AccountGroup$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccountGroup model
+   */
+  interface AccountGroupFieldRefs {
+    readonly id: FieldRef<"AccountGroup", 'String'>
+    readonly organizationId: FieldRef<"AccountGroup", 'String'>
+    readonly name: FieldRef<"AccountGroup", 'String'>
+    readonly description: FieldRef<"AccountGroup", 'String'>
+    readonly isSystem: FieldRef<"AccountGroup", 'Boolean'>
+    readonly createdAt: FieldRef<"AccountGroup", 'DateTime'>
+    readonly updatedAt: FieldRef<"AccountGroup", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccountGroup findUnique
+   */
+  export type AccountGroupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroup to fetch.
+     */
+    where: AccountGroupWhereUniqueInput
+  }
+
+  /**
+   * AccountGroup findUniqueOrThrow
+   */
+  export type AccountGroupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroup to fetch.
+     */
+    where: AccountGroupWhereUniqueInput
+  }
+
+  /**
+   * AccountGroup findFirst
+   */
+  export type AccountGroupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroup to fetch.
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroups to fetch.
+     */
+    orderBy?: AccountGroupOrderByWithRelationInput | AccountGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountGroups.
+     */
+    cursor?: AccountGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroups.
+     */
+    distinct?: AccountGroupScalarFieldEnum | AccountGroupScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroup findFirstOrThrow
+   */
+  export type AccountGroupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroup to fetch.
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroups to fetch.
+     */
+    orderBy?: AccountGroupOrderByWithRelationInput | AccountGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountGroups.
+     */
+    cursor?: AccountGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroups.
+     */
+    distinct?: AccountGroupScalarFieldEnum | AccountGroupScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroup findMany
+   */
+  export type AccountGroupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroups to fetch.
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroups to fetch.
+     */
+    orderBy?: AccountGroupOrderByWithRelationInput | AccountGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccountGroups.
+     */
+    cursor?: AccountGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroups.
+     */
+    distinct?: AccountGroupScalarFieldEnum | AccountGroupScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroup create
+   */
+  export type AccountGroupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccountGroup.
+     */
+    data: XOR<AccountGroupCreateInput, AccountGroupUncheckedCreateInput>
+  }
+
+  /**
+   * AccountGroup createMany
+   */
+  export type AccountGroupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccountGroups.
+     */
+    data: AccountGroupCreateManyInput | AccountGroupCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccountGroup createManyAndReturn
+   */
+  export type AccountGroupCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccountGroups.
+     */
+    data: AccountGroupCreateManyInput | AccountGroupCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountGroup update
+   */
+  export type AccountGroupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccountGroup.
+     */
+    data: XOR<AccountGroupUpdateInput, AccountGroupUncheckedUpdateInput>
+    /**
+     * Choose, which AccountGroup to update.
+     */
+    where: AccountGroupWhereUniqueInput
+  }
+
+  /**
+   * AccountGroup updateMany
+   */
+  export type AccountGroupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccountGroups.
+     */
+    data: XOR<AccountGroupUpdateManyMutationInput, AccountGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountGroups to update
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * Limit how many AccountGroups to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountGroup updateManyAndReturn
+   */
+  export type AccountGroupUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * The data used to update AccountGroups.
+     */
+    data: XOR<AccountGroupUpdateManyMutationInput, AccountGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountGroups to update
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * Limit how many AccountGroups to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountGroup upsert
+   */
+  export type AccountGroupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccountGroup to update in case it exists.
+     */
+    where: AccountGroupWhereUniqueInput
+    /**
+     * In case the AccountGroup found by the `where` argument doesn't exist, create a new AccountGroup with this data.
+     */
+    create: XOR<AccountGroupCreateInput, AccountGroupUncheckedCreateInput>
+    /**
+     * In case the AccountGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccountGroupUpdateInput, AccountGroupUncheckedUpdateInput>
+  }
+
+  /**
+   * AccountGroup delete
+   */
+  export type AccountGroupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+    /**
+     * Filter which AccountGroup to delete.
+     */
+    where: AccountGroupWhereUniqueInput
+  }
+
+  /**
+   * AccountGroup deleteMany
+   */
+  export type AccountGroupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountGroups to delete
+     */
+    where?: AccountGroupWhereInput
+    /**
+     * Limit how many AccountGroups to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountGroup.permissions
+   */
+  export type AccountGroup$permissionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    where?: AccountGroupPermissionWhereInput
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountGroupPermissionScalarFieldEnum | AccountGroupPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroup.members
+   */
+  export type AccountGroup$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    where?: OrganizationMemberGroupWhereInput
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroup without action
+   */
+  export type AccountGroupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroup
+     */
+    select?: AccountGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroup
+     */
+    omit?: AccountGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccountGroupPermission
+   */
+
+  export type AggregateAccountGroupPermission = {
+    _count: AccountGroupPermissionCountAggregateOutputType | null
+    _min: AccountGroupPermissionMinAggregateOutputType | null
+    _max: AccountGroupPermissionMaxAggregateOutputType | null
+  }
+
+  export type AccountGroupPermissionMinAggregateOutputType = {
+    id: string | null
+    groupId: string | null
+    permissionId: string | null
+    createdAt: Date | null
+  }
+
+  export type AccountGroupPermissionMaxAggregateOutputType = {
+    id: string | null
+    groupId: string | null
+    permissionId: string | null
+    createdAt: Date | null
+  }
+
+  export type AccountGroupPermissionCountAggregateOutputType = {
+    id: number
+    groupId: number
+    permissionId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AccountGroupPermissionMinAggregateInputType = {
+    id?: true
+    groupId?: true
+    permissionId?: true
+    createdAt?: true
+  }
+
+  export type AccountGroupPermissionMaxAggregateInputType = {
+    id?: true
+    groupId?: true
+    permissionId?: true
+    createdAt?: true
+  }
+
+  export type AccountGroupPermissionCountAggregateInputType = {
+    id?: true
+    groupId?: true
+    permissionId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AccountGroupPermissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountGroupPermission to aggregate.
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroupPermissions to fetch.
+     */
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroupPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroupPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccountGroupPermissions
+    **/
+    _count?: true | AccountGroupPermissionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccountGroupPermissionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccountGroupPermissionMaxAggregateInputType
+  }
+
+  export type GetAccountGroupPermissionAggregateType<T extends AccountGroupPermissionAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccountGroupPermission]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccountGroupPermission[P]>
+      : GetScalarType<T[P], AggregateAccountGroupPermission[P]>
+  }
+
+
+
+
+  export type AccountGroupPermissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountGroupPermissionWhereInput
+    orderBy?: AccountGroupPermissionOrderByWithAggregationInput | AccountGroupPermissionOrderByWithAggregationInput[]
+    by: AccountGroupPermissionScalarFieldEnum[] | AccountGroupPermissionScalarFieldEnum
+    having?: AccountGroupPermissionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccountGroupPermissionCountAggregateInputType | true
+    _min?: AccountGroupPermissionMinAggregateInputType
+    _max?: AccountGroupPermissionMaxAggregateInputType
+  }
+
+  export type AccountGroupPermissionGroupByOutputType = {
+    id: string
+    groupId: string
+    permissionId: string
+    createdAt: Date
+    _count: AccountGroupPermissionCountAggregateOutputType | null
+    _min: AccountGroupPermissionMinAggregateOutputType | null
+    _max: AccountGroupPermissionMaxAggregateOutputType | null
+  }
+
+  type GetAccountGroupPermissionGroupByPayload<T extends AccountGroupPermissionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccountGroupPermissionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccountGroupPermissionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccountGroupPermissionGroupByOutputType[P]>
+            : GetScalarType<T[P], AccountGroupPermissionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccountGroupPermissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    permissionId?: boolean
+    createdAt?: boolean
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroupPermission"]>
+
+  export type AccountGroupPermissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    permissionId?: boolean
+    createdAt?: boolean
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroupPermission"]>
+
+  export type AccountGroupPermissionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    groupId?: boolean
+    permissionId?: boolean
+    createdAt?: boolean
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["accountGroupPermission"]>
+
+  export type AccountGroupPermissionSelectScalar = {
+    id?: boolean
+    groupId?: boolean
+    permissionId?: boolean
+    createdAt?: boolean
+  }
+
+  export type AccountGroupPermissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "groupId" | "permissionId" | "createdAt", ExtArgs["result"]["accountGroupPermission"]>
+  export type AccountGroupPermissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }
+  export type AccountGroupPermissionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }
+  export type AccountGroupPermissionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    permission?: boolean | PermissionDefaultArgs<ExtArgs>
+  }
+
+  export type $AccountGroupPermissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccountGroupPermission"
+    objects: {
+      group: Prisma.$AccountGroupPayload<ExtArgs>
+      permission: Prisma.$PermissionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      groupId: string
+      permissionId: string
+      createdAt: Date
+    }, ExtArgs["result"]["accountGroupPermission"]>
+    composites: {}
+  }
+
+  type AccountGroupPermissionGetPayload<S extends boolean | null | undefined | AccountGroupPermissionDefaultArgs> = $Result.GetResult<Prisma.$AccountGroupPermissionPayload, S>
+
+  type AccountGroupPermissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccountGroupPermissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccountGroupPermissionCountAggregateInputType | true
+    }
+
+  export interface AccountGroupPermissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccountGroupPermission'], meta: { name: 'AccountGroupPermission' } }
+    /**
+     * Find zero or one AccountGroupPermission that matches the filter.
+     * @param {AccountGroupPermissionFindUniqueArgs} args - Arguments to find a AccountGroupPermission
+     * @example
+     * // Get one AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccountGroupPermissionFindUniqueArgs>(args: SelectSubset<T, AccountGroupPermissionFindUniqueArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccountGroupPermission that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccountGroupPermissionFindUniqueOrThrowArgs} args - Arguments to find a AccountGroupPermission
+     * @example
+     * // Get one AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccountGroupPermissionFindUniqueOrThrowArgs>(args: SelectSubset<T, AccountGroupPermissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountGroupPermission that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionFindFirstArgs} args - Arguments to find a AccountGroupPermission
+     * @example
+     * // Get one AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccountGroupPermissionFindFirstArgs>(args?: SelectSubset<T, AccountGroupPermissionFindFirstArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccountGroupPermission that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionFindFirstOrThrowArgs} args - Arguments to find a AccountGroupPermission
+     * @example
+     * // Get one AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccountGroupPermissionFindFirstOrThrowArgs>(args?: SelectSubset<T, AccountGroupPermissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccountGroupPermissions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccountGroupPermissions
+     * const accountGroupPermissions = await prisma.accountGroupPermission.findMany()
+     * 
+     * // Get first 10 AccountGroupPermissions
+     * const accountGroupPermissions = await prisma.accountGroupPermission.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accountGroupPermissionWithIdOnly = await prisma.accountGroupPermission.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccountGroupPermissionFindManyArgs>(args?: SelectSubset<T, AccountGroupPermissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccountGroupPermission.
+     * @param {AccountGroupPermissionCreateArgs} args - Arguments to create a AccountGroupPermission.
+     * @example
+     * // Create one AccountGroupPermission
+     * const AccountGroupPermission = await prisma.accountGroupPermission.create({
+     *   data: {
+     *     // ... data to create a AccountGroupPermission
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccountGroupPermissionCreateArgs>(args: SelectSubset<T, AccountGroupPermissionCreateArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccountGroupPermissions.
+     * @param {AccountGroupPermissionCreateManyArgs} args - Arguments to create many AccountGroupPermissions.
+     * @example
+     * // Create many AccountGroupPermissions
+     * const accountGroupPermission = await prisma.accountGroupPermission.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccountGroupPermissionCreateManyArgs>(args?: SelectSubset<T, AccountGroupPermissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccountGroupPermissions and returns the data saved in the database.
+     * @param {AccountGroupPermissionCreateManyAndReturnArgs} args - Arguments to create many AccountGroupPermissions.
+     * @example
+     * // Create many AccountGroupPermissions
+     * const accountGroupPermission = await prisma.accountGroupPermission.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccountGroupPermissions and only return the `id`
+     * const accountGroupPermissionWithIdOnly = await prisma.accountGroupPermission.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccountGroupPermissionCreateManyAndReturnArgs>(args?: SelectSubset<T, AccountGroupPermissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccountGroupPermission.
+     * @param {AccountGroupPermissionDeleteArgs} args - Arguments to delete one AccountGroupPermission.
+     * @example
+     * // Delete one AccountGroupPermission
+     * const AccountGroupPermission = await prisma.accountGroupPermission.delete({
+     *   where: {
+     *     // ... filter to delete one AccountGroupPermission
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccountGroupPermissionDeleteArgs>(args: SelectSubset<T, AccountGroupPermissionDeleteArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccountGroupPermission.
+     * @param {AccountGroupPermissionUpdateArgs} args - Arguments to update one AccountGroupPermission.
+     * @example
+     * // Update one AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccountGroupPermissionUpdateArgs>(args: SelectSubset<T, AccountGroupPermissionUpdateArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccountGroupPermissions.
+     * @param {AccountGroupPermissionDeleteManyArgs} args - Arguments to filter AccountGroupPermissions to delete.
+     * @example
+     * // Delete a few AccountGroupPermissions
+     * const { count } = await prisma.accountGroupPermission.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccountGroupPermissionDeleteManyArgs>(args?: SelectSubset<T, AccountGroupPermissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountGroupPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccountGroupPermissions
+     * const accountGroupPermission = await prisma.accountGroupPermission.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccountGroupPermissionUpdateManyArgs>(args: SelectSubset<T, AccountGroupPermissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccountGroupPermissions and returns the data updated in the database.
+     * @param {AccountGroupPermissionUpdateManyAndReturnArgs} args - Arguments to update many AccountGroupPermissions.
+     * @example
+     * // Update many AccountGroupPermissions
+     * const accountGroupPermission = await prisma.accountGroupPermission.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccountGroupPermissions and only return the `id`
+     * const accountGroupPermissionWithIdOnly = await prisma.accountGroupPermission.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccountGroupPermissionUpdateManyAndReturnArgs>(args: SelectSubset<T, AccountGroupPermissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccountGroupPermission.
+     * @param {AccountGroupPermissionUpsertArgs} args - Arguments to update or create a AccountGroupPermission.
+     * @example
+     * // Update or create a AccountGroupPermission
+     * const accountGroupPermission = await prisma.accountGroupPermission.upsert({
+     *   create: {
+     *     // ... data to create a AccountGroupPermission
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccountGroupPermission we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccountGroupPermissionUpsertArgs>(args: SelectSubset<T, AccountGroupPermissionUpsertArgs<ExtArgs>>): Prisma__AccountGroupPermissionClient<$Result.GetResult<Prisma.$AccountGroupPermissionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccountGroupPermissions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionCountArgs} args - Arguments to filter AccountGroupPermissions to count.
+     * @example
+     * // Count the number of AccountGroupPermissions
+     * const count = await prisma.accountGroupPermission.count({
+     *   where: {
+     *     // ... the filter for the AccountGroupPermissions we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccountGroupPermissionCountArgs>(
+      args?: Subset<T, AccountGroupPermissionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccountGroupPermissionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccountGroupPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccountGroupPermissionAggregateArgs>(args: Subset<T, AccountGroupPermissionAggregateArgs>): Prisma.PrismaPromise<GetAccountGroupPermissionAggregateType<T>>
+
+    /**
+     * Group by AccountGroupPermission.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccountGroupPermissionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccountGroupPermissionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccountGroupPermissionGroupByArgs['orderBy'] }
+        : { orderBy?: AccountGroupPermissionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccountGroupPermissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccountGroupPermissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccountGroupPermission model
+   */
+  readonly fields: AccountGroupPermissionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccountGroupPermission.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccountGroupPermissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends AccountGroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountGroupDefaultArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    permission<T extends PermissionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PermissionDefaultArgs<ExtArgs>>): Prisma__PermissionClient<$Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccountGroupPermission model
+   */
+  interface AccountGroupPermissionFieldRefs {
+    readonly id: FieldRef<"AccountGroupPermission", 'String'>
+    readonly groupId: FieldRef<"AccountGroupPermission", 'String'>
+    readonly permissionId: FieldRef<"AccountGroupPermission", 'String'>
+    readonly createdAt: FieldRef<"AccountGroupPermission", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccountGroupPermission findUnique
+   */
+  export type AccountGroupPermissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroupPermission to fetch.
+     */
+    where: AccountGroupPermissionWhereUniqueInput
+  }
+
+  /**
+   * AccountGroupPermission findUniqueOrThrow
+   */
+  export type AccountGroupPermissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroupPermission to fetch.
+     */
+    where: AccountGroupPermissionWhereUniqueInput
+  }
+
+  /**
+   * AccountGroupPermission findFirst
+   */
+  export type AccountGroupPermissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroupPermission to fetch.
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroupPermissions to fetch.
+     */
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountGroupPermissions.
+     */
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroupPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroupPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroupPermissions.
+     */
+    distinct?: AccountGroupPermissionScalarFieldEnum | AccountGroupPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroupPermission findFirstOrThrow
+   */
+  export type AccountGroupPermissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroupPermission to fetch.
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroupPermissions to fetch.
+     */
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccountGroupPermissions.
+     */
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroupPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroupPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroupPermissions.
+     */
+    distinct?: AccountGroupPermissionScalarFieldEnum | AccountGroupPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroupPermission findMany
+   */
+  export type AccountGroupPermissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter, which AccountGroupPermissions to fetch.
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccountGroupPermissions to fetch.
+     */
+    orderBy?: AccountGroupPermissionOrderByWithRelationInput | AccountGroupPermissionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccountGroupPermissions.
+     */
+    cursor?: AccountGroupPermissionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccountGroupPermissions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccountGroupPermissions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccountGroupPermissions.
+     */
+    distinct?: AccountGroupPermissionScalarFieldEnum | AccountGroupPermissionScalarFieldEnum[]
+  }
+
+  /**
+   * AccountGroupPermission create
+   */
+  export type AccountGroupPermissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AccountGroupPermission.
+     */
+    data: XOR<AccountGroupPermissionCreateInput, AccountGroupPermissionUncheckedCreateInput>
+  }
+
+  /**
+   * AccountGroupPermission createMany
+   */
+  export type AccountGroupPermissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccountGroupPermissions.
+     */
+    data: AccountGroupPermissionCreateManyInput | AccountGroupPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccountGroupPermission createManyAndReturn
+   */
+  export type AccountGroupPermissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccountGroupPermissions.
+     */
+    data: AccountGroupPermissionCreateManyInput | AccountGroupPermissionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountGroupPermission update
+   */
+  export type AccountGroupPermissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AccountGroupPermission.
+     */
+    data: XOR<AccountGroupPermissionUpdateInput, AccountGroupPermissionUncheckedUpdateInput>
+    /**
+     * Choose, which AccountGroupPermission to update.
+     */
+    where: AccountGroupPermissionWhereUniqueInput
+  }
+
+  /**
+   * AccountGroupPermission updateMany
+   */
+  export type AccountGroupPermissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccountGroupPermissions.
+     */
+    data: XOR<AccountGroupPermissionUpdateManyMutationInput, AccountGroupPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountGroupPermissions to update
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * Limit how many AccountGroupPermissions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountGroupPermission updateManyAndReturn
+   */
+  export type AccountGroupPermissionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * The data used to update AccountGroupPermissions.
+     */
+    data: XOR<AccountGroupPermissionUpdateManyMutationInput, AccountGroupPermissionUncheckedUpdateManyInput>
+    /**
+     * Filter which AccountGroupPermissions to update
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * Limit how many AccountGroupPermissions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AccountGroupPermission upsert
+   */
+  export type AccountGroupPermissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AccountGroupPermission to update in case it exists.
+     */
+    where: AccountGroupPermissionWhereUniqueInput
+    /**
+     * In case the AccountGroupPermission found by the `where` argument doesn't exist, create a new AccountGroupPermission with this data.
+     */
+    create: XOR<AccountGroupPermissionCreateInput, AccountGroupPermissionUncheckedCreateInput>
+    /**
+     * In case the AccountGroupPermission was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccountGroupPermissionUpdateInput, AccountGroupPermissionUncheckedUpdateInput>
+  }
+
+  /**
+   * AccountGroupPermission delete
+   */
+  export type AccountGroupPermissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+    /**
+     * Filter which AccountGroupPermission to delete.
+     */
+    where: AccountGroupPermissionWhereUniqueInput
+  }
+
+  /**
+   * AccountGroupPermission deleteMany
+   */
+  export type AccountGroupPermissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccountGroupPermissions to delete
+     */
+    where?: AccountGroupPermissionWhereInput
+    /**
+     * Limit how many AccountGroupPermissions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccountGroupPermission without action
+   */
+  export type AccountGroupPermissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccountGroupPermission
+     */
+    select?: AccountGroupPermissionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccountGroupPermission
+     */
+    omit?: AccountGroupPermissionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountGroupPermissionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OrganizationMemberGroup
+   */
+
+  export type AggregateOrganizationMemberGroup = {
+    _count: OrganizationMemberGroupCountAggregateOutputType | null
+    _min: OrganizationMemberGroupMinAggregateOutputType | null
+    _max: OrganizationMemberGroupMaxAggregateOutputType | null
+  }
+
+  export type OrganizationMemberGroupMinAggregateOutputType = {
+    id: string | null
+    organizationMemberId: string | null
+    accountGroupId: string | null
+    organizationId: string | null
+    createdAt: Date | null
+  }
+
+  export type OrganizationMemberGroupMaxAggregateOutputType = {
+    id: string | null
+    organizationMemberId: string | null
+    accountGroupId: string | null
+    organizationId: string | null
+    createdAt: Date | null
+  }
+
+  export type OrganizationMemberGroupCountAggregateOutputType = {
+    id: number
+    organizationMemberId: number
+    accountGroupId: number
+    organizationId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type OrganizationMemberGroupMinAggregateInputType = {
+    id?: true
+    organizationMemberId?: true
+    accountGroupId?: true
+    organizationId?: true
+    createdAt?: true
+  }
+
+  export type OrganizationMemberGroupMaxAggregateInputType = {
+    id?: true
+    organizationMemberId?: true
+    accountGroupId?: true
+    organizationId?: true
+    createdAt?: true
+  }
+
+  export type OrganizationMemberGroupCountAggregateInputType = {
+    id?: true
+    organizationMemberId?: true
+    accountGroupId?: true
+    organizationId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type OrganizationMemberGroupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrganizationMemberGroup to aggregate.
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizationMemberGroups to fetch.
+     */
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizationMemberGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizationMemberGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OrganizationMemberGroups
+    **/
+    _count?: true | OrganizationMemberGroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrganizationMemberGroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrganizationMemberGroupMaxAggregateInputType
+  }
+
+  export type GetOrganizationMemberGroupAggregateType<T extends OrganizationMemberGroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrganizationMemberGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrganizationMemberGroup[P]>
+      : GetScalarType<T[P], AggregateOrganizationMemberGroup[P]>
+  }
+
+
+
+
+  export type OrganizationMemberGroupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrganizationMemberGroupWhereInput
+    orderBy?: OrganizationMemberGroupOrderByWithAggregationInput | OrganizationMemberGroupOrderByWithAggregationInput[]
+    by: OrganizationMemberGroupScalarFieldEnum[] | OrganizationMemberGroupScalarFieldEnum
+    having?: OrganizationMemberGroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrganizationMemberGroupCountAggregateInputType | true
+    _min?: OrganizationMemberGroupMinAggregateInputType
+    _max?: OrganizationMemberGroupMaxAggregateInputType
+  }
+
+  export type OrganizationMemberGroupGroupByOutputType = {
+    id: string
+    organizationMemberId: string
+    accountGroupId: string
+    organizationId: string
+    createdAt: Date
+    _count: OrganizationMemberGroupCountAggregateOutputType | null
+    _min: OrganizationMemberGroupMinAggregateOutputType | null
+    _max: OrganizationMemberGroupMaxAggregateOutputType | null
+  }
+
+  type GetOrganizationMemberGroupGroupByPayload<T extends OrganizationMemberGroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrganizationMemberGroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrganizationMemberGroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrganizationMemberGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], OrganizationMemberGroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrganizationMemberGroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationMemberId?: boolean
+    accountGroupId?: boolean
+    organizationId?: boolean
+    createdAt?: boolean
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organizationMemberGroup"]>
+
+  export type OrganizationMemberGroupSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationMemberId?: boolean
+    accountGroupId?: boolean
+    organizationId?: boolean
+    createdAt?: boolean
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organizationMemberGroup"]>
+
+  export type OrganizationMemberGroupSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationMemberId?: boolean
+    accountGroupId?: boolean
+    organizationId?: boolean
+    createdAt?: boolean
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["organizationMemberGroup"]>
+
+  export type OrganizationMemberGroupSelectScalar = {
+    id?: boolean
+    organizationMemberId?: boolean
+    accountGroupId?: boolean
+    organizationId?: boolean
+    createdAt?: boolean
+  }
+
+  export type OrganizationMemberGroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationMemberId" | "accountGroupId" | "organizationId" | "createdAt", ExtArgs["result"]["organizationMemberGroup"]>
+  export type OrganizationMemberGroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+  export type OrganizationMemberGroupIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+  export type OrganizationMemberGroupIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organizationMember?: boolean | OrganizationMemberDefaultArgs<ExtArgs>
+    accountGroup?: boolean | AccountGroupDefaultArgs<ExtArgs>
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+
+  export type $OrganizationMemberGroupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OrganizationMemberGroup"
+    objects: {
+      organizationMember: Prisma.$OrganizationMemberPayload<ExtArgs>
+      accountGroup: Prisma.$AccountGroupPayload<ExtArgs>
+      organization: Prisma.$OrganizationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      organizationMemberId: string
+      accountGroupId: string
+      organizationId: string
+      createdAt: Date
+    }, ExtArgs["result"]["organizationMemberGroup"]>
+    composites: {}
+  }
+
+  type OrganizationMemberGroupGetPayload<S extends boolean | null | undefined | OrganizationMemberGroupDefaultArgs> = $Result.GetResult<Prisma.$OrganizationMemberGroupPayload, S>
+
+  type OrganizationMemberGroupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OrganizationMemberGroupFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OrganizationMemberGroupCountAggregateInputType | true
+    }
+
+  export interface OrganizationMemberGroupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrganizationMemberGroup'], meta: { name: 'OrganizationMemberGroup' } }
+    /**
+     * Find zero or one OrganizationMemberGroup that matches the filter.
+     * @param {OrganizationMemberGroupFindUniqueArgs} args - Arguments to find a OrganizationMemberGroup
+     * @example
+     * // Get one OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrganizationMemberGroupFindUniqueArgs>(args: SelectSubset<T, OrganizationMemberGroupFindUniqueArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OrganizationMemberGroup that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OrganizationMemberGroupFindUniqueOrThrowArgs} args - Arguments to find a OrganizationMemberGroup
+     * @example
+     * // Get one OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrganizationMemberGroupFindUniqueOrThrowArgs>(args: SelectSubset<T, OrganizationMemberGroupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrganizationMemberGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupFindFirstArgs} args - Arguments to find a OrganizationMemberGroup
+     * @example
+     * // Get one OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrganizationMemberGroupFindFirstArgs>(args?: SelectSubset<T, OrganizationMemberGroupFindFirstArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OrganizationMemberGroup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupFindFirstOrThrowArgs} args - Arguments to find a OrganizationMemberGroup
+     * @example
+     * // Get one OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrganizationMemberGroupFindFirstOrThrowArgs>(args?: SelectSubset<T, OrganizationMemberGroupFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OrganizationMemberGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OrganizationMemberGroups
+     * const organizationMemberGroups = await prisma.organizationMemberGroup.findMany()
+     * 
+     * // Get first 10 OrganizationMemberGroups
+     * const organizationMemberGroups = await prisma.organizationMemberGroup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const organizationMemberGroupWithIdOnly = await prisma.organizationMemberGroup.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrganizationMemberGroupFindManyArgs>(args?: SelectSubset<T, OrganizationMemberGroupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OrganizationMemberGroup.
+     * @param {OrganizationMemberGroupCreateArgs} args - Arguments to create a OrganizationMemberGroup.
+     * @example
+     * // Create one OrganizationMemberGroup
+     * const OrganizationMemberGroup = await prisma.organizationMemberGroup.create({
+     *   data: {
+     *     // ... data to create a OrganizationMemberGroup
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrganizationMemberGroupCreateArgs>(args: SelectSubset<T, OrganizationMemberGroupCreateArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OrganizationMemberGroups.
+     * @param {OrganizationMemberGroupCreateManyArgs} args - Arguments to create many OrganizationMemberGroups.
+     * @example
+     * // Create many OrganizationMemberGroups
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrganizationMemberGroupCreateManyArgs>(args?: SelectSubset<T, OrganizationMemberGroupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OrganizationMemberGroups and returns the data saved in the database.
+     * @param {OrganizationMemberGroupCreateManyAndReturnArgs} args - Arguments to create many OrganizationMemberGroups.
+     * @example
+     * // Create many OrganizationMemberGroups
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OrganizationMemberGroups and only return the `id`
+     * const organizationMemberGroupWithIdOnly = await prisma.organizationMemberGroup.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrganizationMemberGroupCreateManyAndReturnArgs>(args?: SelectSubset<T, OrganizationMemberGroupCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OrganizationMemberGroup.
+     * @param {OrganizationMemberGroupDeleteArgs} args - Arguments to delete one OrganizationMemberGroup.
+     * @example
+     * // Delete one OrganizationMemberGroup
+     * const OrganizationMemberGroup = await prisma.organizationMemberGroup.delete({
+     *   where: {
+     *     // ... filter to delete one OrganizationMemberGroup
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrganizationMemberGroupDeleteArgs>(args: SelectSubset<T, OrganizationMemberGroupDeleteArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OrganizationMemberGroup.
+     * @param {OrganizationMemberGroupUpdateArgs} args - Arguments to update one OrganizationMemberGroup.
+     * @example
+     * // Update one OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrganizationMemberGroupUpdateArgs>(args: SelectSubset<T, OrganizationMemberGroupUpdateArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OrganizationMemberGroups.
+     * @param {OrganizationMemberGroupDeleteManyArgs} args - Arguments to filter OrganizationMemberGroups to delete.
+     * @example
+     * // Delete a few OrganizationMemberGroups
+     * const { count } = await prisma.organizationMemberGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrganizationMemberGroupDeleteManyArgs>(args?: SelectSubset<T, OrganizationMemberGroupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrganizationMemberGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OrganizationMemberGroups
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrganizationMemberGroupUpdateManyArgs>(args: SelectSubset<T, OrganizationMemberGroupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OrganizationMemberGroups and returns the data updated in the database.
+     * @param {OrganizationMemberGroupUpdateManyAndReturnArgs} args - Arguments to update many OrganizationMemberGroups.
+     * @example
+     * // Update many OrganizationMemberGroups
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OrganizationMemberGroups and only return the `id`
+     * const organizationMemberGroupWithIdOnly = await prisma.organizationMemberGroup.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OrganizationMemberGroupUpdateManyAndReturnArgs>(args: SelectSubset<T, OrganizationMemberGroupUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OrganizationMemberGroup.
+     * @param {OrganizationMemberGroupUpsertArgs} args - Arguments to update or create a OrganizationMemberGroup.
+     * @example
+     * // Update or create a OrganizationMemberGroup
+     * const organizationMemberGroup = await prisma.organizationMemberGroup.upsert({
+     *   create: {
+     *     // ... data to create a OrganizationMemberGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OrganizationMemberGroup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrganizationMemberGroupUpsertArgs>(args: SelectSubset<T, OrganizationMemberGroupUpsertArgs<ExtArgs>>): Prisma__OrganizationMemberGroupClient<$Result.GetResult<Prisma.$OrganizationMemberGroupPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OrganizationMemberGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupCountArgs} args - Arguments to filter OrganizationMemberGroups to count.
+     * @example
+     * // Count the number of OrganizationMemberGroups
+     * const count = await prisma.organizationMemberGroup.count({
+     *   where: {
+     *     // ... the filter for the OrganizationMemberGroups we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrganizationMemberGroupCountArgs>(
+      args?: Subset<T, OrganizationMemberGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrganizationMemberGroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OrganizationMemberGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrganizationMemberGroupAggregateArgs>(args: Subset<T, OrganizationMemberGroupAggregateArgs>): Prisma.PrismaPromise<GetOrganizationMemberGroupAggregateType<T>>
+
+    /**
+     * Group by OrganizationMemberGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrganizationMemberGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrganizationMemberGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrganizationMemberGroupGroupByArgs['orderBy'] }
+        : { orderBy?: OrganizationMemberGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrganizationMemberGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrganizationMemberGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OrganizationMemberGroup model
+   */
+  readonly fields: OrganizationMemberGroupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OrganizationMemberGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrganizationMemberGroupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organizationMember<T extends OrganizationMemberDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationMemberDefaultArgs<ExtArgs>>): Prisma__OrganizationMemberClient<$Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    accountGroup<T extends AccountGroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AccountGroupDefaultArgs<ExtArgs>>): Prisma__AccountGroupClient<$Result.GetResult<Prisma.$AccountGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OrganizationMemberGroup model
+   */
+  interface OrganizationMemberGroupFieldRefs {
+    readonly id: FieldRef<"OrganizationMemberGroup", 'String'>
+    readonly organizationMemberId: FieldRef<"OrganizationMemberGroup", 'String'>
+    readonly accountGroupId: FieldRef<"OrganizationMemberGroup", 'String'>
+    readonly organizationId: FieldRef<"OrganizationMemberGroup", 'String'>
+    readonly createdAt: FieldRef<"OrganizationMemberGroup", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OrganizationMemberGroup findUnique
+   */
+  export type OrganizationMemberGroupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizationMemberGroup to fetch.
+     */
+    where: OrganizationMemberGroupWhereUniqueInput
+  }
+
+  /**
+   * OrganizationMemberGroup findUniqueOrThrow
+   */
+  export type OrganizationMemberGroupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizationMemberGroup to fetch.
+     */
+    where: OrganizationMemberGroupWhereUniqueInput
+  }
+
+  /**
+   * OrganizationMemberGroup findFirst
+   */
+  export type OrganizationMemberGroupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizationMemberGroup to fetch.
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizationMemberGroups to fetch.
+     */
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrganizationMemberGroups.
+     */
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizationMemberGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizationMemberGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrganizationMemberGroups.
+     */
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizationMemberGroup findFirstOrThrow
+   */
+  export type OrganizationMemberGroupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizationMemberGroup to fetch.
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizationMemberGroups to fetch.
+     */
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OrganizationMemberGroups.
+     */
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizationMemberGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizationMemberGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrganizationMemberGroups.
+     */
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizationMemberGroup findMany
+   */
+  export type OrganizationMemberGroupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which OrganizationMemberGroups to fetch.
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OrganizationMemberGroups to fetch.
+     */
+    orderBy?: OrganizationMemberGroupOrderByWithRelationInput | OrganizationMemberGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OrganizationMemberGroups.
+     */
+    cursor?: OrganizationMemberGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OrganizationMemberGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OrganizationMemberGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrganizationMemberGroups.
+     */
+    distinct?: OrganizationMemberGroupScalarFieldEnum | OrganizationMemberGroupScalarFieldEnum[]
+  }
+
+  /**
+   * OrganizationMemberGroup create
+   */
+  export type OrganizationMemberGroupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OrganizationMemberGroup.
+     */
+    data: XOR<OrganizationMemberGroupCreateInput, OrganizationMemberGroupUncheckedCreateInput>
+  }
+
+  /**
+   * OrganizationMemberGroup createMany
+   */
+  export type OrganizationMemberGroupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OrganizationMemberGroups.
+     */
+    data: OrganizationMemberGroupCreateManyInput | OrganizationMemberGroupCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OrganizationMemberGroup createManyAndReturn
+   */
+  export type OrganizationMemberGroupCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * The data used to create many OrganizationMemberGroups.
+     */
+    data: OrganizationMemberGroupCreateManyInput | OrganizationMemberGroupCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrganizationMemberGroup update
+   */
+  export type OrganizationMemberGroupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OrganizationMemberGroup.
+     */
+    data: XOR<OrganizationMemberGroupUpdateInput, OrganizationMemberGroupUncheckedUpdateInput>
+    /**
+     * Choose, which OrganizationMemberGroup to update.
+     */
+    where: OrganizationMemberGroupWhereUniqueInput
+  }
+
+  /**
+   * OrganizationMemberGroup updateMany
+   */
+  export type OrganizationMemberGroupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OrganizationMemberGroups.
+     */
+    data: XOR<OrganizationMemberGroupUpdateManyMutationInput, OrganizationMemberGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which OrganizationMemberGroups to update
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * Limit how many OrganizationMemberGroups to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrganizationMemberGroup updateManyAndReturn
+   */
+  export type OrganizationMemberGroupUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * The data used to update OrganizationMemberGroups.
+     */
+    data: XOR<OrganizationMemberGroupUpdateManyMutationInput, OrganizationMemberGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which OrganizationMemberGroups to update
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * Limit how many OrganizationMemberGroups to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OrganizationMemberGroup upsert
+   */
+  export type OrganizationMemberGroupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OrganizationMemberGroup to update in case it exists.
+     */
+    where: OrganizationMemberGroupWhereUniqueInput
+    /**
+     * In case the OrganizationMemberGroup found by the `where` argument doesn't exist, create a new OrganizationMemberGroup with this data.
+     */
+    create: XOR<OrganizationMemberGroupCreateInput, OrganizationMemberGroupUncheckedCreateInput>
+    /**
+     * In case the OrganizationMemberGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrganizationMemberGroupUpdateInput, OrganizationMemberGroupUncheckedUpdateInput>
+  }
+
+  /**
+   * OrganizationMemberGroup delete
+   */
+  export type OrganizationMemberGroupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
+    /**
+     * Filter which OrganizationMemberGroup to delete.
+     */
+    where: OrganizationMemberGroupWhereUniqueInput
+  }
+
+  /**
+   * OrganizationMemberGroup deleteMany
+   */
+  export type OrganizationMemberGroupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OrganizationMemberGroups to delete
+     */
+    where?: OrganizationMemberGroupWhereInput
+    /**
+     * Limit how many OrganizationMemberGroups to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OrganizationMemberGroup without action
+   */
+  export type OrganizationMemberGroupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrganizationMemberGroup
+     */
+    select?: OrganizationMemberGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OrganizationMemberGroup
+     */
+    omit?: OrganizationMemberGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrganizationMemberGroupInclude<ExtArgs> | null
   }
 
 
@@ -39752,6 +44681,51 @@ export namespace Prisma {
   export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalarFieldEnum)[keyof typeof OrganizationMemberScalarFieldEnum]
 
 
+  export const PermissionScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    label: 'label',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+  export const AccountGroupScalarFieldEnum: {
+    id: 'id',
+    organizationId: 'organizationId',
+    name: 'name',
+    description: 'description',
+    isSystem: 'isSystem',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AccountGroupScalarFieldEnum = (typeof AccountGroupScalarFieldEnum)[keyof typeof AccountGroupScalarFieldEnum]
+
+
+  export const AccountGroupPermissionScalarFieldEnum: {
+    id: 'id',
+    groupId: 'groupId',
+    permissionId: 'permissionId',
+    createdAt: 'createdAt'
+  };
+
+  export type AccountGroupPermissionScalarFieldEnum = (typeof AccountGroupPermissionScalarFieldEnum)[keyof typeof AccountGroupPermissionScalarFieldEnum]
+
+
+  export const OrganizationMemberGroupScalarFieldEnum: {
+    id: 'id',
+    organizationMemberId: 'organizationMemberId',
+    accountGroupId: 'accountGroupId',
+    organizationId: 'organizationId',
+    createdAt: 'createdAt'
+  };
+
+  export type OrganizationMemberGroupScalarFieldEnum = (typeof OrganizationMemberGroupScalarFieldEnum)[keyof typeof OrganizationMemberGroupScalarFieldEnum]
+
+
   export const CustomerScalarFieldEnum: {
     id: 'id',
     organizationId: 'organizationId',
@@ -40387,6 +45361,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     members?: OrganizationMemberListRelationFilter
+    accountGroups?: AccountGroupListRelationFilter
+    roleAssignments?: OrganizationMemberGroupListRelationFilter
     customers?: CustomerListRelationFilter
     products?: ProductListRelationFilter
     sales?: SaleListRelationFilter
@@ -40417,6 +45393,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     owner?: UserOrderByWithRelationInput
     members?: OrganizationMemberOrderByRelationAggregateInput
+    accountGroups?: AccountGroupOrderByRelationAggregateInput
+    roleAssignments?: OrganizationMemberGroupOrderByRelationAggregateInput
     customers?: CustomerOrderByRelationAggregateInput
     products?: ProductOrderByRelationAggregateInput
     sales?: SaleOrderByRelationAggregateInput
@@ -40450,6 +45428,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
     members?: OrganizationMemberListRelationFilter
+    accountGroups?: AccountGroupListRelationFilter
+    roleAssignments?: OrganizationMemberGroupListRelationFilter
     customers?: CustomerListRelationFilter
     products?: ProductListRelationFilter
     sales?: SaleListRelationFilter
@@ -40512,6 +45492,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OrganizationMember"> | Date | string
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    accountGroups?: OrganizationMemberGroupListRelationFilter
   }
 
   export type OrganizationMemberOrderByWithRelationInput = {
@@ -40523,6 +45504,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     organization?: OrganizationOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    accountGroups?: OrganizationMemberGroupOrderByRelationAggregateInput
   }
 
   export type OrganizationMemberWhereUniqueInput = Prisma.AtLeast<{
@@ -40538,6 +45520,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OrganizationMember"> | Date | string
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    accountGroups?: OrganizationMemberGroupListRelationFilter
   }, "id" | "organizationId_userId">
 
   export type OrganizationMemberOrderByWithAggregationInput = {
@@ -40562,6 +45545,249 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleWithAggregatesFilter<"OrganizationMember"> | $Enums.OrganizationMemberRole
     createdAt?: DateTimeWithAggregatesFilter<"OrganizationMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OrganizationMember"> | Date | string
+  }
+
+  export type PermissionWhereInput = {
+    AND?: PermissionWhereInput | PermissionWhereInput[]
+    OR?: PermissionWhereInput[]
+    NOT?: PermissionWhereInput | PermissionWhereInput[]
+    id?: StringFilter<"Permission"> | string
+    key?: StringFilter<"Permission"> | string
+    label?: StringFilter<"Permission"> | string
+    createdAt?: DateTimeFilter<"Permission"> | Date | string
+    updatedAt?: DateTimeFilter<"Permission"> | Date | string
+    groups?: AccountGroupPermissionListRelationFilter
+  }
+
+  export type PermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    groups?: AccountGroupPermissionOrderByRelationAggregateInput
+  }
+
+  export type PermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: PermissionWhereInput | PermissionWhereInput[]
+    OR?: PermissionWhereInput[]
+    NOT?: PermissionWhereInput | PermissionWhereInput[]
+    label?: StringFilter<"Permission"> | string
+    createdAt?: DateTimeFilter<"Permission"> | Date | string
+    updatedAt?: DateTimeFilter<"Permission"> | Date | string
+    groups?: AccountGroupPermissionListRelationFilter
+  }, "id" | "key">
+
+  export type PermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PermissionCountOrderByAggregateInput
+    _max?: PermissionMaxOrderByAggregateInput
+    _min?: PermissionMinOrderByAggregateInput
+  }
+
+  export type PermissionScalarWhereWithAggregatesInput = {
+    AND?: PermissionScalarWhereWithAggregatesInput | PermissionScalarWhereWithAggregatesInput[]
+    OR?: PermissionScalarWhereWithAggregatesInput[]
+    NOT?: PermissionScalarWhereWithAggregatesInput | PermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Permission"> | string
+    key?: StringWithAggregatesFilter<"Permission"> | string
+    label?: StringWithAggregatesFilter<"Permission"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Permission"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Permission"> | Date | string
+  }
+
+  export type AccountGroupWhereInput = {
+    AND?: AccountGroupWhereInput | AccountGroupWhereInput[]
+    OR?: AccountGroupWhereInput[]
+    NOT?: AccountGroupWhereInput | AccountGroupWhereInput[]
+    id?: StringFilter<"AccountGroup"> | string
+    organizationId?: StringFilter<"AccountGroup"> | string
+    name?: StringFilter<"AccountGroup"> | string
+    description?: StringNullableFilter<"AccountGroup"> | string | null
+    isSystem?: BoolFilter<"AccountGroup"> | boolean
+    createdAt?: DateTimeFilter<"AccountGroup"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountGroup"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    permissions?: AccountGroupPermissionListRelationFilter
+    members?: OrganizationMemberGroupListRelationFilter
+  }
+
+  export type AccountGroupOrderByWithRelationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isSystem?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organization?: OrganizationOrderByWithRelationInput
+    permissions?: AccountGroupPermissionOrderByRelationAggregateInput
+    members?: OrganizationMemberGroupOrderByRelationAggregateInput
+  }
+
+  export type AccountGroupWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    organizationId_name?: AccountGroupOrganizationIdNameCompoundUniqueInput
+    AND?: AccountGroupWhereInput | AccountGroupWhereInput[]
+    OR?: AccountGroupWhereInput[]
+    NOT?: AccountGroupWhereInput | AccountGroupWhereInput[]
+    organizationId?: StringFilter<"AccountGroup"> | string
+    name?: StringFilter<"AccountGroup"> | string
+    description?: StringNullableFilter<"AccountGroup"> | string | null
+    isSystem?: BoolFilter<"AccountGroup"> | boolean
+    createdAt?: DateTimeFilter<"AccountGroup"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountGroup"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    permissions?: AccountGroupPermissionListRelationFilter
+    members?: OrganizationMemberGroupListRelationFilter
+  }, "id" | "organizationId_name">
+
+  export type AccountGroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isSystem?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AccountGroupCountOrderByAggregateInput
+    _max?: AccountGroupMaxOrderByAggregateInput
+    _min?: AccountGroupMinOrderByAggregateInput
+  }
+
+  export type AccountGroupScalarWhereWithAggregatesInput = {
+    AND?: AccountGroupScalarWhereWithAggregatesInput | AccountGroupScalarWhereWithAggregatesInput[]
+    OR?: AccountGroupScalarWhereWithAggregatesInput[]
+    NOT?: AccountGroupScalarWhereWithAggregatesInput | AccountGroupScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AccountGroup"> | string
+    organizationId?: StringWithAggregatesFilter<"AccountGroup"> | string
+    name?: StringWithAggregatesFilter<"AccountGroup"> | string
+    description?: StringNullableWithAggregatesFilter<"AccountGroup"> | string | null
+    isSystem?: BoolWithAggregatesFilter<"AccountGroup"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AccountGroup"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AccountGroup"> | Date | string
+  }
+
+  export type AccountGroupPermissionWhereInput = {
+    AND?: AccountGroupPermissionWhereInput | AccountGroupPermissionWhereInput[]
+    OR?: AccountGroupPermissionWhereInput[]
+    NOT?: AccountGroupPermissionWhereInput | AccountGroupPermissionWhereInput[]
+    id?: StringFilter<"AccountGroupPermission"> | string
+    groupId?: StringFilter<"AccountGroupPermission"> | string
+    permissionId?: StringFilter<"AccountGroupPermission"> | string
+    createdAt?: DateTimeFilter<"AccountGroupPermission"> | Date | string
+    group?: XOR<AccountGroupScalarRelationFilter, AccountGroupWhereInput>
+    permission?: XOR<PermissionScalarRelationFilter, PermissionWhereInput>
+  }
+
+  export type AccountGroupPermissionOrderByWithRelationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    group?: AccountGroupOrderByWithRelationInput
+    permission?: PermissionOrderByWithRelationInput
+  }
+
+  export type AccountGroupPermissionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    groupId_permissionId?: AccountGroupPermissionGroupIdPermissionIdCompoundUniqueInput
+    AND?: AccountGroupPermissionWhereInput | AccountGroupPermissionWhereInput[]
+    OR?: AccountGroupPermissionWhereInput[]
+    NOT?: AccountGroupPermissionWhereInput | AccountGroupPermissionWhereInput[]
+    groupId?: StringFilter<"AccountGroupPermission"> | string
+    permissionId?: StringFilter<"AccountGroupPermission"> | string
+    createdAt?: DateTimeFilter<"AccountGroupPermission"> | Date | string
+    group?: XOR<AccountGroupScalarRelationFilter, AccountGroupWhereInput>
+    permission?: XOR<PermissionScalarRelationFilter, PermissionWhereInput>
+  }, "id" | "groupId_permissionId">
+
+  export type AccountGroupPermissionOrderByWithAggregationInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+    _count?: AccountGroupPermissionCountOrderByAggregateInput
+    _max?: AccountGroupPermissionMaxOrderByAggregateInput
+    _min?: AccountGroupPermissionMinOrderByAggregateInput
+  }
+
+  export type AccountGroupPermissionScalarWhereWithAggregatesInput = {
+    AND?: AccountGroupPermissionScalarWhereWithAggregatesInput | AccountGroupPermissionScalarWhereWithAggregatesInput[]
+    OR?: AccountGroupPermissionScalarWhereWithAggregatesInput[]
+    NOT?: AccountGroupPermissionScalarWhereWithAggregatesInput | AccountGroupPermissionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AccountGroupPermission"> | string
+    groupId?: StringWithAggregatesFilter<"AccountGroupPermission"> | string
+    permissionId?: StringWithAggregatesFilter<"AccountGroupPermission"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AccountGroupPermission"> | Date | string
+  }
+
+  export type OrganizationMemberGroupWhereInput = {
+    AND?: OrganizationMemberGroupWhereInput | OrganizationMemberGroupWhereInput[]
+    OR?: OrganizationMemberGroupWhereInput[]
+    NOT?: OrganizationMemberGroupWhereInput | OrganizationMemberGroupWhereInput[]
+    id?: StringFilter<"OrganizationMemberGroup"> | string
+    organizationMemberId?: StringFilter<"OrganizationMemberGroup"> | string
+    accountGroupId?: StringFilter<"OrganizationMemberGroup"> | string
+    organizationId?: StringFilter<"OrganizationMemberGroup"> | string
+    createdAt?: DateTimeFilter<"OrganizationMemberGroup"> | Date | string
+    organizationMember?: XOR<OrganizationMemberScalarRelationFilter, OrganizationMemberWhereInput>
+    accountGroup?: XOR<AccountGroupScalarRelationFilter, AccountGroupWhereInput>
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+  }
+
+  export type OrganizationMemberGroupOrderByWithRelationInput = {
+    id?: SortOrder
+    organizationMemberId?: SortOrder
+    accountGroupId?: SortOrder
+    organizationId?: SortOrder
+    createdAt?: SortOrder
+    organizationMember?: OrganizationMemberOrderByWithRelationInput
+    accountGroup?: AccountGroupOrderByWithRelationInput
+    organization?: OrganizationOrderByWithRelationInput
+  }
+
+  export type OrganizationMemberGroupWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    organizationMemberId_accountGroupId?: OrganizationMemberGroupOrganizationMemberIdAccountGroupIdCompoundUniqueInput
+    AND?: OrganizationMemberGroupWhereInput | OrganizationMemberGroupWhereInput[]
+    OR?: OrganizationMemberGroupWhereInput[]
+    NOT?: OrganizationMemberGroupWhereInput | OrganizationMemberGroupWhereInput[]
+    organizationMemberId?: StringFilter<"OrganizationMemberGroup"> | string
+    accountGroupId?: StringFilter<"OrganizationMemberGroup"> | string
+    organizationId?: StringFilter<"OrganizationMemberGroup"> | string
+    createdAt?: DateTimeFilter<"OrganizationMemberGroup"> | Date | string
+    organizationMember?: XOR<OrganizationMemberScalarRelationFilter, OrganizationMemberWhereInput>
+    accountGroup?: XOR<AccountGroupScalarRelationFilter, AccountGroupWhereInput>
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+  }, "id" | "organizationMemberId_accountGroupId">
+
+  export type OrganizationMemberGroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    organizationMemberId?: SortOrder
+    accountGroupId?: SortOrder
+    organizationId?: SortOrder
+    createdAt?: SortOrder
+    _count?: OrganizationMemberGroupCountOrderByAggregateInput
+    _max?: OrganizationMemberGroupMaxOrderByAggregateInput
+    _min?: OrganizationMemberGroupMinOrderByAggregateInput
+  }
+
+  export type OrganizationMemberGroupScalarWhereWithAggregatesInput = {
+    AND?: OrganizationMemberGroupScalarWhereWithAggregatesInput | OrganizationMemberGroupScalarWhereWithAggregatesInput[]
+    OR?: OrganizationMemberGroupScalarWhereWithAggregatesInput[]
+    NOT?: OrganizationMemberGroupScalarWhereWithAggregatesInput | OrganizationMemberGroupScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OrganizationMemberGroup"> | string
+    organizationMemberId?: StringWithAggregatesFilter<"OrganizationMemberGroup"> | string
+    accountGroupId?: StringWithAggregatesFilter<"OrganizationMemberGroup"> | string
+    organizationId?: StringWithAggregatesFilter<"OrganizationMemberGroup"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"OrganizationMemberGroup"> | Date | string
   }
 
   export type CustomerWhereInput = {
@@ -42805,6 +48031,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -42834,6 +48062,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -42863,6 +48093,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -42892,6 +48124,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -42956,6 +48190,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     organization: OrganizationCreateNestedOneWithoutMembersInput
     user: UserCreateNestedOneWithoutOrganizationMembershipsInput
+    accountGroups?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberUncheckedCreateInput = {
@@ -42965,6 +48200,7 @@ export namespace Prisma {
     role: $Enums.OrganizationMemberRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberUpdateInput = {
@@ -42974,6 +48210,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organization?: OrganizationUpdateOneRequiredWithoutMembersNestedInput
     user?: UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput
+    accountGroups?: OrganizationMemberGroupUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberUncheckedUpdateInput = {
@@ -42983,6 +48220,7 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberCreateManyInput = {
@@ -43008,6 +48246,243 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PermissionCreateInput = {
+    id?: string
+    key: string
+    label: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: AccountGroupPermissionCreateNestedManyWithoutPermissionInput
+  }
+
+  export type PermissionUncheckedCreateInput = {
+    id?: string
+    key: string
+    label: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    groups?: AccountGroupPermissionUncheckedCreateNestedManyWithoutPermissionInput
+  }
+
+  export type PermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: AccountGroupPermissionUpdateManyWithoutPermissionNestedInput
+  }
+
+  export type PermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    groups?: AccountGroupPermissionUncheckedUpdateManyWithoutPermissionNestedInput
+  }
+
+  export type PermissionCreateManyInput = {
+    id?: string
+    key: string
+    label: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutAccountGroupsInput
+    permissions?: AccountGroupPermissionCreateNestedManyWithoutGroupInput
+    members?: OrganizationMemberGroupCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupUncheckedCreateInput = {
+    id?: string
+    organizationId: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: AccountGroupPermissionUncheckedCreateNestedManyWithoutGroupInput
+    members?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutAccountGroupsNestedInput
+    permissions?: AccountGroupPermissionUpdateManyWithoutGroupNestedInput
+    members?: OrganizationMemberGroupUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type AccountGroupUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: AccountGroupPermissionUncheckedUpdateManyWithoutGroupNestedInput
+    members?: OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type AccountGroupCreateManyInput = {
+    id?: string
+    organizationId: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AccountGroupUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    group: AccountGroupCreateNestedOneWithoutPermissionsInput
+    permission: PermissionCreateNestedOneWithoutGroupsInput
+  }
+
+  export type AccountGroupPermissionUncheckedCreateInput = {
+    id?: string
+    groupId: string
+    permissionId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: AccountGroupUpdateOneRequiredWithoutPermissionsNestedInput
+    permission?: PermissionUpdateOneRequiredWithoutGroupsNestedInput
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    permissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionCreateManyInput = {
+    id?: string
+    groupId: string
+    permissionId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    permissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    organizationMember: OrganizationMemberCreateNestedOneWithoutAccountGroupsInput
+    accountGroup: AccountGroupCreateNestedOneWithoutMembersInput
+    organization: OrganizationCreateNestedOneWithoutRoleAssignmentsInput
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateInput = {
+    id?: string
+    organizationMemberId: string
+    accountGroupId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organizationMember?: OrganizationMemberUpdateOneRequiredWithoutAccountGroupsNestedInput
+    accountGroup?: AccountGroupUpdateOneRequiredWithoutMembersNestedInput
+    organization?: OrganizationUpdateOneRequiredWithoutRoleAssignmentsNestedInput
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupCreateManyInput = {
+    id?: string
+    organizationMemberId: string
+    accountGroupId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CustomerCreateInput = {
@@ -45428,6 +50903,18 @@ export namespace Prisma {
     none?: OrganizationMemberWhereInput
   }
 
+  export type AccountGroupListRelationFilter = {
+    every?: AccountGroupWhereInput
+    some?: AccountGroupWhereInput
+    none?: AccountGroupWhereInput
+  }
+
+  export type OrganizationMemberGroupListRelationFilter = {
+    every?: OrganizationMemberGroupWhereInput
+    some?: OrganizationMemberGroupWhereInput
+    none?: OrganizationMemberGroupWhereInput
+  }
+
   export type CustomerListRelationFilter = {
     every?: CustomerWhereInput
     some?: CustomerWhereInput
@@ -45518,6 +51005,14 @@ export namespace Prisma {
   }
 
   export type OrganizationMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AccountGroupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrganizationMemberGroupOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -45729,6 +51224,145 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrganizationMemberRoleFilter<$PrismaModel>
     _max?: NestedEnumOrganizationMemberRoleFilter<$PrismaModel>
+  }
+
+  export type AccountGroupPermissionListRelationFilter = {
+    every?: AccountGroupPermissionWhereInput
+    some?: AccountGroupPermissionWhereInput
+    none?: AccountGroupPermissionWhereInput
+  }
+
+  export type AccountGroupPermissionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    label?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountGroupOrganizationIdNameCompoundUniqueInput = {
+    organizationId: string
+    name: string
+  }
+
+  export type AccountGroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountGroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountGroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    isSystem?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AccountGroupScalarRelationFilter = {
+    is?: AccountGroupWhereInput
+    isNot?: AccountGroupWhereInput
+  }
+
+  export type PermissionScalarRelationFilter = {
+    is?: PermissionWhereInput
+    isNot?: PermissionWhereInput
+  }
+
+  export type AccountGroupPermissionGroupIdPermissionIdCompoundUniqueInput = {
+    groupId: string
+    permissionId: string
+  }
+
+  export type AccountGroupPermissionCountOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AccountGroupPermissionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AccountGroupPermissionMinOrderByAggregateInput = {
+    id?: SortOrder
+    groupId?: SortOrder
+    permissionId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrganizationMemberScalarRelationFilter = {
+    is?: OrganizationMemberWhereInput
+    isNot?: OrganizationMemberWhereInput
+  }
+
+  export type OrganizationMemberGroupOrganizationMemberIdAccountGroupIdCompoundUniqueInput = {
+    organizationMemberId: string
+    accountGroupId: string
+  }
+
+  export type OrganizationMemberGroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    organizationMemberId?: SortOrder
+    accountGroupId?: SortOrder
+    organizationId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrganizationMemberGroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    organizationMemberId?: SortOrder
+    accountGroupId?: SortOrder
+    organizationId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type OrganizationMemberGroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    organizationMemberId?: SortOrder
+    accountGroupId?: SortOrder
+    organizationId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type CustomerCountOrderByAggregateInput = {
@@ -47411,6 +53045,20 @@ export namespace Prisma {
     connect?: OrganizationMemberWhereUniqueInput | OrganizationMemberWhereUniqueInput[]
   }
 
+  export type AccountGroupCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput> | AccountGroupCreateWithoutOrganizationInput[] | AccountGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutOrganizationInput | AccountGroupCreateOrConnectWithoutOrganizationInput[]
+    createMany?: AccountGroupCreateManyOrganizationInputEnvelope
+    connect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+  }
+
+  export type OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput> | OrganizationMemberGroupCreateWithoutOrganizationInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+  }
+
   export type CustomerCreateNestedManyWithoutOrganizationInput = {
     create?: XOR<CustomerCreateWithoutOrganizationInput, CustomerUncheckedCreateWithoutOrganizationInput> | CustomerCreateWithoutOrganizationInput[] | CustomerUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: CustomerCreateOrConnectWithoutOrganizationInput | CustomerCreateOrConnectWithoutOrganizationInput[]
@@ -47514,6 +53162,20 @@ export namespace Prisma {
     connectOrCreate?: OrganizationMemberCreateOrConnectWithoutOrganizationInput | OrganizationMemberCreateOrConnectWithoutOrganizationInput[]
     createMany?: OrganizationMemberCreateManyOrganizationInputEnvelope
     connect?: OrganizationMemberWhereUniqueInput | OrganizationMemberWhereUniqueInput[]
+  }
+
+  export type AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput> | AccountGroupCreateWithoutOrganizationInput[] | AccountGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutOrganizationInput | AccountGroupCreateOrConnectWithoutOrganizationInput[]
+    createMany?: AccountGroupCreateManyOrganizationInputEnvelope
+    connect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput> | OrganizationMemberGroupCreateWithoutOrganizationInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
   }
 
   export type CustomerUncheckedCreateNestedManyWithoutOrganizationInput = {
@@ -47650,6 +53312,34 @@ export namespace Prisma {
     update?: OrganizationMemberUpdateWithWhereUniqueWithoutOrganizationInput | OrganizationMemberUpdateWithWhereUniqueWithoutOrganizationInput[]
     updateMany?: OrganizationMemberUpdateManyWithWhereWithoutOrganizationInput | OrganizationMemberUpdateManyWithWhereWithoutOrganizationInput[]
     deleteMany?: OrganizationMemberScalarWhereInput | OrganizationMemberScalarWhereInput[]
+  }
+
+  export type AccountGroupUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput> | AccountGroupCreateWithoutOrganizationInput[] | AccountGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutOrganizationInput | AccountGroupCreateOrConnectWithoutOrganizationInput[]
+    upsert?: AccountGroupUpsertWithWhereUniqueWithoutOrganizationInput | AccountGroupUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: AccountGroupCreateManyOrganizationInputEnvelope
+    set?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    disconnect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    delete?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    connect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    update?: AccountGroupUpdateWithWhereUniqueWithoutOrganizationInput | AccountGroupUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: AccountGroupUpdateManyWithWhereWithoutOrganizationInput | AccountGroupUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: AccountGroupScalarWhereInput | AccountGroupScalarWhereInput[]
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput> | OrganizationMemberGroupCreateWithoutOrganizationInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationInput | OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
   }
 
   export type CustomerUpdateManyWithoutOrganizationNestedInput = {
@@ -47862,6 +53552,34 @@ export namespace Prisma {
     deleteMany?: OrganizationMemberScalarWhereInput | OrganizationMemberScalarWhereInput[]
   }
 
+  export type AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput> | AccountGroupCreateWithoutOrganizationInput[] | AccountGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutOrganizationInput | AccountGroupCreateOrConnectWithoutOrganizationInput[]
+    upsert?: AccountGroupUpsertWithWhereUniqueWithoutOrganizationInput | AccountGroupUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: AccountGroupCreateManyOrganizationInputEnvelope
+    set?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    disconnect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    delete?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    connect?: AccountGroupWhereUniqueInput | AccountGroupWhereUniqueInput[]
+    update?: AccountGroupUpdateWithWhereUniqueWithoutOrganizationInput | AccountGroupUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: AccountGroupUpdateManyWithWhereWithoutOrganizationInput | AccountGroupUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: AccountGroupScalarWhereInput | AccountGroupScalarWhereInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput> | OrganizationMemberGroupCreateWithoutOrganizationInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationInput | OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+  }
+
   export type CustomerUncheckedUpdateManyWithoutOrganizationNestedInput = {
     create?: XOR<CustomerCreateWithoutOrganizationInput, CustomerUncheckedCreateWithoutOrganizationInput> | CustomerCreateWithoutOrganizationInput[] | CustomerUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: CustomerCreateOrConnectWithoutOrganizationInput | CustomerCreateOrConnectWithoutOrganizationInput[]
@@ -48070,6 +53788,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type OrganizationMemberGroupCreateNestedManyWithoutOrganizationMemberInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput> | OrganizationMemberGroupCreateWithoutOrganizationMemberInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationMemberInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationMemberInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput> | OrganizationMemberGroupCreateWithoutOrganizationMemberInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationMemberInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+  }
+
   export type EnumOrganizationMemberRoleFieldUpdateOperationsInput = {
     set?: $Enums.OrganizationMemberRole
   }
@@ -48088,6 +53820,244 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutOrganizationMembershipsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOrganizationMembershipsInput, UserUpdateWithoutOrganizationMembershipsInput>, UserUncheckedUpdateWithoutOrganizationMembershipsInput>
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithoutOrganizationMemberNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput> | OrganizationMemberGroupCreateWithoutOrganizationMemberInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationMemberInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationMemberInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationMemberInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationMemberInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationMemberInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationMemberInput | OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationMemberInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput> | OrganizationMemberGroupCreateWithoutOrganizationMemberInput[] | OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput | OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationMemberInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationMemberInput[]
+    createMany?: OrganizationMemberGroupCreateManyOrganizationMemberInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationMemberInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationMemberInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationMemberInput | OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationMemberInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+  }
+
+  export type AccountGroupPermissionCreateNestedManyWithoutPermissionInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput> | AccountGroupPermissionCreateWithoutPermissionInput[] | AccountGroupPermissionUncheckedCreateWithoutPermissionInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutPermissionInput | AccountGroupPermissionCreateOrConnectWithoutPermissionInput[]
+    createMany?: AccountGroupPermissionCreateManyPermissionInputEnvelope
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+  }
+
+  export type AccountGroupPermissionUncheckedCreateNestedManyWithoutPermissionInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput> | AccountGroupPermissionCreateWithoutPermissionInput[] | AccountGroupPermissionUncheckedCreateWithoutPermissionInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutPermissionInput | AccountGroupPermissionCreateOrConnectWithoutPermissionInput[]
+    createMany?: AccountGroupPermissionCreateManyPermissionInputEnvelope
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+  }
+
+  export type AccountGroupPermissionUpdateManyWithoutPermissionNestedInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput> | AccountGroupPermissionCreateWithoutPermissionInput[] | AccountGroupPermissionUncheckedCreateWithoutPermissionInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutPermissionInput | AccountGroupPermissionCreateOrConnectWithoutPermissionInput[]
+    upsert?: AccountGroupPermissionUpsertWithWhereUniqueWithoutPermissionInput | AccountGroupPermissionUpsertWithWhereUniqueWithoutPermissionInput[]
+    createMany?: AccountGroupPermissionCreateManyPermissionInputEnvelope
+    set?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    disconnect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    delete?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    update?: AccountGroupPermissionUpdateWithWhereUniqueWithoutPermissionInput | AccountGroupPermissionUpdateWithWhereUniqueWithoutPermissionInput[]
+    updateMany?: AccountGroupPermissionUpdateManyWithWhereWithoutPermissionInput | AccountGroupPermissionUpdateManyWithWhereWithoutPermissionInput[]
+    deleteMany?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateManyWithoutPermissionNestedInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput> | AccountGroupPermissionCreateWithoutPermissionInput[] | AccountGroupPermissionUncheckedCreateWithoutPermissionInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutPermissionInput | AccountGroupPermissionCreateOrConnectWithoutPermissionInput[]
+    upsert?: AccountGroupPermissionUpsertWithWhereUniqueWithoutPermissionInput | AccountGroupPermissionUpsertWithWhereUniqueWithoutPermissionInput[]
+    createMany?: AccountGroupPermissionCreateManyPermissionInputEnvelope
+    set?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    disconnect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    delete?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    update?: AccountGroupPermissionUpdateWithWhereUniqueWithoutPermissionInput | AccountGroupPermissionUpdateWithWhereUniqueWithoutPermissionInput[]
+    updateMany?: AccountGroupPermissionUpdateManyWithWhereWithoutPermissionInput | AccountGroupPermissionUpdateManyWithWhereWithoutPermissionInput[]
+    deleteMany?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+  }
+
+  export type OrganizationCreateNestedOneWithoutAccountGroupsInput = {
+    create?: XOR<OrganizationCreateWithoutAccountGroupsInput, OrganizationUncheckedCreateWithoutAccountGroupsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutAccountGroupsInput
+    connect?: OrganizationWhereUniqueInput
+  }
+
+  export type AccountGroupPermissionCreateNestedManyWithoutGroupInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput> | AccountGroupPermissionCreateWithoutGroupInput[] | AccountGroupPermissionUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutGroupInput | AccountGroupPermissionCreateOrConnectWithoutGroupInput[]
+    createMany?: AccountGroupPermissionCreateManyGroupInputEnvelope
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+  }
+
+  export type OrganizationMemberGroupCreateNestedManyWithoutAccountGroupInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput> | OrganizationMemberGroupCreateWithoutAccountGroupInput[] | OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput | OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput[]
+    createMany?: OrganizationMemberGroupCreateManyAccountGroupInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+  }
+
+  export type AccountGroupPermissionUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput> | AccountGroupPermissionCreateWithoutGroupInput[] | AccountGroupPermissionUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutGroupInput | AccountGroupPermissionCreateOrConnectWithoutGroupInput[]
+    createMany?: AccountGroupPermissionCreateManyGroupInputEnvelope
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateNestedManyWithoutAccountGroupInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput> | OrganizationMemberGroupCreateWithoutAccountGroupInput[] | OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput | OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput[]
+    createMany?: OrganizationMemberGroupCreateManyAccountGroupInputEnvelope
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+  }
+
+  export type OrganizationUpdateOneRequiredWithoutAccountGroupsNestedInput = {
+    create?: XOR<OrganizationCreateWithoutAccountGroupsInput, OrganizationUncheckedCreateWithoutAccountGroupsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutAccountGroupsInput
+    upsert?: OrganizationUpsertWithoutAccountGroupsInput
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutAccountGroupsInput, OrganizationUpdateWithoutAccountGroupsInput>, OrganizationUncheckedUpdateWithoutAccountGroupsInput>
+  }
+
+  export type AccountGroupPermissionUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput> | AccountGroupPermissionCreateWithoutGroupInput[] | AccountGroupPermissionUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutGroupInput | AccountGroupPermissionCreateOrConnectWithoutGroupInput[]
+    upsert?: AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput | AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: AccountGroupPermissionCreateManyGroupInputEnvelope
+    set?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    disconnect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    delete?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    update?: AccountGroupPermissionUpdateWithWhereUniqueWithoutGroupInput | AccountGroupPermissionUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: AccountGroupPermissionUpdateManyWithWhereWithoutGroupInput | AccountGroupPermissionUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithoutAccountGroupNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput> | OrganizationMemberGroupCreateWithoutAccountGroupInput[] | OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput | OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutAccountGroupInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutAccountGroupInput[]
+    createMany?: OrganizationMemberGroupCreateManyAccountGroupInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutAccountGroupInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutAccountGroupInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutAccountGroupInput | OrganizationMemberGroupUpdateManyWithWhereWithoutAccountGroupInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput> | AccountGroupPermissionCreateWithoutGroupInput[] | AccountGroupPermissionUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: AccountGroupPermissionCreateOrConnectWithoutGroupInput | AccountGroupPermissionCreateOrConnectWithoutGroupInput[]
+    upsert?: AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput | AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: AccountGroupPermissionCreateManyGroupInputEnvelope
+    set?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    disconnect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    delete?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    connect?: AccountGroupPermissionWhereUniqueInput | AccountGroupPermissionWhereUniqueInput[]
+    update?: AccountGroupPermissionUpdateWithWhereUniqueWithoutGroupInput | AccountGroupPermissionUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: AccountGroupPermissionUpdateManyWithWhereWithoutGroupInput | AccountGroupPermissionUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupNestedInput = {
+    create?: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput> | OrganizationMemberGroupCreateWithoutAccountGroupInput[] | OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput[]
+    connectOrCreate?: OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput | OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput[]
+    upsert?: OrganizationMemberGroupUpsertWithWhereUniqueWithoutAccountGroupInput | OrganizationMemberGroupUpsertWithWhereUniqueWithoutAccountGroupInput[]
+    createMany?: OrganizationMemberGroupCreateManyAccountGroupInputEnvelope
+    set?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    disconnect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    delete?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    connect?: OrganizationMemberGroupWhereUniqueInput | OrganizationMemberGroupWhereUniqueInput[]
+    update?: OrganizationMemberGroupUpdateWithWhereUniqueWithoutAccountGroupInput | OrganizationMemberGroupUpdateWithWhereUniqueWithoutAccountGroupInput[]
+    updateMany?: OrganizationMemberGroupUpdateManyWithWhereWithoutAccountGroupInput | OrganizationMemberGroupUpdateManyWithWhereWithoutAccountGroupInput[]
+    deleteMany?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+  }
+
+  export type AccountGroupCreateNestedOneWithoutPermissionsInput = {
+    create?: XOR<AccountGroupCreateWithoutPermissionsInput, AccountGroupUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutPermissionsInput
+    connect?: AccountGroupWhereUniqueInput
+  }
+
+  export type PermissionCreateNestedOneWithoutGroupsInput = {
+    create?: XOR<PermissionCreateWithoutGroupsInput, PermissionUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: PermissionCreateOrConnectWithoutGroupsInput
+    connect?: PermissionWhereUniqueInput
+  }
+
+  export type AccountGroupUpdateOneRequiredWithoutPermissionsNestedInput = {
+    create?: XOR<AccountGroupCreateWithoutPermissionsInput, AccountGroupUncheckedCreateWithoutPermissionsInput>
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutPermissionsInput
+    upsert?: AccountGroupUpsertWithoutPermissionsInput
+    connect?: AccountGroupWhereUniqueInput
+    update?: XOR<XOR<AccountGroupUpdateToOneWithWhereWithoutPermissionsInput, AccountGroupUpdateWithoutPermissionsInput>, AccountGroupUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type PermissionUpdateOneRequiredWithoutGroupsNestedInput = {
+    create?: XOR<PermissionCreateWithoutGroupsInput, PermissionUncheckedCreateWithoutGroupsInput>
+    connectOrCreate?: PermissionCreateOrConnectWithoutGroupsInput
+    upsert?: PermissionUpsertWithoutGroupsInput
+    connect?: PermissionWhereUniqueInput
+    update?: XOR<XOR<PermissionUpdateToOneWithWhereWithoutGroupsInput, PermissionUpdateWithoutGroupsInput>, PermissionUncheckedUpdateWithoutGroupsInput>
+  }
+
+  export type OrganizationMemberCreateNestedOneWithoutAccountGroupsInput = {
+    create?: XOR<OrganizationMemberCreateWithoutAccountGroupsInput, OrganizationMemberUncheckedCreateWithoutAccountGroupsInput>
+    connectOrCreate?: OrganizationMemberCreateOrConnectWithoutAccountGroupsInput
+    connect?: OrganizationMemberWhereUniqueInput
+  }
+
+  export type AccountGroupCreateNestedOneWithoutMembersInput = {
+    create?: XOR<AccountGroupCreateWithoutMembersInput, AccountGroupUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutMembersInput
+    connect?: AccountGroupWhereUniqueInput
+  }
+
+  export type OrganizationCreateNestedOneWithoutRoleAssignmentsInput = {
+    create?: XOR<OrganizationCreateWithoutRoleAssignmentsInput, OrganizationUncheckedCreateWithoutRoleAssignmentsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutRoleAssignmentsInput
+    connect?: OrganizationWhereUniqueInput
+  }
+
+  export type OrganizationMemberUpdateOneRequiredWithoutAccountGroupsNestedInput = {
+    create?: XOR<OrganizationMemberCreateWithoutAccountGroupsInput, OrganizationMemberUncheckedCreateWithoutAccountGroupsInput>
+    connectOrCreate?: OrganizationMemberCreateOrConnectWithoutAccountGroupsInput
+    upsert?: OrganizationMemberUpsertWithoutAccountGroupsInput
+    connect?: OrganizationMemberWhereUniqueInput
+    update?: XOR<XOR<OrganizationMemberUpdateToOneWithWhereWithoutAccountGroupsInput, OrganizationMemberUpdateWithoutAccountGroupsInput>, OrganizationMemberUncheckedUpdateWithoutAccountGroupsInput>
+  }
+
+  export type AccountGroupUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<AccountGroupCreateWithoutMembersInput, AccountGroupUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: AccountGroupCreateOrConnectWithoutMembersInput
+    upsert?: AccountGroupUpsertWithoutMembersInput
+    connect?: AccountGroupWhereUniqueInput
+    update?: XOR<XOR<AccountGroupUpdateToOneWithWhereWithoutMembersInput, AccountGroupUpdateWithoutMembersInput>, AccountGroupUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type OrganizationUpdateOneRequiredWithoutRoleAssignmentsNestedInput = {
+    create?: XOR<OrganizationCreateWithoutRoleAssignmentsInput, OrganizationUncheckedCreateWithoutRoleAssignmentsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutRoleAssignmentsInput
+    upsert?: OrganizationUpsertWithoutRoleAssignmentsInput
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutRoleAssignmentsInput, OrganizationUpdateWithoutRoleAssignmentsInput>, OrganizationUncheckedUpdateWithoutRoleAssignmentsInput>
   }
 
   export type OrganizationCreateNestedOneWithoutCustomersInput = {
@@ -50305,6 +56275,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutOrganizationMembershipsInput
+    accountGroups?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberUncheckedCreateWithoutOrganizationInput = {
@@ -50313,6 +56284,7 @@ export namespace Prisma {
     role: $Enums.OrganizationMemberRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberCreateOrConnectWithoutOrganizationInput = {
@@ -50322,6 +56294,62 @@ export namespace Prisma {
 
   export type OrganizationMemberCreateManyOrganizationInputEnvelope = {
     data: OrganizationMemberCreateManyOrganizationInput | OrganizationMemberCreateManyOrganizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountGroupCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: AccountGroupPermissionCreateNestedManyWithoutGroupInput
+    members?: OrganizationMemberGroupCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: AccountGroupPermissionUncheckedCreateNestedManyWithoutGroupInput
+    members?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupCreateOrConnectWithoutOrganizationInput = {
+    where: AccountGroupWhereUniqueInput
+    create: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type AccountGroupCreateManyOrganizationInputEnvelope = {
+    data: AccountGroupCreateManyOrganizationInput | AccountGroupCreateManyOrganizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrganizationMemberGroupCreateWithoutOrganizationInput = {
+    id?: string
+    createdAt?: Date | string
+    organizationMember: OrganizationMemberCreateNestedOneWithoutAccountGroupsInput
+    accountGroup: AccountGroupCreateNestedOneWithoutMembersInput
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    organizationMemberId: string
+    accountGroupId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupCreateOrConnectWithoutOrganizationInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    create: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type OrganizationMemberGroupCreateManyOrganizationInputEnvelope = {
+    data: OrganizationMemberGroupCreateManyOrganizationInput | OrganizationMemberGroupCreateManyOrganizationInput[]
     skipDuplicates?: boolean
   }
 
@@ -50916,6 +56944,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OrganizationMember"> | Date | string
   }
 
+  export type AccountGroupUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: AccountGroupWhereUniqueInput
+    update: XOR<AccountGroupUpdateWithoutOrganizationInput, AccountGroupUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<AccountGroupCreateWithoutOrganizationInput, AccountGroupUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type AccountGroupUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: AccountGroupWhereUniqueInput
+    data: XOR<AccountGroupUpdateWithoutOrganizationInput, AccountGroupUncheckedUpdateWithoutOrganizationInput>
+  }
+
+  export type AccountGroupUpdateManyWithWhereWithoutOrganizationInput = {
+    where: AccountGroupScalarWhereInput
+    data: XOR<AccountGroupUpdateManyMutationInput, AccountGroupUncheckedUpdateManyWithoutOrganizationInput>
+  }
+
+  export type AccountGroupScalarWhereInput = {
+    AND?: AccountGroupScalarWhereInput | AccountGroupScalarWhereInput[]
+    OR?: AccountGroupScalarWhereInput[]
+    NOT?: AccountGroupScalarWhereInput | AccountGroupScalarWhereInput[]
+    id?: StringFilter<"AccountGroup"> | string
+    organizationId?: StringFilter<"AccountGroup"> | string
+    name?: StringFilter<"AccountGroup"> | string
+    description?: StringNullableFilter<"AccountGroup"> | string | null
+    isSystem?: BoolFilter<"AccountGroup"> | boolean
+    createdAt?: DateTimeFilter<"AccountGroup"> | Date | string
+    updatedAt?: DateTimeFilter<"AccountGroup"> | Date | string
+  }
+
+  export type OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    update: XOR<OrganizationMemberGroupUpdateWithoutOrganizationInput, OrganizationMemberGroupUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<OrganizationMemberGroupCreateWithoutOrganizationInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    data: XOR<OrganizationMemberGroupUpdateWithoutOrganizationInput, OrganizationMemberGroupUncheckedUpdateWithoutOrganizationInput>
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationInput = {
+    where: OrganizationMemberGroupScalarWhereInput
+    data: XOR<OrganizationMemberGroupUpdateManyMutationInput, OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationInput>
+  }
+
+  export type OrganizationMemberGroupScalarWhereInput = {
+    AND?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+    OR?: OrganizationMemberGroupScalarWhereInput[]
+    NOT?: OrganizationMemberGroupScalarWhereInput | OrganizationMemberGroupScalarWhereInput[]
+    id?: StringFilter<"OrganizationMemberGroup"> | string
+    organizationMemberId?: StringFilter<"OrganizationMemberGroup"> | string
+    accountGroupId?: StringFilter<"OrganizationMemberGroup"> | string
+    organizationId?: StringFilter<"OrganizationMemberGroup"> | string
+    createdAt?: DateTimeFilter<"OrganizationMemberGroup"> | Date | string
+  }
+
   export type CustomerUpsertWithWhereUniqueWithoutOrganizationInput = {
     where: CustomerWhereUniqueInput
     update: XOR<CustomerUpdateWithoutOrganizationInput, CustomerUncheckedUpdateWithoutOrganizationInput>
@@ -51370,6 +57454,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -51398,6 +57484,8 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -51466,6 +57554,30 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutOrganizationMembershipsInput, UserUncheckedCreateWithoutOrganizationMembershipsInput>
   }
 
+  export type OrganizationMemberGroupCreateWithoutOrganizationMemberInput = {
+    id?: string
+    createdAt?: Date | string
+    accountGroup: AccountGroupCreateNestedOneWithoutMembersInput
+    organization: OrganizationCreateNestedOneWithoutRoleAssignmentsInput
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput = {
+    id?: string
+    accountGroupId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupCreateOrConnectWithoutOrganizationMemberInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    create: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput>
+  }
+
+  export type OrganizationMemberGroupCreateManyOrganizationMemberInputEnvelope = {
+    data: OrganizationMemberGroupCreateManyOrganizationMemberInput | OrganizationMemberGroupCreateManyOrganizationMemberInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OrganizationUpsertWithoutMembersInput = {
     update: XOR<OrganizationUpdateWithoutMembersInput, OrganizationUncheckedUpdateWithoutMembersInput>
     create: XOR<OrganizationCreateWithoutMembersInput, OrganizationUncheckedCreateWithoutMembersInput>
@@ -51489,6 +57601,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -51517,6 +57631,8 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -51586,6 +57702,640 @@ export namespace Prisma {
     organizationsOwned?: OrganizationUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
+  export type OrganizationMemberGroupUpsertWithWhereUniqueWithoutOrganizationMemberInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    update: XOR<OrganizationMemberGroupUpdateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedUpdateWithoutOrganizationMemberInput>
+    create: XOR<OrganizationMemberGroupCreateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedCreateWithoutOrganizationMemberInput>
+  }
+
+  export type OrganizationMemberGroupUpdateWithWhereUniqueWithoutOrganizationMemberInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    data: XOR<OrganizationMemberGroupUpdateWithoutOrganizationMemberInput, OrganizationMemberGroupUncheckedUpdateWithoutOrganizationMemberInput>
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithWhereWithoutOrganizationMemberInput = {
+    where: OrganizationMemberGroupScalarWhereInput
+    data: XOR<OrganizationMemberGroupUpdateManyMutationInput, OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberInput>
+  }
+
+  export type AccountGroupPermissionCreateWithoutPermissionInput = {
+    id?: string
+    createdAt?: Date | string
+    group: AccountGroupCreateNestedOneWithoutPermissionsInput
+  }
+
+  export type AccountGroupPermissionUncheckedCreateWithoutPermissionInput = {
+    id?: string
+    groupId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionCreateOrConnectWithoutPermissionInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    create: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput>
+  }
+
+  export type AccountGroupPermissionCreateManyPermissionInputEnvelope = {
+    data: AccountGroupPermissionCreateManyPermissionInput | AccountGroupPermissionCreateManyPermissionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountGroupPermissionUpsertWithWhereUniqueWithoutPermissionInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    update: XOR<AccountGroupPermissionUpdateWithoutPermissionInput, AccountGroupPermissionUncheckedUpdateWithoutPermissionInput>
+    create: XOR<AccountGroupPermissionCreateWithoutPermissionInput, AccountGroupPermissionUncheckedCreateWithoutPermissionInput>
+  }
+
+  export type AccountGroupPermissionUpdateWithWhereUniqueWithoutPermissionInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    data: XOR<AccountGroupPermissionUpdateWithoutPermissionInput, AccountGroupPermissionUncheckedUpdateWithoutPermissionInput>
+  }
+
+  export type AccountGroupPermissionUpdateManyWithWhereWithoutPermissionInput = {
+    where: AccountGroupPermissionScalarWhereInput
+    data: XOR<AccountGroupPermissionUpdateManyMutationInput, AccountGroupPermissionUncheckedUpdateManyWithoutPermissionInput>
+  }
+
+  export type AccountGroupPermissionScalarWhereInput = {
+    AND?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+    OR?: AccountGroupPermissionScalarWhereInput[]
+    NOT?: AccountGroupPermissionScalarWhereInput | AccountGroupPermissionScalarWhereInput[]
+    id?: StringFilter<"AccountGroupPermission"> | string
+    groupId?: StringFilter<"AccountGroupPermission"> | string
+    permissionId?: StringFilter<"AccountGroupPermission"> | string
+    createdAt?: DateTimeFilter<"AccountGroupPermission"> | Date | string
+  }
+
+  export type OrganizationCreateWithoutAccountGroupsInput = {
+    id?: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
+    members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerCreateNestedManyWithoutOrganizationInput
+    products?: ProductCreateNestedManyWithoutOrganizationInput
+    sales?: SaleCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentCreateNestedManyWithoutOrganizationInput
+    services?: ServiceCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationUncheckedCreateWithoutAccountGroupsInput = {
+    id?: string
+    ownerUserId: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+    products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
+    sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutOrganizationInput
+    services?: ServiceUncheckedCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemUncheckedCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationCreateOrConnectWithoutAccountGroupsInput = {
+    where: OrganizationWhereUniqueInput
+    create: XOR<OrganizationCreateWithoutAccountGroupsInput, OrganizationUncheckedCreateWithoutAccountGroupsInput>
+  }
+
+  export type AccountGroupPermissionCreateWithoutGroupInput = {
+    id?: string
+    createdAt?: Date | string
+    permission: PermissionCreateNestedOneWithoutGroupsInput
+  }
+
+  export type AccountGroupPermissionUncheckedCreateWithoutGroupInput = {
+    id?: string
+    permissionId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionCreateOrConnectWithoutGroupInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    create: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput>
+  }
+
+  export type AccountGroupPermissionCreateManyGroupInputEnvelope = {
+    data: AccountGroupPermissionCreateManyGroupInput | AccountGroupPermissionCreateManyGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrganizationMemberGroupCreateWithoutAccountGroupInput = {
+    id?: string
+    createdAt?: Date | string
+    organizationMember: OrganizationMemberCreateNestedOneWithoutAccountGroupsInput
+    organization: OrganizationCreateNestedOneWithoutRoleAssignmentsInput
+  }
+
+  export type OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput = {
+    id?: string
+    organizationMemberId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupCreateOrConnectWithoutAccountGroupInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    create: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput>
+  }
+
+  export type OrganizationMemberGroupCreateManyAccountGroupInputEnvelope = {
+    data: OrganizationMemberGroupCreateManyAccountGroupInput | OrganizationMemberGroupCreateManyAccountGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrganizationUpsertWithoutAccountGroupsInput = {
+    update: XOR<OrganizationUpdateWithoutAccountGroupsInput, OrganizationUncheckedUpdateWithoutAccountGroupsInput>
+    create: XOR<OrganizationCreateWithoutAccountGroupsInput, OrganizationUncheckedCreateWithoutAccountGroupsInput>
+    where?: OrganizationWhereInput
+  }
+
+  export type OrganizationUpdateToOneWithWhereWithoutAccountGroupsInput = {
+    where?: OrganizationWhereInput
+    data: XOR<OrganizationUpdateWithoutAccountGroupsInput, OrganizationUncheckedUpdateWithoutAccountGroupsInput>
+  }
+
+  export type OrganizationUpdateWithoutAccountGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
+    members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type OrganizationUncheckedUpdateWithoutAccountGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUncheckedUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    update: XOR<AccountGroupPermissionUpdateWithoutGroupInput, AccountGroupPermissionUncheckedUpdateWithoutGroupInput>
+    create: XOR<AccountGroupPermissionCreateWithoutGroupInput, AccountGroupPermissionUncheckedCreateWithoutGroupInput>
+  }
+
+  export type AccountGroupPermissionUpdateWithWhereUniqueWithoutGroupInput = {
+    where: AccountGroupPermissionWhereUniqueInput
+    data: XOR<AccountGroupPermissionUpdateWithoutGroupInput, AccountGroupPermissionUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type AccountGroupPermissionUpdateManyWithWhereWithoutGroupInput = {
+    where: AccountGroupPermissionScalarWhereInput
+    data: XOR<AccountGroupPermissionUpdateManyMutationInput, AccountGroupPermissionUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type OrganizationMemberGroupUpsertWithWhereUniqueWithoutAccountGroupInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    update: XOR<OrganizationMemberGroupUpdateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedUpdateWithoutAccountGroupInput>
+    create: XOR<OrganizationMemberGroupCreateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedCreateWithoutAccountGroupInput>
+  }
+
+  export type OrganizationMemberGroupUpdateWithWhereUniqueWithoutAccountGroupInput = {
+    where: OrganizationMemberGroupWhereUniqueInput
+    data: XOR<OrganizationMemberGroupUpdateWithoutAccountGroupInput, OrganizationMemberGroupUncheckedUpdateWithoutAccountGroupInput>
+  }
+
+  export type OrganizationMemberGroupUpdateManyWithWhereWithoutAccountGroupInput = {
+    where: OrganizationMemberGroupScalarWhereInput
+    data: XOR<OrganizationMemberGroupUpdateManyMutationInput, OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupInput>
+  }
+
+  export type AccountGroupCreateWithoutPermissionsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutAccountGroupsInput
+    members?: OrganizationMemberGroupCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupUncheckedCreateWithoutPermissionsInput = {
+    id?: string
+    organizationId: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutAccountGroupInput
+  }
+
+  export type AccountGroupCreateOrConnectWithoutPermissionsInput = {
+    where: AccountGroupWhereUniqueInput
+    create: XOR<AccountGroupCreateWithoutPermissionsInput, AccountGroupUncheckedCreateWithoutPermissionsInput>
+  }
+
+  export type PermissionCreateWithoutGroupsInput = {
+    id?: string
+    key: string
+    label: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PermissionUncheckedCreateWithoutGroupsInput = {
+    id?: string
+    key: string
+    label: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PermissionCreateOrConnectWithoutGroupsInput = {
+    where: PermissionWhereUniqueInput
+    create: XOR<PermissionCreateWithoutGroupsInput, PermissionUncheckedCreateWithoutGroupsInput>
+  }
+
+  export type AccountGroupUpsertWithoutPermissionsInput = {
+    update: XOR<AccountGroupUpdateWithoutPermissionsInput, AccountGroupUncheckedUpdateWithoutPermissionsInput>
+    create: XOR<AccountGroupCreateWithoutPermissionsInput, AccountGroupUncheckedCreateWithoutPermissionsInput>
+    where?: AccountGroupWhereInput
+  }
+
+  export type AccountGroupUpdateToOneWithWhereWithoutPermissionsInput = {
+    where?: AccountGroupWhereInput
+    data: XOR<AccountGroupUpdateWithoutPermissionsInput, AccountGroupUncheckedUpdateWithoutPermissionsInput>
+  }
+
+  export type AccountGroupUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutAccountGroupsNestedInput
+    members?: OrganizationMemberGroupUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type AccountGroupUncheckedUpdateWithoutPermissionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type PermissionUpsertWithoutGroupsInput = {
+    update: XOR<PermissionUpdateWithoutGroupsInput, PermissionUncheckedUpdateWithoutGroupsInput>
+    create: XOR<PermissionCreateWithoutGroupsInput, PermissionUncheckedCreateWithoutGroupsInput>
+    where?: PermissionWhereInput
+  }
+
+  export type PermissionUpdateToOneWithWhereWithoutGroupsInput = {
+    where?: PermissionWhereInput
+    data: XOR<PermissionUpdateWithoutGroupsInput, PermissionUncheckedUpdateWithoutGroupsInput>
+  }
+
+  export type PermissionUpdateWithoutGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PermissionUncheckedUpdateWithoutGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberCreateWithoutAccountGroupsInput = {
+    id?: string
+    role: $Enums.OrganizationMemberRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutMembersInput
+    user: UserCreateNestedOneWithoutOrganizationMembershipsInput
+  }
+
+  export type OrganizationMemberUncheckedCreateWithoutAccountGroupsInput = {
+    id?: string
+    organizationId: string
+    userId: string
+    role: $Enums.OrganizationMemberRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrganizationMemberCreateOrConnectWithoutAccountGroupsInput = {
+    where: OrganizationMemberWhereUniqueInput
+    create: XOR<OrganizationMemberCreateWithoutAccountGroupsInput, OrganizationMemberUncheckedCreateWithoutAccountGroupsInput>
+  }
+
+  export type AccountGroupCreateWithoutMembersInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutAccountGroupsInput
+    permissions?: AccountGroupPermissionCreateNestedManyWithoutGroupInput
+  }
+
+  export type AccountGroupUncheckedCreateWithoutMembersInput = {
+    id?: string
+    organizationId: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    permissions?: AccountGroupPermissionUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type AccountGroupCreateOrConnectWithoutMembersInput = {
+    where: AccountGroupWhereUniqueInput
+    create: XOR<AccountGroupCreateWithoutMembersInput, AccountGroupUncheckedCreateWithoutMembersInput>
+  }
+
+  export type OrganizationCreateWithoutRoleAssignmentsInput = {
+    id?: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
+    members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerCreateNestedManyWithoutOrganizationInput
+    products?: ProductCreateNestedManyWithoutOrganizationInput
+    sales?: SaleCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentCreateNestedManyWithoutOrganizationInput
+    services?: ServiceCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationUncheckedCreateWithoutRoleAssignmentsInput = {
+    id?: string
+    ownerUserId: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+    products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
+    sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutOrganizationInput
+    services?: ServiceUncheckedCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemUncheckedCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationCreateOrConnectWithoutRoleAssignmentsInput = {
+    where: OrganizationWhereUniqueInput
+    create: XOR<OrganizationCreateWithoutRoleAssignmentsInput, OrganizationUncheckedCreateWithoutRoleAssignmentsInput>
+  }
+
+  export type OrganizationMemberUpsertWithoutAccountGroupsInput = {
+    update: XOR<OrganizationMemberUpdateWithoutAccountGroupsInput, OrganizationMemberUncheckedUpdateWithoutAccountGroupsInput>
+    create: XOR<OrganizationMemberCreateWithoutAccountGroupsInput, OrganizationMemberUncheckedCreateWithoutAccountGroupsInput>
+    where?: OrganizationMemberWhereInput
+  }
+
+  export type OrganizationMemberUpdateToOneWithWhereWithoutAccountGroupsInput = {
+    where?: OrganizationMemberWhereInput
+    data: XOR<OrganizationMemberUpdateWithoutAccountGroupsInput, OrganizationMemberUncheckedUpdateWithoutAccountGroupsInput>
+  }
+
+  export type OrganizationMemberUpdateWithoutAccountGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutMembersNestedInput
+    user?: UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput
+  }
+
+  export type OrganizationMemberUncheckedUpdateWithoutAccountGroupsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupUpsertWithoutMembersInput = {
+    update: XOR<AccountGroupUpdateWithoutMembersInput, AccountGroupUncheckedUpdateWithoutMembersInput>
+    create: XOR<AccountGroupCreateWithoutMembersInput, AccountGroupUncheckedCreateWithoutMembersInput>
+    where?: AccountGroupWhereInput
+  }
+
+  export type AccountGroupUpdateToOneWithWhereWithoutMembersInput = {
+    where?: AccountGroupWhereInput
+    data: XOR<AccountGroupUpdateWithoutMembersInput, AccountGroupUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type AccountGroupUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutAccountGroupsNestedInput
+    permissions?: AccountGroupPermissionUpdateManyWithoutGroupNestedInput
+  }
+
+  export type AccountGroupUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: AccountGroupPermissionUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type OrganizationUpsertWithoutRoleAssignmentsInput = {
+    update: XOR<OrganizationUpdateWithoutRoleAssignmentsInput, OrganizationUncheckedUpdateWithoutRoleAssignmentsInput>
+    create: XOR<OrganizationCreateWithoutRoleAssignmentsInput, OrganizationUncheckedCreateWithoutRoleAssignmentsInput>
+    where?: OrganizationWhereInput
+  }
+
+  export type OrganizationUpdateToOneWithWhereWithoutRoleAssignmentsInput = {
+    where?: OrganizationWhereInput
+    data: XOR<OrganizationUpdateWithoutRoleAssignmentsInput, OrganizationUncheckedUpdateWithoutRoleAssignmentsInput>
+  }
+
+  export type OrganizationUpdateWithoutRoleAssignmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
+    members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type OrganizationUncheckedUpdateWithoutRoleAssignmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUncheckedUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+  }
+
   export type OrganizationCreateWithoutCustomersInput = {
     id?: string
     name: string
@@ -51599,6 +58349,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
@@ -51627,6 +58379,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
@@ -51739,6 +58493,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
@@ -51767,6 +58523,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -51827,6 +58585,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
@@ -51855,6 +58615,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
@@ -52091,6 +58853,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
@@ -52119,6 +58883,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -52293,6 +59059,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -52321,6 +59089,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -52397,6 +59167,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -52425,6 +59197,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -52469,6 +59243,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
@@ -52497,6 +59273,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
@@ -52608,6 +59386,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
@@ -52636,6 +59416,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -52879,6 +59661,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -52907,6 +59691,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -52951,6 +59737,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -52979,6 +59767,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -53007,6 +59797,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -53035,6 +59827,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -53136,6 +59930,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -53164,6 +59960,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -53426,6 +60224,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -53454,6 +60254,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -53563,6 +60365,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -53591,6 +60395,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -53649,6 +60455,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -53677,6 +60485,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -53785,6 +60595,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -53813,6 +60625,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -53885,6 +60699,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -53913,6 +60729,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -54013,6 +60831,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -54041,6 +60861,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -54387,6 +61209,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -54415,6 +61239,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -54500,6 +61326,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -54528,6 +61356,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -54603,6 +61433,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -54631,6 +61463,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -54675,6 +61509,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -54703,6 +61539,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -54731,6 +61569,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -54759,6 +61599,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -54867,6 +61709,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -54895,6 +61739,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -54985,6 +61831,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -55013,6 +61861,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -55208,6 +62058,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -55236,6 +62088,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -55653,6 +62507,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -55681,6 +62537,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -55859,6 +62717,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -55887,6 +62747,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -56466,6 +63328,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
     customers?: CustomerCreateNestedManyWithoutOrganizationInput
     products?: ProductCreateNestedManyWithoutOrganizationInput
     sales?: SaleCreateNestedManyWithoutOrganizationInput
@@ -56494,6 +63358,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
     customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
     products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
     sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
@@ -56526,6 +63392,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     organization: OrganizationCreateNestedOneWithoutMembersInput
+    accountGroups?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberUncheckedCreateWithoutUserInput = {
@@ -56534,6 +63401,7 @@ export namespace Prisma {
     role: $Enums.OrganizationMemberRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationMemberInput
   }
 
   export type OrganizationMemberCreateOrConnectWithoutUserInput = {
@@ -56995,6 +63863,22 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type AccountGroupCreateManyOrganizationInput = {
+    id?: string
+    name: string
+    description?: string | null
+    isSystem?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupCreateManyOrganizationInput = {
+    id?: string
+    organizationMemberId: string
+    accountGroupId: string
+    createdAt?: Date | string
+  }
+
   export type CustomerCreateManyOrganizationInput = {
     id?: string
     name: string
@@ -57163,6 +64047,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutOrganizationMembershipsNestedInput
+    accountGroups?: OrganizationMemberGroupUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberUncheckedUpdateWithoutOrganizationInput = {
@@ -57171,6 +64056,7 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberUncheckedUpdateManyWithoutOrganizationInput = {
@@ -57179,6 +64065,58 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: AccountGroupPermissionUpdateManyWithoutGroupNestedInput
+    members?: OrganizationMemberGroupUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type AccountGroupUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permissions?: AccountGroupPermissionUncheckedUpdateManyWithoutGroupNestedInput
+    members?: OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupNestedInput
+  }
+
+  export type AccountGroupUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isSystem?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organizationMember?: OrganizationMemberUpdateOneRequiredWithoutAccountGroupsNestedInput
+    accountGroup?: AccountGroupUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CustomerUpdateWithoutOrganizationInput = {
@@ -57711,6 +64649,110 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupCreateManyOrganizationMemberInput = {
+    id?: string
+    accountGroupId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupUpdateWithoutOrganizationMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountGroup?: AccountGroupUpdateOneRequiredWithoutMembersNestedInput
+    organization?: OrganizationUpdateOneRequiredWithoutRoleAssignmentsNestedInput
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateWithoutOrganizationMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountGroupId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionCreateManyPermissionInput = {
+    id?: string
+    groupId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionUpdateWithoutPermissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: AccountGroupUpdateOneRequiredWithoutPermissionsNestedInput
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateWithoutPermissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateManyWithoutPermissionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionCreateManyGroupInput = {
+    id?: string
+    permissionId: string
+    createdAt?: Date | string
+  }
+
+  export type OrganizationMemberGroupCreateManyAccountGroupInput = {
+    id?: string
+    organizationMemberId: string
+    organizationId: string
+    createdAt?: Date | string
+  }
+
+  export type AccountGroupPermissionUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    permission?: PermissionUpdateOneRequiredWithoutGroupsNestedInput
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    permissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AccountGroupPermissionUncheckedUpdateManyWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    permissionId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUpdateWithoutAccountGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organizationMember?: OrganizationMemberUpdateOneRequiredWithoutAccountGroupsNestedInput
+    organization?: OrganizationUpdateOneRequiredWithoutRoleAssignmentsNestedInput
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateWithoutAccountGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrganizationMemberGroupUncheckedUpdateManyWithoutAccountGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationMemberId?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SaleCreateManyCustomerInput = {
@@ -58846,6 +65888,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUpdateManyWithoutOrganizationNestedInput
     products?: ProductUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUpdateManyWithoutOrganizationNestedInput
@@ -58874,6 +65918,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
     customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
     products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
     sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -58909,6 +65955,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organization?: OrganizationUpdateOneRequiredWithoutMembersNestedInput
+    accountGroups?: OrganizationMemberGroupUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberUncheckedUpdateWithoutUserInput = {
@@ -58917,6 +65964,7 @@ export namespace Prisma {
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accountGroups?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationMemberNestedInput
   }
 
   export type OrganizationMemberUncheckedUpdateManyWithoutUserInput = {

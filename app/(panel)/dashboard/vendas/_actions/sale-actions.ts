@@ -2,6 +2,7 @@
 
 import { auth } from "@/lib/auth"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
@@ -30,16 +31,24 @@ const createSaleSchema = z.object({
 export type CreateSaleLineInput = z.infer<typeof lineSchema>
 export type CreateSaleInput = z.infer<typeof createSaleSchema>
 
-export async function createSale(input: CreateSaleInput) {
+async function getSalesContext() {
   const session = await auth()
-  if (!session?.user?.id) {
-    return { error: "Não autorizado" }
-  }
-
+  if (!session?.user?.id) return { error: "Não autorizado" } as const
   const organizationId = getActiveOrganizationId(session)
-  if (!organizationId) {
-    return { error: "Empresa não identificada" }
-  }
+  if (!organizationId) return { error: "Empresa não identificada" } as const
+  const canManageSales = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "sales:manage",
+  })
+  if (!canManageSales) return { error: "Sem permissão para gerir vendas." } as const
+  return { session, organizationId } as const
+}
+
+export async function createSale(input: CreateSaleInput) {
+  const ctx = await getSalesContext()
+  if ("error" in ctx) return { error: ctx.error }
+  const { organizationId } = ctx
 
   const parsed = createSaleSchema.safeParse(input)
   if (!parsed.success) {
@@ -111,15 +120,9 @@ export async function createSale(input: CreateSaleInput) {
 }
 
 export async function cancelSale(saleId: string) {
-  const session = await auth()
-  if (!session?.user?.id) {
-    return { error: "Não autorizado" }
-  }
-
-  const organizationId = getActiveOrganizationId(session)
-  if (!organizationId) {
-    return { error: "Empresa não identificada" }
-  }
+  const ctx = await getSalesContext()
+  if ("error" in ctx) return { error: ctx.error }
+  const { organizationId } = ctx
 
   try {
     const sale = await prisma.sale.findFirst({
@@ -145,15 +148,9 @@ export async function cancelSale(saleId: string) {
 }
 
 export async function confirmSale(saleId: string) {
-  const session = await auth()
-  if (!session?.user?.id) {
-    return { error: "Não autorizado" }
-  }
-
-  const organizationId = getActiveOrganizationId(session)
-  if (!organizationId) {
-    return { error: "Empresa não identificada" }
-  }
+  const ctx = await getSalesContext()
+  if ("error" in ctx) return { error: ctx.error }
+  const { organizationId } = ctx
 
   try {
     const sale = await prisma.sale.findFirst({
@@ -191,15 +188,9 @@ const sendQuoteSchema = z.object({
 })
 
 export async function sendQuoteByEmail(input: z.infer<typeof sendQuoteSchema>) {
-  const session = await auth()
-  if (!session?.user?.id) {
-    return { error: "Não autorizado" }
-  }
-
-  const organizationId = getActiveOrganizationId(session)
-  if (!organizationId) {
-    return { error: "Empresa não identificada" }
-  }
+  const ctx = await getSalesContext()
+  if ("error" in ctx) return { error: ctx.error }
+  const { organizationId } = ctx
 
   const parsed = sendQuoteSchema.safeParse(input)
   if (!parsed.success) {

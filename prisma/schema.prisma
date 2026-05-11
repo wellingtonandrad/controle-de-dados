@@ -76,6 +76,8 @@ model Organization {
   active   Boolean @default(true)
 
   members          OrganizationMember[]
+  accountGroups    AccountGroup[]
+  roleAssignments  OrganizationMemberGroup[]
   customers        Customer[]
   products         Product[]
   sales            Sale[]
@@ -105,12 +107,68 @@ model OrganizationMember {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountGroups OrganizationMemberGroup[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([organizationId, userId])
   @@index([userId])
+}
+
+model Permission {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groups AccountGroupPermission[]
+}
+
+model AccountGroup {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  isSystem    Boolean @default(false)
+
+  permissions AccountGroupPermission[]
+  members     OrganizationMemberGroup[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+}
+
+model AccountGroupPermission {
+  id            String       @id @default(cuid())
+  groupId       String
+  permissionId  String
+  group         AccountGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  permission    Permission   @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt     DateTime     @default(now())
+
+  @@unique([groupId, permissionId])
+  @@index([permissionId])
+}
+
+model OrganizationMemberGroup {
+  id                    String             @id @default(cuid())
+  organizationMemberId  String
+  accountGroupId        String
+  organizationMember    OrganizationMember @relation(fields: [organizationMemberId], references: [id], onDelete: Cascade)
+  accountGroup          AccountGroup       @relation(fields: [accountGroupId], references: [id], onDelete: Cascade)
+  organizationId        String
+  organization          Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt             DateTime           @default(now())
+
+  @@unique([organizationMemberId, accountGroupId])
+  @@index([organizationId, organizationMemberId])
 }
 
 model Customer {

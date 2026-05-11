@@ -1,6 +1,7 @@
 import getSession from "@/lib/getSession"
 import { redirect } from "next/navigation"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
 import { NovaVendaForm } from "../_components/nova-venda-form"
 import { ErpPageHeader } from "../../_components/erp-page-header"
@@ -15,6 +16,15 @@ export default async function NovaVendaPage() {
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) {
     redirect("/acesso-empresa")
+  }
+
+  const canManageSales = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "sales:manage",
+  })
+  if (!canManageSales) {
+    redirect("/dashboard/vendas")
   }
 
   const [products, customers] = await Promise.all([

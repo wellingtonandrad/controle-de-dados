@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import getSession from "@/lib/getSession"
 import prisma from "@/lib/prisma"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import { SalesDashboardContent } from "../_components/sales-dashboard-content"
 
 function monthRange(year: number, month0: number) {
@@ -16,6 +17,13 @@ export default async function SalesDashboardPage() {
 
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) redirect("/acesso-empresa")
+
+  const canViewSales = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "sales:view",
+  })
+  if (!canViewSales) redirect("/dashboard/overview")
 
   const now = new Date()
   const y = now.getFullYear()

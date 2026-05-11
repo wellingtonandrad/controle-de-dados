@@ -5,6 +5,7 @@ import { z } from "zod"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import { sendReceivablesRemindersForOrganization } from "@/lib/notifications/receivables-reminder"
 
 const createReceivableSchema = z.object({
@@ -36,6 +37,12 @@ async function getContext() {
   if (!session?.user?.id) return { error: "Sessão inválida." } as const
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) return { error: "Empresa não identificada." } as const
+  const canManage = await hasOrganizationPermission({
+    session,
+    organizationId,
+    permission: "receivables:manage",
+  })
+  if (!canManage) return { error: "Sem permissão para gerir contas a receber." } as const
   return { organizationId, userId: session.user.id } as const
 }
 

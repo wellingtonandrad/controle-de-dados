@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Não autorizado" }, { status: 403 })
   }
 
-  if (!canAccessReports(session)) {
+  if (!(await canAccessReports(session))) {
     return NextResponse.json(
       { error: "Sem permissão para ver relatórios financeiros." },
       { status: 403 },

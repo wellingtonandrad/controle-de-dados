@@ -15,6 +15,7 @@ export function dashboardTitleFromPathname(pathname: string): string {
   if (pathname.startsWith("/dashboard/vendas/dashboard")) return "Dashboard de vendas"
   if (pathname.startsWith("/dashboard/vendas")) return "Vendas"
   if (pathname.startsWith("/dashboard/equipe")) return "Equipe"
+  if (pathname.startsWith("/dashboard/cargos")) return "Cargos"
   if (pathname.startsWith("/dashboard/profile")) return "Configurações"
   return "Painel"
 }

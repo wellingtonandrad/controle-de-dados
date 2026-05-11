@@ -3,6 +3,7 @@ import { requireClinicUser } from "@/app/utils/auth/require-clinic-user"
 import getSession from "@/lib/getSession"
 import { canAccessReports } from "@/app/utils/auth/can-access-reports"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
 
 export default async function DashboardLayout({
@@ -13,12 +14,12 @@ export default async function DashboardLayout({
     await requireClinicUser()
     const session = await getSession()
     const isClinicOwner = session?.user?.organizationRole === "OWNER"
-    const canViewReports = canAccessReports(session)
+    const canViewReports = await canAccessReports(session)
     const organizationId = session ? getActiveOrganizationId(session) : null
     const endOfToday = new Date()
     endOfToday.setHours(23, 59, 59, 999)
 
-    const [openManualReceivables, openInstallments] = organizationId
+    const [openManualReceivables, openInstallments, canManageRbac] = organizationId
       ? await Promise.all([
           prisma.receivable.count({
             where: {
@@ -34,8 +35,13 @@ export default async function DashboardLayout({
               appointment: { organizationId },
             },
           }),
+          hasOrganizationPermission({
+            session,
+            organizationId,
+            permission: "rbac:manage",
+          }),
         ])
-      : [0, 0]
+      : [0, 0, false]
 
     const notificationsCount = openManualReceivables + openInstallments
 
@@ -47,6 +53,7 @@ export default async function DashboardLayout({
         userEmail={session?.user?.email ?? null}
         userImage={session?.user?.image ?? null}
         notificationsCount={notificationsCount}
+        canManageRbac={canManageRbac}
       >
         {children}
       </SidebarDashboard>

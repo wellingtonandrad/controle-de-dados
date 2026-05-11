@@ -42,7 +42,7 @@ export default async function Reports({
     redirect("/acesso-empresa")
   }
 
-  if (!canAccessReports(session)) {
+  if (!(await canAccessReports(session))) {
     redirect("/dashboard/overview")
   }
 
