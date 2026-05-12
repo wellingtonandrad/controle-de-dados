@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { LegalPageLayout } from "../_components/legal-page-layout"
 
 export const metadata: Metadata = {
-  title: "Termos de uso | OdontoPRO",
-  description: "Termos de uso da plataforma OdontoPRO.",
+  title: "Termos de uso | Controle de dados",
+  description: "Termos de uso da plataforma Controle de dados.",
   robots: { index: true, follow: true },
 }
 
@@ -11,7 +11,7 @@ export default function TermosPage() {
   return (
     <LegalPageLayout title="Termos de uso">
       <p>
-        Estes termos regem o uso da plataforma OdontoPRO pelos usuários
+        Estes termos regem o uso da plataforma Controle de dados pelos usuários
         cadastrados (clínicas, profissionais e equipe autorizada). Ao utilizar o
         serviço, você declara que leu e concorda com as condições abaixo, na
         versão vigente à data de uso.
@@ -19,7 +19,7 @@ export default function TermosPage() {
 
       <h2>1. Objeto do serviço</h2>
       <p>
-        O OdontoPRO oferece ferramentas digitais para apoio à gestão de
+        O Controle de dados oferece ferramentas digitais para apoio à gestão de
         clínicas odontológicas, incluindo funcionalidades que podem envolver
         agendamento, cadastros, relatórios, estoque e integrações com
         prestadores terceiros (por exemplo, pagamentos e armazenamento de

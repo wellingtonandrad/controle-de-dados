@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { LegalPageLayout } from "../_components/legal-page-layout"
 
 export const metadata: Metadata = {
-  title: "Política de privacidade | OdontoPRO",
-  description: "Política de privacidade e proteção de dados do OdontoPRO.",
+  title: "Política de privacidade | Controle de dados",
+  description: "Política de privacidade e proteção de dados do Controle de dados.",
   robots: { index: true, follow: true },
 }
 
@@ -12,10 +12,10 @@ export default function PrivacidadePage() {
     <LegalPageLayout title="Política de privacidade">
       <p>
         Esta política descreve, em linguagem acessível, como dados pessoais
-        podem ser tratados no contexto do OdontoPRO, em alinhamento com a
+        podem ser tratados no contexto do Controle de dados, em alinhamento com a
         Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD). O
         controlador das operações indicadas como próprias da plataforma é o
-        responsável legal pelo produto OdontoPRO (identificação comercial e
+        responsável legal pelo produto Controle de dados (identificação comercial e
         contato devem ser preenchidos na operação real do serviço).
       </p>
 

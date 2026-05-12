@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         {
           tags: [`user_${billingUserId}`],
           public_id: publicId,
-          folder: "odontopro/avatars",
+          folder: "controle-de-dados/avatars",
           overwrite: true,
           resource_type: "image",
         },
