@@ -81,7 +81,7 @@ export function ProfileContent({ user }: ProfileContentProps) {
               <div className="space-y-1.5">
                 <label className="text-sm font-medium leading-none">E-mail (login)</label>
                 <Input value={user.email} readOnly disabled className="bg-slate-50" />
-                <p className="text-xs text-muted-foreground">Definido pelo provedor de login (GitHub).</p>
+                <p className="text-xs text-muted-foreground">Definido pelo provedor de login (Google).</p>
               </div>
 
               <div className="space-y-4">
