@@ -103,7 +103,7 @@ export function AppointmentsList({ times }: AppointmentsListProps) {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["get-appointments", activeViewDate],
     queryFn: async () => {
-      const url = `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments?date=${activeViewDate}`
+      const url = `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments?date=${activeViewDate}`
 
       const response = await fetch(url)
 
@@ -124,7 +124,7 @@ export function AppointmentsList({ times }: AppointmentsListProps) {
     queryKey: ["scheduled-upcoming"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments/scheduled-upcoming`,
+        `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments/scheduled-upcoming`,
       )
       const json = (await response.json()) as AppointmentWithService[]
       if (!response.ok) {
@@ -140,7 +140,7 @@ export function AppointmentsList({ times }: AppointmentsListProps) {
     queryKey: ["completed-recent"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments/completed-recent`,
+        `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments/completed-recent`,
       )
       const json = (await response.json()) as AppointmentWithService[]
       if (!response.ok) {
@@ -156,7 +156,7 @@ export function AppointmentsList({ times }: AppointmentsListProps) {
     queryKey: ["no-show-recent"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments/no-show-recent`,
+        `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments/no-show-recent`,
       )
       const json = (await response.json()) as AppointmentWithService[]
       if (!response.ok) {
@@ -172,7 +172,7 @@ export function AppointmentsList({ times }: AppointmentsListProps) {
     queryKey: ["canceled-recent"],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments/canceled-recent`,
+        `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments/canceled-recent`,
       )
       const json = (await response.json()) as AppointmentWithService[]
       if (!response.ok) {

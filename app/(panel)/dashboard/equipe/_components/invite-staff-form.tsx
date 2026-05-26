@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { inviteClinicStaff } from "../_actions/invite-clinic-staff"
+import { inviteOrganizationStaff } from "../_actions/invite-organization-staff"
 import { toast } from "sonner"
 
 export function InviteStaffForm() {
@@ -15,7 +15,7 @@ export function InviteStaffForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    const res = await inviteClinicStaff({ email, role })
+    const res = await inviteOrganizationStaff({ email, role })
     setLoading(false)
     if (res.error) {
       toast.error(res.error)

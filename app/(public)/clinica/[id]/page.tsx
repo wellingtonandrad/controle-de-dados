@@ -1,19 +1,11 @@
-import { getInfoSchedule } from "./_date-acess/get-info-schedule"
-import { ScheduleContent } from "./_components/schedule-content"
 import { redirect } from "next/navigation"
 
-export default async function SchedulePage({
+/** Rota legada: redireciona para o agendamento público da empresa. */
+export default async function LegacyClinicaRedirect({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
-
-  const organizationId = (await params).id
-  const clinic = await getInfoSchedule({ organizationId })
-
-  if (!clinic) {
-    redirect("/")
-  }
-
-  return <ScheduleContent clinic={clinic} />
+  const { id } = await params
+  redirect(`/empresa/${encodeURIComponent(id)}`)
 }

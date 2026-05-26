@@ -13,7 +13,7 @@ export function LegalPageLayout({
       <article className="mx-auto max-w-3xl rounded-xl border bg-white px-5 py-8 shadow-sm sm:px-8 sm:py-10">
         <p className="mb-6 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-950">
           Texto modelo para apoio à transparência. Revise com assessoria jurídica
-          antes de uso formal com pacientes e clínicas.
+          antes de uso formal com clientes e empresas.
         </p>
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
           {title}

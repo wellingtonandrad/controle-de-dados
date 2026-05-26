@@ -77,7 +77,7 @@ export function AppointmentInstallmentsEditor({
     queryKey: ["appointment-installments", appointmentId],
     queryFn: async () => {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/api/clinic/appointments/${appointmentId}/installments`,
+        `${process.env.NEXT_PUBLIC_URL}/api/panel/appointments/${appointmentId}/installments`,
       )
       if (!res.ok) return [] as InstallmentRow[]
       return res.json() as Promise<InstallmentRow[]>

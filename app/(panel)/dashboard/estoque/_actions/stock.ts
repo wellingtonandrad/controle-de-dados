@@ -5,6 +5,7 @@ import { z } from "zod"
 import { auth } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
+import { recordAudit } from "@/lib/audit/record-audit"
 
 const createItemSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -31,7 +32,7 @@ async function organizationIdOrError() {
   if (!session?.user?.id) return { error: "Usuário não encontrado" as const }
   const organizationId = getActiveOrganizationId(session)
   if (!organizationId) return { error: "Empresa não identificada" as const }
-  return { organizationId }
+  return { organizationId, userId: session.user.id }
 }
 
 export async function createStockItem(raw: z.infer<typeof createItemSchema>) {
@@ -64,6 +65,15 @@ export async function createStockItem(raw: z.infer<typeof createItemSchema>) {
     }
 
     revalidatePath("/dashboard/estoque")
+    await recordAudit({
+      organizationId: ctx.organizationId,
+      userId: ctx.userId,
+      category: "STOCK",
+      action: "stock.item.create",
+      summary: `Material cadastrado: ${item.name} (${item.currentQuantity} ${item.unit})`,
+      entityType: "StockItem",
+      entityId: item.id,
+    })
     return { data: "Material cadastrado." }
   } catch {
     return { error: "Não foi possível cadastrar o material." }
@@ -77,11 +87,13 @@ export async function createStockMovement(raw: z.infer<typeof movementSchema>) {
   if ("error" in ctx) return { error: ctx.error }
 
   try {
+    let movementItemName = ""
     await prisma.$transaction(async (tx) => {
       const item = await tx.stockItem.findFirst({
         where: { id: parsed.data.stockItemId, organizationId: ctx.organizationId, active: true },
       })
       if (!item) throw new Error("Material não encontrado")
+      movementItemName = item.name
 
       let nextQty = item.currentQuantity
       if (parsed.data.kind === "IN") nextQty += parsed.data.quantity
@@ -108,6 +120,16 @@ export async function createStockMovement(raw: z.infer<typeof movementSchema>) {
     })
 
     revalidatePath("/dashboard/estoque")
+    await recordAudit({
+      organizationId: ctx.organizationId,
+      userId: ctx.userId,
+      category: "STOCK",
+      action: "stock.movement.create",
+      summary: `Movimento ${parsed.data.kind} · ${parsed.data.quantity} · ${movementItemName}`,
+      entityType: "StockItem",
+      entityId: parsed.data.stockItemId,
+      metadata: { kind: parsed.data.kind, quantity: parsed.data.quantity },
+    })
     return { data: "Movimentação registrada." }
   } catch (err) {
     return { error: err instanceof Error ? err.message : "Falha ao movimentar estoque." }

@@ -39,7 +39,7 @@ function GoogleIcon({ className }: { className?: string }) {
   )
 }
 
-function canOpenClinicPanel(session: ReturnType<typeof useSession>["data"]) {
+function canOpenErpPanel(session: ReturnType<typeof useSession>["data"]) {
   if (!session?.user) return false
   const u = session.user
   if (u.role === "ACCOUNT_HOLDER" && u.organizationVerified) return true
@@ -80,7 +80,7 @@ export function Header({
         >
           Abrir painel
         </Link>
-      ) : session && canOpenClinicPanel(session) ? (
+      ) : session && canOpenErpPanel(session) ? (
         <Link
           href="/dashboard"
           className="text-base font-medium text-emerald-700 underline-offset-4 hover:underline"
@@ -101,7 +101,7 @@ export function Header({
           <GoogleIcon className="mr-2 h-4 w-4 shrink-0" />
           Entrar com Google
         </Button>
-      ) : !panelNoAuth && session && !canOpenClinicPanel(session) && googleOAuthConfigured ? (
+      ) : !panelNoAuth && session && !canOpenErpPanel(session) && googleOAuthConfigured ? (
         <Button
           type="button"
           variant="outline"

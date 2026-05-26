@@ -6,7 +6,7 @@ import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import nodemailer from "nodemailer"
+import { recordAudit } from "@/lib/audit/record-audit"
 
 const lineSchema = z.object({
   productId: z.string().min(1),
@@ -42,13 +42,13 @@ async function getSalesContext() {
     permission: "sales:manage",
   })
   if (!canManageSales) return { error: "Sem permissão para gerir vendas." } as const
-  return { session, organizationId } as const
+  return { session, organizationId, userId: session.user.id } as const
 }
 
 export async function createSale(input: CreateSaleInput) {
   const ctx = await getSalesContext()
   if ("error" in ctx) return { error: ctx.error }
-  const { organizationId } = ctx
+  const { organizationId, userId } = ctx
 
   const parsed = createSaleSchema.safeParse(input)
   if (!parsed.success) {
@@ -112,6 +112,16 @@ export async function createSale(input: CreateSaleInput) {
     })
 
     revalidatePath("/dashboard/vendas")
+    await recordAudit({
+      organizationId,
+      userId,
+      category: "SALE",
+      action: "sale.create",
+      summary: `Venda ${status === "DRAFT" ? "rascunho" : "confirmada"} · ${(totalCents / 100).toFixed(2)}`,
+      entityType: "Sale",
+      entityId: sale.id,
+      metadata: { totalCents, status, lineCount: lines.length },
+    })
     return { data: sale }
   } catch (e) {
     console.error(e)
@@ -140,6 +150,15 @@ export async function cancelSale(saleId: string) {
       data: { status: "CANCELLED" },
     })
     revalidatePath("/dashboard/vendas")
+    await recordAudit({
+      organizationId,
+      userId: ctx.userId,
+      category: "SALE",
+      action: "sale.cancel",
+      summary: `Venda cancelada · …${saleId.slice(-6)}`,
+      entityType: "Sale",
+      entityId: saleId,
+    })
     return { ok: true as const }
   } catch (e) {
     console.error(e)

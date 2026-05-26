@@ -1,61 +1,61 @@
 import { SidebarDashboard } from "./_components/sidebar"
-import { requireClinicUser } from "@/app/utils/auth/require-clinic-user"
+import { requireOrganizationUser } from "@/app/utils/auth/require-organization-user"
 import getSession from "@/lib/getSession"
 import { canAccessReports } from "@/app/utils/auth/can-access-reports"
-import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import prisma from "@/lib/prisma"
+import { normalizeEnabledModules } from "@/lib/erp/vertical-modules"
 
 export default async function DashboardLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode
-}){
-    await requireClinicUser()
-    const session = await getSession()
-    const isClinicOwner = session?.user?.organizationRole === "OWNER"
-    const canViewReports = await canAccessReports(session)
-    const organizationId = session ? getActiveOrganizationId(session) : null
-    const endOfToday = new Date()
-    endOfToday.setHours(23, 59, 59, 999)
+  children: React.ReactNode
+}) {
+  const { organization } = await requireOrganizationUser()
+  const session = await getSession()
+  const isOrganizationOwner = session?.user?.organizationRole === "OWNER"
+  const canViewReports = await canAccessReports(session)
+  const enabledModules = normalizeEnabledModules(organization.enabledModules)
 
-    const [openManualReceivables, openInstallments, canManageRbac] = organizationId
-      ? await Promise.all([
-          prisma.receivable.count({
-            where: {
-              organizationId,
-              paidAt: null,
-              dueDate: { lte: endOfToday },
-            },
-          }),
-          prisma.appointmentInstallment.count({
-            where: {
-              paidAt: null,
-              dueDate: { lte: endOfToday },
-              appointment: { organizationId },
-            },
-          }),
-          hasOrganizationPermission({
-            session,
-            organizationId,
-            permission: "rbac:manage",
-          }),
-        ])
-      : [0, 0, false]
+  const endOfToday = new Date()
+  endOfToday.setHours(23, 59, 59, 999)
 
-    const notificationsCount = openManualReceivables + openInstallments
+  const [openManualReceivables, openInstallments, canManageRbac] = await Promise.all([
+    prisma.receivable.count({
+      where: {
+        organizationId: organization.id,
+        paidAt: null,
+        dueDate: { lte: endOfToday },
+      },
+    }),
+    prisma.appointmentInstallment.count({
+      where: {
+        paidAt: null,
+        dueDate: { lte: endOfToday },
+        appointment: { organizationId: organization.id },
+      },
+    }),
+    hasOrganizationPermission({
+      session,
+      organizationId: organization.id,
+      permission: "rbac:manage",
+    }),
+  ])
 
-    return (
-      <SidebarDashboard
-        isClinicOwner={isClinicOwner}
-        canViewReports={canViewReports}
-        userName={session?.user?.name ?? null}
-        userEmail={session?.user?.email ?? null}
-        userImage={session?.user?.image ?? null}
-        notificationsCount={notificationsCount}
-        canManageRbac={canManageRbac}
-      >
-        {children}
-      </SidebarDashboard>
-    )
+  const notificationsCount = openManualReceivables + openInstallments
+
+  return (
+    <SidebarDashboard
+      isOrganizationOwner={isOrganizationOwner}
+      enabledModules={enabledModules}
+      canViewReports={canViewReports}
+      userName={session?.user?.name ?? null}
+      userEmail={session?.user?.email ?? null}
+      userImage={session?.user?.image ?? null}
+      notificationsCount={notificationsCount}
+      canManageRbac={canManageRbac}
+    >
+      {children}
+    </SidebarDashboard>
+  )
 }

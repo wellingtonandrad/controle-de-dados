@@ -109,6 +109,13 @@ interface StockContentProps {
 }
 
 type SortKey = "name" | "balance_desc" | "balance_asc"
+type StatusFilter = "all" | "zero" | "low" | "ok"
+
+function itemStockStatus(item: StockItem): "zero" | "low" | "ok" {
+  if (item.currentQuantity === 0) return "zero"
+  if (item.currentQuantity <= item.minimumQuantity) return "low"
+  return "ok"
+}
 
 const selectClass =
   "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -124,6 +131,7 @@ export function StockContent({
 
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState<SortKey>("name")
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all")
 
   const [itemName, setItemName] = useState("")
   const [itemUnit, setItemUnit] = useState("un")
@@ -169,6 +177,10 @@ export function StockContent({
       ? stockItems.filter((i) => i.name.toLowerCase().includes(q))
       : [...stockItems]
 
+    if (statusFilter !== "all") {
+      rows = rows.filter((i) => itemStockStatus(i) === statusFilter)
+    }
+
     if (sort === "name") {
       rows.sort((a, b) => a.name.localeCompare(b.name, "pt-BR"))
     } else if (sort === "balance_desc") {
@@ -177,7 +189,7 @@ export function StockContent({
       rows.sort((a, b) => a.currentQuantity - b.currentQuantity)
     }
     return rows
-  }, [stockItems, search, sort])
+  }, [stockItems, search, sort, statusFilter])
 
   const filteredMovements = useMemo(() => {
     return movements.filter((mv) => {
@@ -259,7 +271,7 @@ export function StockContent({
     <div className="mx-auto max-w-7xl space-y-8 pb-10">
       <ErpPageHeader
         title="Estoque"
-        description={`Controle de materiais, histórico de movimentos e regras de consumo (${consumptions.length} regra(s)).`}
+        description={`Lista de materiais logo abaixo. Lançamentos, cadastro e regras de consumo (${consumptions.length} regra(s)) seguem na página.`}
         actions={
           <>
             <Button variant="outline" size="sm" asChild>
@@ -311,6 +323,150 @@ export function StockContent({
           />
         </div>
       </div>
+
+      <Card
+        id="materiais-estoque"
+        className="overflow-hidden rounded-2xl border-emerald-200/60 bg-white py-0 shadow-md ring-1 ring-emerald-100/80"
+      >
+        <CardHeader className="border-b border-slate-100 bg-gradient-to-r from-emerald-50/90 via-white to-slate-50/80 px-5 py-5 sm:px-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex gap-3">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white text-emerald-800 shadow-sm ring-1 ring-emerald-200/80">
+                <Warehouse className="size-5" aria-hidden />
+              </span>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle className="text-lg tracking-tight">Seus materiais</CardTitle>
+                  {stockItems.length > 0 ? (
+                    <Badge variant="secondary" className="font-normal">
+                      {filteredItems.length === stockItems.length
+                        ? `${stockItems.length} cadastrado(s)`
+                        : `Mostrando ${filteredItems.length} de ${stockItems.length}`}
+                    </Badge>
+                  ) : null}
+                </div>
+                <CardDescription className="mt-1 max-w-2xl text-sm">
+                  Visão principal do estoque: nome, unidade, saldo, mínimo e status. Use a busca e os filtros para
+                  achar um item rapidamente.
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex w-full flex-col gap-2 lg:max-w-xl lg:flex-row lg:flex-wrap lg:items-center lg:justify-end">
+              <Input
+                className="h-10 border-slate-200 bg-white lg:min-w-[12rem] lg:flex-1"
+                placeholder="Buscar por nome…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                aria-label="Buscar material por nome"
+              />
+              <select
+                className={cn(selectClass, "h-10 border-slate-200 bg-white lg:w-44")}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
+                aria-label="Filtrar por status do estoque"
+              >
+                <option value="all">Status: todos</option>
+                <option value="zero">Status: sem estoque</option>
+                <option value="low">Status: estoque baixo</option>
+                <option value="ok">Status: normal</option>
+              </select>
+              <select
+                className={cn(selectClass, "h-10 border-slate-200 bg-white lg:w-48")}
+                value={sort}
+                onChange={(e) => setSort(e.target.value as SortKey)}
+                aria-label="Ordenar lista de materiais"
+              >
+                <option value="name">Ordenar: nome</option>
+                <option value="balance_desc">Ordenar: saldo (maior)</option>
+                <option value="balance_asc">Ordenar: saldo (menor)</option>
+              </select>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-4 sm:p-5">
+          <div className={erpTableWrap}>
+            <table className="w-full min-w-[520px] text-sm">
+              <thead>
+                <tr className={erpTableHead}>
+                  <th className="px-4 py-3 sm:px-6">Material</th>
+                  <th
+                    className="px-2 py-3 text-center"
+                    title="Unidade de medida (ex.: un, caixa), não é a quantidade em estoque"
+                  >
+                    Un.
+                  </th>
+                  <th
+                    className="px-2 py-3 text-right"
+                    title="Quantidade que você tem agora nesta unidade"
+                  >
+                    Saldo
+                  </th>
+                  <th
+                    className="px-2 py-3 text-right"
+                    title="Alerta quando o saldo for menor ou igual a este valor"
+                  >
+                    Mín.
+                  </th>
+                  <th className="px-4 py-3 text-right sm:px-6">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stockItems.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-10 text-center text-muted-foreground">
+                      Ainda não há materiais. Use o formulário <strong className="text-foreground">Novo material</strong>{" "}
+                      (painel ao lado no desktop ou abaixo no celular) para cadastrar o primeiro item — ele aparecerá
+                      aqui na hora.
+                    </td>
+                  </tr>
+                ) : filteredItems.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-10 text-center text-muted-foreground">
+                      {search.trim()
+                        ? "Nenhum material corresponde à busca. Limpe o texto ou ajuste o filtro de status."
+                        : statusFilter !== "all"
+                          ? "Nenhum material neste status. Escolha outro filtro ou “todos”."
+                          : "Nenhum material na lista."}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredItems.map((item) => {
+                    const semEstoque = item.currentQuantity === 0
+                    const baixo =
+                      !semEstoque && item.currentQuantity <= item.minimumQuantity
+                    return (
+                      <tr
+                        key={item.id}
+                        className={cn(
+                          "border-b border-slate-100 last:border-0 transition-colors hover:bg-slate-50/80",
+                          semEstoque && "bg-red-50/50",
+                          baixo && "bg-amber-50/70",
+                        )}
+                      >
+                        <td className="px-4 py-2.5 font-medium text-slate-900 sm:px-6">{item.name}</td>
+                        <td className="px-2 py-2.5 text-center text-muted-foreground">{item.unit}</td>
+                        <td className="px-2 py-2.5 text-right tabular-nums">{item.currentQuantity}</td>
+                        <td className="px-2 py-2.5 text-right tabular-nums text-muted-foreground">
+                          {item.minimumQuantity}
+                        </td>
+                        <td className="px-4 py-2.5 text-right sm:px-6">
+                          {semEstoque ? (
+                            <Badge variant="destructive">Sem estoque</Badge>
+                          ) : baixo ? (
+                            <Badge variant="warning">Baixo</Badge>
+                          ) : (
+                            <Badge variant="success">Normal</Badge>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-8 xl:grid-cols-12">
         <div className="space-y-8 xl:col-span-8">
@@ -557,131 +713,6 @@ export function StockContent({
                   </tbody>
                 </table>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="overflow-hidden rounded-2xl border-slate-200/90 py-0 shadow-md">
-            <CardHeader className="border-b border-slate-100 bg-slate-50/90 px-5 py-5 sm:px-6">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                <div className="flex gap-3">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white text-slate-700 shadow-sm ring-1 ring-slate-200/80">
-                    <Warehouse className="size-5" aria-hidden />
-                  </span>
-                  <div>
-                    <CardTitle className="text-lg tracking-tight">Materiais em estoque</CardTitle>
-                    <CardDescription className="mt-1 text-sm">
-                      Saldo atual por item. Unidade é só como você conta (un, cx, ml…).
-                    </CardDescription>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
-                  <Input
-                    className="h-10 border-slate-200 bg-white sm:w-56"
-                    placeholder="Buscar por nome…"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <select
-                    className={cn(selectClass, "h-10 border-slate-200 bg-white sm:w-48")}
-                    value={sort}
-                    onChange={(e) => setSort(e.target.value as SortKey)}
-                  >
-                    <option value="name">Ordenar: nome</option>
-                    <option value="balance_desc">Ordenar: saldo (maior)</option>
-                    <option value="balance_asc">Ordenar: saldo (menor)</option>
-                  </select>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-4 sm:p-5">
-              <div className={erpTableWrap}>
-                <table className="w-full min-w-[520px] text-sm">
-                  <thead>
-                    <tr className={erpTableHead}>
-                      <th className="px-4 py-3 sm:px-6">Material</th>
-                      <th
-                        className="px-2 py-3 text-center"
-                        title="Unidade de medida (ex.: un, caixa), não é a quantidade em estoque"
-                      >
-                        Un.
-                      </th>
-                      <th
-                        className="px-2 py-3 text-right"
-                        title="Quantidade que você tem agora nesta unidade"
-                      >
-                        Saldo
-                      </th>
-                      <th
-                        className="px-2 py-3 text-right"
-                        title="Alerta quando o saldo for menor ou igual a este valor"
-                      >
-                        Mín.
-                      </th>
-                      <th className="px-4 py-3 text-right sm:px-6">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {stockItems.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="px-6 py-10 text-center text-muted-foreground"
-                        >
-                          Cadastre o primeiro material no painel à direita.
-                        </td>
-                      </tr>
-                    ) : filteredItems.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan={5}
-                          className="px-6 py-10 text-center text-muted-foreground"
-                        >
-                          Nenhum material corresponde à busca.
-                        </td>
-                      </tr>
-                    ) : (
-                      filteredItems.map((item) => {
-                        const semEstoque = item.currentQuantity === 0
-                        const baixo =
-                          !semEstoque &&
-                          item.currentQuantity <= item.minimumQuantity
-                        return (
-                          <tr
-                            key={item.id}
-                            className={cn(
-                              "border-b border-slate-100 last:border-0 transition-colors hover:bg-slate-50/80",
-                              semEstoque && "bg-red-50/50",
-                              baixo && "bg-amber-50/70",
-                            )}
-                          >
-                            <td className="px-4 py-2.5 font-medium text-slate-900 sm:px-6">
-                              {item.name}
-                            </td>
-                            <td className="px-2 py-2.5 text-center text-muted-foreground">
-                              {item.unit}
-                            </td>
-                            <td className="px-2 py-2.5 text-right tabular-nums">
-                              {item.currentQuantity}
-                            </td>
-                            <td className="px-2 py-2.5 text-right tabular-nums text-muted-foreground">
-                              {item.minimumQuantity}
-                            </td>
-                            <td className="px-4 py-2.5 text-right sm:px-6">
-                              {semEstoque ? (
-                                <Badge variant="destructive">Sem estoque</Badge>
-                              ) : baixo ? (
-                                <Badge variant="warning">Baixo</Badge>
-                              ) : (
-                                <Badge variant="success">Normal</Badge>
-                              )}
-                            </td>
-                          </tr>
-                        )
-                      })
-                    )}
-                  </tbody>
-                </table>
               </div>
             </CardContent>
           </Card>
@@ -942,9 +973,9 @@ function StockFlowGuide() {
       <div className="border-t border-slate-100 px-5 pb-5 pt-2 sm:px-6">
         <ol className="list-decimal space-y-2.5 pl-4 text-xs leading-relaxed text-muted-foreground marker:font-medium marker:text-foreground sm:text-sm">
           <li>
-            <strong className="text-foreground">Materiais</strong> — cadastre cada item com{" "}
-            <strong className="text-foreground">unidade</strong> (un, caixa…) e{" "}
-            <strong className="text-foreground">saldo</strong> atual.
+            <strong className="text-foreground">Materiais</strong> — a lista principal fica logo abaixo do resumo.
+            Cadastre cada item com <strong className="text-foreground">unidade</strong> (un, caixa…) e{" "}
+            <strong className="text-foreground">saldo</strong> atual; use busca e filtro de status para achar itens.
           </li>
           <li>
             <strong className="text-foreground">Lançamentos</strong> — entradas somam, saídas subtraem; ajuste define o

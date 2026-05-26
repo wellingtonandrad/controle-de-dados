@@ -74,6 +74,15 @@ export async function createManualReceivable(raw: z.infer<typeof createReceivabl
       },
     })
 
+    await recordAudit({
+      organizationId: ctx.organizationId,
+      userId: ctx.userId,
+      category: "FINANCE",
+      action: "receivable.create",
+      summary: `Conta a receber: ${parsed.data.description.slice(0, 80)}`,
+      metadata: { amountCents: parsed.data.amountCents },
+    })
+
     revalidatePath("/dashboard/contas-receber")
     return { ok: true as const }
   } catch {
@@ -111,6 +120,14 @@ export async function markReceivablePaid(raw: z.infer<typeof markSchema>) {
     }
 
     revalidatePath("/dashboard/contas-receber")
+    await recordAudit({
+      organizationId: ctx.organizationId,
+      userId: ctx.userId,
+      category: "FINANCE",
+      action: "receivable.mark_paid",
+      summary: `Recebimento registrado (${parsed.data.kind})`,
+      entityId: parsed.data.id,
+    })
     return { ok: true as const }
   } catch {
     return { error: "Não foi possível marcar como recebido." }

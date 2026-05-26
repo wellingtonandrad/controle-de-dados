@@ -22,7 +22,7 @@ export const subscriptionPlans = [
     {
         id: "BASIC",
         name: "Basic",
-        description: "Perfeito para clinicas menores",
+        description: "Perfeito para empresas menores",
         oldPrice: "R$ 97,90",
         price: "R$ 27,90",
         features: [
@@ -36,7 +36,7 @@ export const subscriptionPlans = [
     {
         id: "PROFESSIONAL",
         name: "Professional",
-        description: "Ideal para clinicas grandes",
+        description: "Ideal para empresas maiores",
         oldPrice: "R$ 197,90",
         price: "R$ 97,90",
         features: [

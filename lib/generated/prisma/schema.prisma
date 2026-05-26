@@ -61,6 +61,57 @@ enum ProductionOrderStatus {
   CANCELLED
 }
 
+/**
+ * Camada importada de KMZ/KML: região de entrega, fábrica, bairro, rota.
+ */
+enum GeoMapLayerCategory {
+  DELIVERY_REGION
+  FACTORY_SITE
+  NEIGHBORHOOD_BOUNDARY
+  PLANNED_ROUTE
+}
+
+/**
+ * Quem enviou o ponto de GPS: entregador ou veículo da empresa.
+ */
+enum GpsSubjectType {
+  DELIVERER
+  COMPANY_VEHICLE
+}
+
+/**
+ * Status da entrega no momento do registro do ponto.
+ */
+enum DeliveryProgressStatus {
+  SCHEDULED
+  LOADING
+  OUT_FOR_DELIVERY
+  IN_TRANSIT
+  AT_CUSTOMER
+  DELIVERED
+  EXCEPTION
+  RETURNING
+  CANCELLED
+}
+
+enum DeliveryTripStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+/**
+ * Módulos verticais do ERP multissetorial (CORE é sempre implícito).
+ */
+enum ErpVerticalModule {
+  LOGISTICS
+  MARKETS
+  SERVICES
+  HOSPITALS
+  INDUSTRY
+}
+
 model Organization {
   id          String @id @default(cuid())
   ownerUserId String
@@ -74,6 +125,11 @@ model Organization {
 
   verified Boolean @default(false)
   active   Boolean @default(true)
+
+  /**
+   * Módulos ativos nesta empresa (menu e rotas verticais).
+   */
+  enabledModules ErpVerticalModule[] @default([LOGISTICS, SERVICES, INDUSTRY])
 
   members          OrganizationMember[]
   accountGroups    AccountGroup[]
@@ -92,6 +148,8 @@ model Organization {
   workCenters      WorkCenter[]
   billsOfMaterials BillOfMaterial[]
   productionOrders ProductionOrder[]
+  geoMapLayers     GeoMapLayer[]
+  deliveryTrips    DeliveryTrip[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -255,7 +313,8 @@ model Sale {
   totalCents Int
   notes      String?
 
-  lines SaleLine[]
+  lines         SaleLine[]
+  deliveryTrips DeliveryTrip[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -620,6 +679,69 @@ model ProductionReport {
   createdAt DateTime @default(now())
 
   @@index([productionOrderId, createdAt])
+}
+
+model GeoMapLayer {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name           String
+  category       GeoMapLayerCategory
+  /**
+   * GeoJSON FeatureCollection extraído do KML/KMZ.
+   */
+  geoJson        Json
+  sourceFileName String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, category])
+}
+
+model DeliveryTrip {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  saleId String?
+  sale   Sale?   @relation(fields: [saleId], references: [id], onDelete: SetNull)
+
+  referenceCode String?
+  description   String?
+  driverLabel   String?
+  vehicleLabel  String?
+
+  status DeliveryTripStatus @default(DRAFT)
+
+  gpsPoints GpsTrackPoint[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([saleId])
+}
+
+model GpsTrackPoint {
+  id String @id @default(cuid())
+
+  tripId String
+  trip   DeliveryTrip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  latitude   Float
+  longitude  Float
+  recordedAt DateTime
+
+  subject        GpsSubjectType
+  deliveryStatus DeliveryProgressStatus
+
+  note String?
+
+  createdAt DateTime @default(now())
+
+  @@index([tripId, recordedAt])
 }
 
 model User {

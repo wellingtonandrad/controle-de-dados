@@ -159,6 +159,21 @@ export type ProductionMaterialPlan = $Result.DefaultSelection<Prisma.$Production
  */
 export type ProductionReport = $Result.DefaultSelection<Prisma.$ProductionReportPayload>
 /**
+ * Model GeoMapLayer
+ * 
+ */
+export type GeoMapLayer = $Result.DefaultSelection<Prisma.$GeoMapLayerPayload>
+/**
+ * Model DeliveryTrip
+ * 
+ */
+export type DeliveryTrip = $Result.DefaultSelection<Prisma.$DeliveryTripPayload>
+/**
+ * Model GpsTrackPoint
+ * 
+ */
+export type GpsTrackPoint = $Result.DefaultSelection<Prisma.$GpsTrackPointPayload>
+/**
  * Model User
  * 
  */
@@ -265,6 +280,60 @@ export const ProductionOrderStatus: {
 
 export type ProductionOrderStatus = (typeof ProductionOrderStatus)[keyof typeof ProductionOrderStatus]
 
+
+export const GeoMapLayerCategory: {
+  DELIVERY_REGION: 'DELIVERY_REGION',
+  FACTORY_SITE: 'FACTORY_SITE',
+  NEIGHBORHOOD_BOUNDARY: 'NEIGHBORHOOD_BOUNDARY',
+  PLANNED_ROUTE: 'PLANNED_ROUTE'
+};
+
+export type GeoMapLayerCategory = (typeof GeoMapLayerCategory)[keyof typeof GeoMapLayerCategory]
+
+
+export const GpsSubjectType: {
+  DELIVERER: 'DELIVERER',
+  COMPANY_VEHICLE: 'COMPANY_VEHICLE'
+};
+
+export type GpsSubjectType = (typeof GpsSubjectType)[keyof typeof GpsSubjectType]
+
+
+export const DeliveryProgressStatus: {
+  SCHEDULED: 'SCHEDULED',
+  LOADING: 'LOADING',
+  OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
+  IN_TRANSIT: 'IN_TRANSIT',
+  AT_CUSTOMER: 'AT_CUSTOMER',
+  DELIVERED: 'DELIVERED',
+  EXCEPTION: 'EXCEPTION',
+  RETURNING: 'RETURNING',
+  CANCELLED: 'CANCELLED'
+};
+
+export type DeliveryProgressStatus = (typeof DeliveryProgressStatus)[keyof typeof DeliveryProgressStatus]
+
+
+export const DeliveryTripStatus: {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type DeliveryTripStatus = (typeof DeliveryTripStatus)[keyof typeof DeliveryTripStatus]
+
+
+export const ErpVerticalModule: {
+  LOGISTICS: 'LOGISTICS',
+  MARKETS: 'MARKETS',
+  SERVICES: 'SERVICES',
+  HOSPITALS: 'HOSPITALS',
+  INDUSTRY: 'INDUSTRY'
+};
+
+export type ErpVerticalModule = (typeof ErpVerticalModule)[keyof typeof ErpVerticalModule]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -298,6 +367,26 @@ export const ProductItemType: typeof $Enums.ProductItemType
 export type ProductionOrderStatus = $Enums.ProductionOrderStatus
 
 export const ProductionOrderStatus: typeof $Enums.ProductionOrderStatus
+
+export type GeoMapLayerCategory = $Enums.GeoMapLayerCategory
+
+export const GeoMapLayerCategory: typeof $Enums.GeoMapLayerCategory
+
+export type GpsSubjectType = $Enums.GpsSubjectType
+
+export const GpsSubjectType: typeof $Enums.GpsSubjectType
+
+export type DeliveryProgressStatus = $Enums.DeliveryProgressStatus
+
+export const DeliveryProgressStatus: typeof $Enums.DeliveryProgressStatus
+
+export type DeliveryTripStatus = $Enums.DeliveryTripStatus
+
+export const DeliveryTripStatus: typeof $Enums.DeliveryTripStatus
+
+export type ErpVerticalModule = $Enums.ErpVerticalModule
+
+export const ErpVerticalModule: typeof $Enums.ErpVerticalModule
 
 /**
  * ##  Prisma Client ʲˢ
@@ -709,6 +798,36 @@ export class PrismaClient<
     * ```
     */
   get productionReport(): Prisma.ProductionReportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.geoMapLayer`: Exposes CRUD operations for the **GeoMapLayer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GeoMapLayers
+    * const geoMapLayers = await prisma.geoMapLayer.findMany()
+    * ```
+    */
+  get geoMapLayer(): Prisma.GeoMapLayerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deliveryTrip`: Exposes CRUD operations for the **DeliveryTrip** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DeliveryTrips
+    * const deliveryTrips = await prisma.deliveryTrip.findMany()
+    * ```
+    */
+  get deliveryTrip(): Prisma.DeliveryTripDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gpsTrackPoint`: Exposes CRUD operations for the **GpsTrackPoint** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GpsTrackPoints
+    * const gpsTrackPoints = await prisma.gpsTrackPoint.findMany()
+    * ```
+    */
+  get gpsTrackPoint(): Prisma.GpsTrackPointDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -1222,6 +1341,9 @@ export namespace Prisma {
     ProductionOrder: 'ProductionOrder',
     ProductionMaterialPlan: 'ProductionMaterialPlan',
     ProductionReport: 'ProductionReport',
+    GeoMapLayer: 'GeoMapLayer',
+    DeliveryTrip: 'DeliveryTrip',
+    GpsTrackPoint: 'GpsTrackPoint',
     User: 'User',
     Account: 'Account',
     Session: 'Session',
@@ -1242,7 +1364,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "organization" | "organizationMember" | "permission" | "accountGroup" | "accountGroupPermission" | "organizationMemberGroup" | "customer" | "product" | "supplier" | "sale" | "saleLine" | "salesGoal" | "purchase" | "purchaseLine" | "appointment" | "service" | "stockItem" | "stockMovement" | "serviceStockConsumption" | "appointmentInstallment" | "receivable" | "reminder" | "workCenter" | "billOfMaterial" | "bomItem" | "routingStep" | "productionOrder" | "productionMaterialPlan" | "productionReport" | "user" | "account" | "session" | "verificationToken" | "authenticator"
+      modelProps: "organization" | "organizationMember" | "permission" | "accountGroup" | "accountGroupPermission" | "organizationMemberGroup" | "customer" | "product" | "supplier" | "sale" | "saleLine" | "salesGoal" | "purchase" | "purchaseLine" | "appointment" | "service" | "stockItem" | "stockMovement" | "serviceStockConsumption" | "appointmentInstallment" | "receivable" | "reminder" | "workCenter" | "billOfMaterial" | "bomItem" | "routingStep" | "productionOrder" | "productionMaterialPlan" | "productionReport" | "geoMapLayer" | "deliveryTrip" | "gpsTrackPoint" | "user" | "account" | "session" | "verificationToken" | "authenticator"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3392,6 +3514,228 @@ export namespace Prisma {
           }
         }
       }
+      GeoMapLayer: {
+        payload: Prisma.$GeoMapLayerPayload<ExtArgs>
+        fields: Prisma.GeoMapLayerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GeoMapLayerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GeoMapLayerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          findFirst: {
+            args: Prisma.GeoMapLayerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GeoMapLayerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          findMany: {
+            args: Prisma.GeoMapLayerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>[]
+          }
+          create: {
+            args: Prisma.GeoMapLayerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          createMany: {
+            args: Prisma.GeoMapLayerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GeoMapLayerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>[]
+          }
+          delete: {
+            args: Prisma.GeoMapLayerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          update: {
+            args: Prisma.GeoMapLayerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          deleteMany: {
+            args: Prisma.GeoMapLayerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GeoMapLayerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GeoMapLayerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>[]
+          }
+          upsert: {
+            args: Prisma.GeoMapLayerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GeoMapLayerPayload>
+          }
+          aggregate: {
+            args: Prisma.GeoMapLayerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGeoMapLayer>
+          }
+          groupBy: {
+            args: Prisma.GeoMapLayerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GeoMapLayerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GeoMapLayerCountArgs<ExtArgs>
+            result: $Utils.Optional<GeoMapLayerCountAggregateOutputType> | number
+          }
+        }
+      }
+      DeliveryTrip: {
+        payload: Prisma.$DeliveryTripPayload<ExtArgs>
+        fields: Prisma.DeliveryTripFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeliveryTripFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeliveryTripFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          findFirst: {
+            args: Prisma.DeliveryTripFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeliveryTripFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          findMany: {
+            args: Prisma.DeliveryTripFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>[]
+          }
+          create: {
+            args: Prisma.DeliveryTripCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          createMany: {
+            args: Prisma.DeliveryTripCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeliveryTripCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>[]
+          }
+          delete: {
+            args: Prisma.DeliveryTripDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          update: {
+            args: Prisma.DeliveryTripUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          deleteMany: {
+            args: Prisma.DeliveryTripDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeliveryTripUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeliveryTripUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>[]
+          }
+          upsert: {
+            args: Prisma.DeliveryTripUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliveryTripPayload>
+          }
+          aggregate: {
+            args: Prisma.DeliveryTripAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeliveryTrip>
+          }
+          groupBy: {
+            args: Prisma.DeliveryTripGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryTripGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeliveryTripCountArgs<ExtArgs>
+            result: $Utils.Optional<DeliveryTripCountAggregateOutputType> | number
+          }
+        }
+      }
+      GpsTrackPoint: {
+        payload: Prisma.$GpsTrackPointPayload<ExtArgs>
+        fields: Prisma.GpsTrackPointFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GpsTrackPointFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GpsTrackPointFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          findFirst: {
+            args: Prisma.GpsTrackPointFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GpsTrackPointFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          findMany: {
+            args: Prisma.GpsTrackPointFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>[]
+          }
+          create: {
+            args: Prisma.GpsTrackPointCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          createMany: {
+            args: Prisma.GpsTrackPointCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GpsTrackPointCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>[]
+          }
+          delete: {
+            args: Prisma.GpsTrackPointDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          update: {
+            args: Prisma.GpsTrackPointUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          deleteMany: {
+            args: Prisma.GpsTrackPointDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GpsTrackPointUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GpsTrackPointUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>[]
+          }
+          upsert: {
+            args: Prisma.GpsTrackPointUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GpsTrackPointPayload>
+          }
+          aggregate: {
+            args: Prisma.GpsTrackPointAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGpsTrackPoint>
+          }
+          groupBy: {
+            args: Prisma.GpsTrackPointGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GpsTrackPointGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GpsTrackPointCountArgs<ExtArgs>
+            result: $Utils.Optional<GpsTrackPointCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -3899,6 +4243,9 @@ export namespace Prisma {
     productionOrder?: ProductionOrderOmit
     productionMaterialPlan?: ProductionMaterialPlanOmit
     productionReport?: ProductionReportOmit
+    geoMapLayer?: GeoMapLayerOmit
+    deliveryTrip?: DeliveryTripOmit
+    gpsTrackPoint?: GpsTrackPointOmit
     user?: UserOmit
     account?: AccountOmit
     session?: SessionOmit
@@ -4001,6 +4348,8 @@ export namespace Prisma {
     workCenters: number
     billsOfMaterials: number
     productionOrders: number
+    geoMapLayers: number
+    deliveryTrips: number
   }
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4021,6 +4370,8 @@ export namespace Prisma {
     workCenters?: boolean | OrganizationCountOutputTypeCountWorkCentersArgs
     billsOfMaterials?: boolean | OrganizationCountOutputTypeCountBillsOfMaterialsArgs
     productionOrders?: boolean | OrganizationCountOutputTypeCountProductionOrdersArgs
+    geoMapLayers?: boolean | OrganizationCountOutputTypeCountGeoMapLayersArgs
+    deliveryTrips?: boolean | OrganizationCountOutputTypeCountDeliveryTripsArgs
   }
 
   // Custom InputTypes
@@ -4151,6 +4502,20 @@ export namespace Prisma {
    */
   export type OrganizationCountOutputTypeCountProductionOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProductionOrderWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountGeoMapLayersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeoMapLayerWhereInput
+  }
+
+  /**
+   * OrganizationCountOutputType without action
+   */
+  export type OrganizationCountOutputTypeCountDeliveryTripsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryTripWhereInput
   }
 
 
@@ -4409,10 +4774,12 @@ export namespace Prisma {
 
   export type SaleCountOutputType = {
     lines: number
+    deliveryTrips: number
   }
 
   export type SaleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lines?: boolean | SaleCountOutputTypeCountLinesArgs
+    deliveryTrips?: boolean | SaleCountOutputTypeCountDeliveryTripsArgs
   }
 
   // Custom InputTypes
@@ -4431,6 +4798,13 @@ export namespace Prisma {
    */
   export type SaleCountOutputTypeCountLinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SaleLineWhereInput
+  }
+
+  /**
+   * SaleCountOutputType without action
+   */
+  export type SaleCountOutputTypeCountDeliveryTripsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryTripWhereInput
   }
 
 
@@ -4706,6 +5080,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type DeliveryTripCountOutputType
+   */
+
+  export type DeliveryTripCountOutputType = {
+    gpsPoints: number
+  }
+
+  export type DeliveryTripCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    gpsPoints?: boolean | DeliveryTripCountOutputTypeCountGpsPointsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DeliveryTripCountOutputType without action
+   */
+  export type DeliveryTripCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTripCountOutputType
+     */
+    select?: DeliveryTripCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryTripCountOutputType without action
+   */
+  export type DeliveryTripCountOutputTypeCountGpsPointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GpsTrackPointWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
@@ -4824,6 +5229,7 @@ export namespace Prisma {
     phone: number
     verified: number
     active: number
+    enabledModules: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4868,6 +5274,7 @@ export namespace Prisma {
     phone?: true
     verified?: true
     active?: true
+    enabledModules?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4955,6 +5362,7 @@ export namespace Prisma {
     phone: string | null
     verified: boolean
     active: boolean
+    enabledModules: $Enums.ErpVerticalModule[]
     createdAt: Date
     updatedAt: Date
     _count: OrganizationCountAggregateOutputType | null
@@ -4986,6 +5394,7 @@ export namespace Prisma {
     phone?: boolean
     verified?: boolean
     active?: boolean
+    enabledModules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
@@ -5006,6 +5415,8 @@ export namespace Prisma {
     workCenters?: boolean | Organization$workCentersArgs<ExtArgs>
     billsOfMaterials?: boolean | Organization$billsOfMaterialsArgs<ExtArgs>
     productionOrders?: boolean | Organization$productionOrdersArgs<ExtArgs>
+    geoMapLayers?: boolean | Organization$geoMapLayersArgs<ExtArgs>
+    deliveryTrips?: boolean | Organization$deliveryTripsArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organization"]>
 
@@ -5019,6 +5430,7 @@ export namespace Prisma {
     phone?: boolean
     verified?: boolean
     active?: boolean
+    enabledModules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
@@ -5034,6 +5446,7 @@ export namespace Prisma {
     phone?: boolean
     verified?: boolean
     active?: boolean
+    enabledModules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     owner?: boolean | UserDefaultArgs<ExtArgs>
@@ -5049,11 +5462,12 @@ export namespace Prisma {
     phone?: boolean
     verified?: boolean
     active?: boolean
+    enabledModules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerUserId" | "name" | "slug" | "document" | "email" | "phone" | "verified" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ownerUserId" | "name" | "slug" | "document" | "email" | "phone" | "verified" | "active" | "enabledModules" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
     members?: boolean | Organization$membersArgs<ExtArgs>
@@ -5073,6 +5487,8 @@ export namespace Prisma {
     workCenters?: boolean | Organization$workCentersArgs<ExtArgs>
     billsOfMaterials?: boolean | Organization$billsOfMaterialsArgs<ExtArgs>
     productionOrders?: boolean | Organization$productionOrdersArgs<ExtArgs>
+    geoMapLayers?: boolean | Organization$geoMapLayersArgs<ExtArgs>
+    deliveryTrips?: boolean | Organization$deliveryTripsArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5103,6 +5519,8 @@ export namespace Prisma {
       workCenters: Prisma.$WorkCenterPayload<ExtArgs>[]
       billsOfMaterials: Prisma.$BillOfMaterialPayload<ExtArgs>[]
       productionOrders: Prisma.$ProductionOrderPayload<ExtArgs>[]
+      geoMapLayers: Prisma.$GeoMapLayerPayload<ExtArgs>[]
+      deliveryTrips: Prisma.$DeliveryTripPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5114,6 +5532,10 @@ export namespace Prisma {
       phone: string | null
       verified: boolean
       active: boolean
+      /**
+       * * Módulos ativos nesta empresa (menu e rotas verticais).
+       */
+      enabledModules: $Enums.ErpVerticalModule[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["organization"]>
@@ -5528,6 +5950,8 @@ export namespace Prisma {
     workCenters<T extends Organization$workCentersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$workCentersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkCenterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     billsOfMaterials<T extends Organization$billsOfMaterialsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$billsOfMaterialsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BillOfMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     productionOrders<T extends Organization$productionOrdersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$productionOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    geoMapLayers<T extends Organization$geoMapLayersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$geoMapLayersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deliveryTrips<T extends Organization$deliveryTripsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$deliveryTripsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5566,6 +5990,7 @@ export namespace Prisma {
     readonly phone: FieldRef<"Organization", 'String'>
     readonly verified: FieldRef<"Organization", 'Boolean'>
     readonly active: FieldRef<"Organization", 'Boolean'>
+    readonly enabledModules: FieldRef<"Organization", 'ErpVerticalModule[]'>
     readonly createdAt: FieldRef<"Organization", 'DateTime'>
     readonly updatedAt: FieldRef<"Organization", 'DateTime'>
   }
@@ -6374,6 +6799,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProductionOrderScalarFieldEnum | ProductionOrderScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.geoMapLayers
+   */
+  export type Organization$geoMapLayersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    where?: GeoMapLayerWhereInput
+    orderBy?: GeoMapLayerOrderByWithRelationInput | GeoMapLayerOrderByWithRelationInput[]
+    cursor?: GeoMapLayerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GeoMapLayerScalarFieldEnum | GeoMapLayerScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.deliveryTrips
+   */
+  export type Organization$deliveryTripsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    where?: DeliveryTripWhereInput
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    cursor?: DeliveryTripWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliveryTripScalarFieldEnum | DeliveryTripScalarFieldEnum[]
   }
 
   /**
@@ -15838,6 +16311,7 @@ export namespace Prisma {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
     customer?: boolean | Sale$customerArgs<ExtArgs>
     lines?: boolean | Sale$linesArgs<ExtArgs>
+    deliveryTrips?: boolean | Sale$deliveryTripsArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sale"]>
 
@@ -15883,6 +16357,7 @@ export namespace Prisma {
     organization?: boolean | OrganizationDefaultArgs<ExtArgs>
     customer?: boolean | Sale$customerArgs<ExtArgs>
     lines?: boolean | Sale$linesArgs<ExtArgs>
+    deliveryTrips?: boolean | Sale$deliveryTripsArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SaleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15900,6 +16375,7 @@ export namespace Prisma {
       organization: Prisma.$OrganizationPayload<ExtArgs>
       customer: Prisma.$CustomerPayload<ExtArgs> | null
       lines: Prisma.$SaleLinePayload<ExtArgs>[]
+      deliveryTrips: Prisma.$DeliveryTripPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -16307,6 +16783,7 @@ export namespace Prisma {
     organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     customer<T extends Sale$customerArgs<ExtArgs> = {}>(args?: Subset<T, Sale$customerArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     lines<T extends Sale$linesArgs<ExtArgs> = {}>(args?: Subset<T, Sale$linesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SaleLinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deliveryTrips<T extends Sale$deliveryTripsArgs<ExtArgs> = {}>(args?: Subset<T, Sale$deliveryTripsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16785,6 +17262,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SaleLineScalarFieldEnum | SaleLineScalarFieldEnum[]
+  }
+
+  /**
+   * Sale.deliveryTrips
+   */
+  export type Sale$deliveryTripsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    where?: DeliveryTripWhereInput
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    cursor?: DeliveryTripWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliveryTripScalarFieldEnum | DeliveryTripScalarFieldEnum[]
   }
 
   /**
@@ -38965,6 +39466,3445 @@ export namespace Prisma {
 
 
   /**
+   * Model GeoMapLayer
+   */
+
+  export type AggregateGeoMapLayer = {
+    _count: GeoMapLayerCountAggregateOutputType | null
+    _min: GeoMapLayerMinAggregateOutputType | null
+    _max: GeoMapLayerMaxAggregateOutputType | null
+  }
+
+  export type GeoMapLayerMinAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    name: string | null
+    category: $Enums.GeoMapLayerCategory | null
+    sourceFileName: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GeoMapLayerMaxAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    name: string | null
+    category: $Enums.GeoMapLayerCategory | null
+    sourceFileName: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GeoMapLayerCountAggregateOutputType = {
+    id: number
+    organizationId: number
+    name: number
+    category: number
+    geoJson: number
+    sourceFileName: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GeoMapLayerMinAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    category?: true
+    sourceFileName?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GeoMapLayerMaxAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    category?: true
+    sourceFileName?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GeoMapLayerCountAggregateInputType = {
+    id?: true
+    organizationId?: true
+    name?: true
+    category?: true
+    geoJson?: true
+    sourceFileName?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GeoMapLayerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeoMapLayer to aggregate.
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeoMapLayers to fetch.
+     */
+    orderBy?: GeoMapLayerOrderByWithRelationInput | GeoMapLayerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GeoMapLayerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeoMapLayers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeoMapLayers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GeoMapLayers
+    **/
+    _count?: true | GeoMapLayerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GeoMapLayerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GeoMapLayerMaxAggregateInputType
+  }
+
+  export type GetGeoMapLayerAggregateType<T extends GeoMapLayerAggregateArgs> = {
+        [P in keyof T & keyof AggregateGeoMapLayer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGeoMapLayer[P]>
+      : GetScalarType<T[P], AggregateGeoMapLayer[P]>
+  }
+
+
+
+
+  export type GeoMapLayerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GeoMapLayerWhereInput
+    orderBy?: GeoMapLayerOrderByWithAggregationInput | GeoMapLayerOrderByWithAggregationInput[]
+    by: GeoMapLayerScalarFieldEnum[] | GeoMapLayerScalarFieldEnum
+    having?: GeoMapLayerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GeoMapLayerCountAggregateInputType | true
+    _min?: GeoMapLayerMinAggregateInputType
+    _max?: GeoMapLayerMaxAggregateInputType
+  }
+
+  export type GeoMapLayerGroupByOutputType = {
+    id: string
+    organizationId: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonValue
+    sourceFileName: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: GeoMapLayerCountAggregateOutputType | null
+    _min: GeoMapLayerMinAggregateOutputType | null
+    _max: GeoMapLayerMaxAggregateOutputType | null
+  }
+
+  type GetGeoMapLayerGroupByPayload<T extends GeoMapLayerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GeoMapLayerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GeoMapLayerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GeoMapLayerGroupByOutputType[P]>
+            : GetScalarType<T[P], GeoMapLayerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GeoMapLayerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    category?: boolean
+    geoJson?: boolean
+    sourceFileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["geoMapLayer"]>
+
+  export type GeoMapLayerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    category?: boolean
+    geoJson?: boolean
+    sourceFileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["geoMapLayer"]>
+
+  export type GeoMapLayerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    category?: boolean
+    geoJson?: boolean
+    sourceFileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["geoMapLayer"]>
+
+  export type GeoMapLayerSelectScalar = {
+    id?: boolean
+    organizationId?: boolean
+    name?: boolean
+    category?: boolean
+    geoJson?: boolean
+    sourceFileName?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GeoMapLayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "name" | "category" | "geoJson" | "sourceFileName" | "createdAt" | "updatedAt", ExtArgs["result"]["geoMapLayer"]>
+  export type GeoMapLayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+  export type GeoMapLayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+  export type GeoMapLayerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+  }
+
+  export type $GeoMapLayerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GeoMapLayer"
+    objects: {
+      organization: Prisma.$OrganizationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      organizationId: string
+      name: string
+      category: $Enums.GeoMapLayerCategory
+      /**
+       * * GeoJSON FeatureCollection extraído do KML/KMZ.
+       */
+      geoJson: Prisma.JsonValue
+      sourceFileName: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["geoMapLayer"]>
+    composites: {}
+  }
+
+  type GeoMapLayerGetPayload<S extends boolean | null | undefined | GeoMapLayerDefaultArgs> = $Result.GetResult<Prisma.$GeoMapLayerPayload, S>
+
+  type GeoMapLayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GeoMapLayerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GeoMapLayerCountAggregateInputType | true
+    }
+
+  export interface GeoMapLayerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GeoMapLayer'], meta: { name: 'GeoMapLayer' } }
+    /**
+     * Find zero or one GeoMapLayer that matches the filter.
+     * @param {GeoMapLayerFindUniqueArgs} args - Arguments to find a GeoMapLayer
+     * @example
+     * // Get one GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GeoMapLayerFindUniqueArgs>(args: SelectSubset<T, GeoMapLayerFindUniqueArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GeoMapLayer that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GeoMapLayerFindUniqueOrThrowArgs} args - Arguments to find a GeoMapLayer
+     * @example
+     * // Get one GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GeoMapLayerFindUniqueOrThrowArgs>(args: SelectSubset<T, GeoMapLayerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeoMapLayer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerFindFirstArgs} args - Arguments to find a GeoMapLayer
+     * @example
+     * // Get one GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GeoMapLayerFindFirstArgs>(args?: SelectSubset<T, GeoMapLayerFindFirstArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GeoMapLayer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerFindFirstOrThrowArgs} args - Arguments to find a GeoMapLayer
+     * @example
+     * // Get one GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GeoMapLayerFindFirstOrThrowArgs>(args?: SelectSubset<T, GeoMapLayerFindFirstOrThrowArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GeoMapLayers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GeoMapLayers
+     * const geoMapLayers = await prisma.geoMapLayer.findMany()
+     * 
+     * // Get first 10 GeoMapLayers
+     * const geoMapLayers = await prisma.geoMapLayer.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const geoMapLayerWithIdOnly = await prisma.geoMapLayer.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GeoMapLayerFindManyArgs>(args?: SelectSubset<T, GeoMapLayerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GeoMapLayer.
+     * @param {GeoMapLayerCreateArgs} args - Arguments to create a GeoMapLayer.
+     * @example
+     * // Create one GeoMapLayer
+     * const GeoMapLayer = await prisma.geoMapLayer.create({
+     *   data: {
+     *     // ... data to create a GeoMapLayer
+     *   }
+     * })
+     * 
+     */
+    create<T extends GeoMapLayerCreateArgs>(args: SelectSubset<T, GeoMapLayerCreateArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GeoMapLayers.
+     * @param {GeoMapLayerCreateManyArgs} args - Arguments to create many GeoMapLayers.
+     * @example
+     * // Create many GeoMapLayers
+     * const geoMapLayer = await prisma.geoMapLayer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GeoMapLayerCreateManyArgs>(args?: SelectSubset<T, GeoMapLayerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GeoMapLayers and returns the data saved in the database.
+     * @param {GeoMapLayerCreateManyAndReturnArgs} args - Arguments to create many GeoMapLayers.
+     * @example
+     * // Create many GeoMapLayers
+     * const geoMapLayer = await prisma.geoMapLayer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GeoMapLayers and only return the `id`
+     * const geoMapLayerWithIdOnly = await prisma.geoMapLayer.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GeoMapLayerCreateManyAndReturnArgs>(args?: SelectSubset<T, GeoMapLayerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GeoMapLayer.
+     * @param {GeoMapLayerDeleteArgs} args - Arguments to delete one GeoMapLayer.
+     * @example
+     * // Delete one GeoMapLayer
+     * const GeoMapLayer = await prisma.geoMapLayer.delete({
+     *   where: {
+     *     // ... filter to delete one GeoMapLayer
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GeoMapLayerDeleteArgs>(args: SelectSubset<T, GeoMapLayerDeleteArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GeoMapLayer.
+     * @param {GeoMapLayerUpdateArgs} args - Arguments to update one GeoMapLayer.
+     * @example
+     * // Update one GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GeoMapLayerUpdateArgs>(args: SelectSubset<T, GeoMapLayerUpdateArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GeoMapLayers.
+     * @param {GeoMapLayerDeleteManyArgs} args - Arguments to filter GeoMapLayers to delete.
+     * @example
+     * // Delete a few GeoMapLayers
+     * const { count } = await prisma.geoMapLayer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GeoMapLayerDeleteManyArgs>(args?: SelectSubset<T, GeoMapLayerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeoMapLayers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GeoMapLayers
+     * const geoMapLayer = await prisma.geoMapLayer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GeoMapLayerUpdateManyArgs>(args: SelectSubset<T, GeoMapLayerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GeoMapLayers and returns the data updated in the database.
+     * @param {GeoMapLayerUpdateManyAndReturnArgs} args - Arguments to update many GeoMapLayers.
+     * @example
+     * // Update many GeoMapLayers
+     * const geoMapLayer = await prisma.geoMapLayer.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GeoMapLayers and only return the `id`
+     * const geoMapLayerWithIdOnly = await prisma.geoMapLayer.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GeoMapLayerUpdateManyAndReturnArgs>(args: SelectSubset<T, GeoMapLayerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GeoMapLayer.
+     * @param {GeoMapLayerUpsertArgs} args - Arguments to update or create a GeoMapLayer.
+     * @example
+     * // Update or create a GeoMapLayer
+     * const geoMapLayer = await prisma.geoMapLayer.upsert({
+     *   create: {
+     *     // ... data to create a GeoMapLayer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GeoMapLayer we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GeoMapLayerUpsertArgs>(args: SelectSubset<T, GeoMapLayerUpsertArgs<ExtArgs>>): Prisma__GeoMapLayerClient<$Result.GetResult<Prisma.$GeoMapLayerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GeoMapLayers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerCountArgs} args - Arguments to filter GeoMapLayers to count.
+     * @example
+     * // Count the number of GeoMapLayers
+     * const count = await prisma.geoMapLayer.count({
+     *   where: {
+     *     // ... the filter for the GeoMapLayers we want to count
+     *   }
+     * })
+    **/
+    count<T extends GeoMapLayerCountArgs>(
+      args?: Subset<T, GeoMapLayerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GeoMapLayerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GeoMapLayer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GeoMapLayerAggregateArgs>(args: Subset<T, GeoMapLayerAggregateArgs>): Prisma.PrismaPromise<GetGeoMapLayerAggregateType<T>>
+
+    /**
+     * Group by GeoMapLayer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GeoMapLayerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GeoMapLayerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GeoMapLayerGroupByArgs['orderBy'] }
+        : { orderBy?: GeoMapLayerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GeoMapLayerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGeoMapLayerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GeoMapLayer model
+   */
+  readonly fields: GeoMapLayerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GeoMapLayer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GeoMapLayerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GeoMapLayer model
+   */
+  interface GeoMapLayerFieldRefs {
+    readonly id: FieldRef<"GeoMapLayer", 'String'>
+    readonly organizationId: FieldRef<"GeoMapLayer", 'String'>
+    readonly name: FieldRef<"GeoMapLayer", 'String'>
+    readonly category: FieldRef<"GeoMapLayer", 'GeoMapLayerCategory'>
+    readonly geoJson: FieldRef<"GeoMapLayer", 'Json'>
+    readonly sourceFileName: FieldRef<"GeoMapLayer", 'String'>
+    readonly createdAt: FieldRef<"GeoMapLayer", 'DateTime'>
+    readonly updatedAt: FieldRef<"GeoMapLayer", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GeoMapLayer findUnique
+   */
+  export type GeoMapLayerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter, which GeoMapLayer to fetch.
+     */
+    where: GeoMapLayerWhereUniqueInput
+  }
+
+  /**
+   * GeoMapLayer findUniqueOrThrow
+   */
+  export type GeoMapLayerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter, which GeoMapLayer to fetch.
+     */
+    where: GeoMapLayerWhereUniqueInput
+  }
+
+  /**
+   * GeoMapLayer findFirst
+   */
+  export type GeoMapLayerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter, which GeoMapLayer to fetch.
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeoMapLayers to fetch.
+     */
+    orderBy?: GeoMapLayerOrderByWithRelationInput | GeoMapLayerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeoMapLayers.
+     */
+    cursor?: GeoMapLayerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeoMapLayers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeoMapLayers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeoMapLayers.
+     */
+    distinct?: GeoMapLayerScalarFieldEnum | GeoMapLayerScalarFieldEnum[]
+  }
+
+  /**
+   * GeoMapLayer findFirstOrThrow
+   */
+  export type GeoMapLayerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter, which GeoMapLayer to fetch.
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeoMapLayers to fetch.
+     */
+    orderBy?: GeoMapLayerOrderByWithRelationInput | GeoMapLayerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GeoMapLayers.
+     */
+    cursor?: GeoMapLayerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeoMapLayers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeoMapLayers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeoMapLayers.
+     */
+    distinct?: GeoMapLayerScalarFieldEnum | GeoMapLayerScalarFieldEnum[]
+  }
+
+  /**
+   * GeoMapLayer findMany
+   */
+  export type GeoMapLayerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter, which GeoMapLayers to fetch.
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GeoMapLayers to fetch.
+     */
+    orderBy?: GeoMapLayerOrderByWithRelationInput | GeoMapLayerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GeoMapLayers.
+     */
+    cursor?: GeoMapLayerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GeoMapLayers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GeoMapLayers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GeoMapLayers.
+     */
+    distinct?: GeoMapLayerScalarFieldEnum | GeoMapLayerScalarFieldEnum[]
+  }
+
+  /**
+   * GeoMapLayer create
+   */
+  export type GeoMapLayerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GeoMapLayer.
+     */
+    data: XOR<GeoMapLayerCreateInput, GeoMapLayerUncheckedCreateInput>
+  }
+
+  /**
+   * GeoMapLayer createMany
+   */
+  export type GeoMapLayerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GeoMapLayers.
+     */
+    data: GeoMapLayerCreateManyInput | GeoMapLayerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GeoMapLayer createManyAndReturn
+   */
+  export type GeoMapLayerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * The data used to create many GeoMapLayers.
+     */
+    data: GeoMapLayerCreateManyInput | GeoMapLayerCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeoMapLayer update
+   */
+  export type GeoMapLayerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GeoMapLayer.
+     */
+    data: XOR<GeoMapLayerUpdateInput, GeoMapLayerUncheckedUpdateInput>
+    /**
+     * Choose, which GeoMapLayer to update.
+     */
+    where: GeoMapLayerWhereUniqueInput
+  }
+
+  /**
+   * GeoMapLayer updateMany
+   */
+  export type GeoMapLayerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GeoMapLayers.
+     */
+    data: XOR<GeoMapLayerUpdateManyMutationInput, GeoMapLayerUncheckedUpdateManyInput>
+    /**
+     * Filter which GeoMapLayers to update
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * Limit how many GeoMapLayers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeoMapLayer updateManyAndReturn
+   */
+  export type GeoMapLayerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * The data used to update GeoMapLayers.
+     */
+    data: XOR<GeoMapLayerUpdateManyMutationInput, GeoMapLayerUncheckedUpdateManyInput>
+    /**
+     * Filter which GeoMapLayers to update
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * Limit how many GeoMapLayers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GeoMapLayer upsert
+   */
+  export type GeoMapLayerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GeoMapLayer to update in case it exists.
+     */
+    where: GeoMapLayerWhereUniqueInput
+    /**
+     * In case the GeoMapLayer found by the `where` argument doesn't exist, create a new GeoMapLayer with this data.
+     */
+    create: XOR<GeoMapLayerCreateInput, GeoMapLayerUncheckedCreateInput>
+    /**
+     * In case the GeoMapLayer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GeoMapLayerUpdateInput, GeoMapLayerUncheckedUpdateInput>
+  }
+
+  /**
+   * GeoMapLayer delete
+   */
+  export type GeoMapLayerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+    /**
+     * Filter which GeoMapLayer to delete.
+     */
+    where: GeoMapLayerWhereUniqueInput
+  }
+
+  /**
+   * GeoMapLayer deleteMany
+   */
+  export type GeoMapLayerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GeoMapLayers to delete
+     */
+    where?: GeoMapLayerWhereInput
+    /**
+     * Limit how many GeoMapLayers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GeoMapLayer without action
+   */
+  export type GeoMapLayerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GeoMapLayer
+     */
+    select?: GeoMapLayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GeoMapLayer
+     */
+    omit?: GeoMapLayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GeoMapLayerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DeliveryTrip
+   */
+
+  export type AggregateDeliveryTrip = {
+    _count: DeliveryTripCountAggregateOutputType | null
+    _min: DeliveryTripMinAggregateOutputType | null
+    _max: DeliveryTripMaxAggregateOutputType | null
+  }
+
+  export type DeliveryTripMinAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    saleId: string | null
+    referenceCode: string | null
+    description: string | null
+    driverLabel: string | null
+    vehicleLabel: string | null
+    status: $Enums.DeliveryTripStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeliveryTripMaxAggregateOutputType = {
+    id: string | null
+    organizationId: string | null
+    saleId: string | null
+    referenceCode: string | null
+    description: string | null
+    driverLabel: string | null
+    vehicleLabel: string | null
+    status: $Enums.DeliveryTripStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeliveryTripCountAggregateOutputType = {
+    id: number
+    organizationId: number
+    saleId: number
+    referenceCode: number
+    description: number
+    driverLabel: number
+    vehicleLabel: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DeliveryTripMinAggregateInputType = {
+    id?: true
+    organizationId?: true
+    saleId?: true
+    referenceCode?: true
+    description?: true
+    driverLabel?: true
+    vehicleLabel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeliveryTripMaxAggregateInputType = {
+    id?: true
+    organizationId?: true
+    saleId?: true
+    referenceCode?: true
+    description?: true
+    driverLabel?: true
+    vehicleLabel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeliveryTripCountAggregateInputType = {
+    id?: true
+    organizationId?: true
+    saleId?: true
+    referenceCode?: true
+    description?: true
+    driverLabel?: true
+    vehicleLabel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DeliveryTripAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryTrip to aggregate.
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryTrips to fetch.
+     */
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeliveryTripWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryTrips from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryTrips.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DeliveryTrips
+    **/
+    _count?: true | DeliveryTripCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeliveryTripMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeliveryTripMaxAggregateInputType
+  }
+
+  export type GetDeliveryTripAggregateType<T extends DeliveryTripAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeliveryTrip]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeliveryTrip[P]>
+      : GetScalarType<T[P], AggregateDeliveryTrip[P]>
+  }
+
+
+
+
+  export type DeliveryTripGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliveryTripWhereInput
+    orderBy?: DeliveryTripOrderByWithAggregationInput | DeliveryTripOrderByWithAggregationInput[]
+    by: DeliveryTripScalarFieldEnum[] | DeliveryTripScalarFieldEnum
+    having?: DeliveryTripScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeliveryTripCountAggregateInputType | true
+    _min?: DeliveryTripMinAggregateInputType
+    _max?: DeliveryTripMaxAggregateInputType
+  }
+
+  export type DeliveryTripGroupByOutputType = {
+    id: string
+    organizationId: string
+    saleId: string | null
+    referenceCode: string | null
+    description: string | null
+    driverLabel: string | null
+    vehicleLabel: string | null
+    status: $Enums.DeliveryTripStatus
+    createdAt: Date
+    updatedAt: Date
+    _count: DeliveryTripCountAggregateOutputType | null
+    _min: DeliveryTripMinAggregateOutputType | null
+    _max: DeliveryTripMaxAggregateOutputType | null
+  }
+
+  type GetDeliveryTripGroupByPayload<T extends DeliveryTripGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeliveryTripGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeliveryTripGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeliveryTripGroupByOutputType[P]>
+            : GetScalarType<T[P], DeliveryTripGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeliveryTripSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    saleId?: boolean
+    referenceCode?: boolean
+    description?: boolean
+    driverLabel?: boolean
+    vehicleLabel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+    gpsPoints?: boolean | DeliveryTrip$gpsPointsArgs<ExtArgs>
+    _count?: boolean | DeliveryTripCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryTrip"]>
+
+  export type DeliveryTripSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    saleId?: boolean
+    referenceCode?: boolean
+    description?: boolean
+    driverLabel?: boolean
+    vehicleLabel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryTrip"]>
+
+  export type DeliveryTripSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    organizationId?: boolean
+    saleId?: boolean
+    referenceCode?: boolean
+    description?: boolean
+    driverLabel?: boolean
+    vehicleLabel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+  }, ExtArgs["result"]["deliveryTrip"]>
+
+  export type DeliveryTripSelectScalar = {
+    id?: boolean
+    organizationId?: boolean
+    saleId?: boolean
+    referenceCode?: boolean
+    description?: boolean
+    driverLabel?: boolean
+    vehicleLabel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DeliveryTripOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "organizationId" | "saleId" | "referenceCode" | "description" | "driverLabel" | "vehicleLabel" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["deliveryTrip"]>
+  export type DeliveryTripInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+    gpsPoints?: boolean | DeliveryTrip$gpsPointsArgs<ExtArgs>
+    _count?: boolean | DeliveryTripCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DeliveryTripIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+  }
+  export type DeliveryTripIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    organization?: boolean | OrganizationDefaultArgs<ExtArgs>
+    sale?: boolean | DeliveryTrip$saleArgs<ExtArgs>
+  }
+
+  export type $DeliveryTripPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DeliveryTrip"
+    objects: {
+      organization: Prisma.$OrganizationPayload<ExtArgs>
+      sale: Prisma.$SalePayload<ExtArgs> | null
+      gpsPoints: Prisma.$GpsTrackPointPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      organizationId: string
+      saleId: string | null
+      referenceCode: string | null
+      description: string | null
+      driverLabel: string | null
+      vehicleLabel: string | null
+      status: $Enums.DeliveryTripStatus
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["deliveryTrip"]>
+    composites: {}
+  }
+
+  type DeliveryTripGetPayload<S extends boolean | null | undefined | DeliveryTripDefaultArgs> = $Result.GetResult<Prisma.$DeliveryTripPayload, S>
+
+  type DeliveryTripCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeliveryTripFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeliveryTripCountAggregateInputType | true
+    }
+
+  export interface DeliveryTripDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DeliveryTrip'], meta: { name: 'DeliveryTrip' } }
+    /**
+     * Find zero or one DeliveryTrip that matches the filter.
+     * @param {DeliveryTripFindUniqueArgs} args - Arguments to find a DeliveryTrip
+     * @example
+     * // Get one DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeliveryTripFindUniqueArgs>(args: SelectSubset<T, DeliveryTripFindUniqueArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DeliveryTrip that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeliveryTripFindUniqueOrThrowArgs} args - Arguments to find a DeliveryTrip
+     * @example
+     * // Get one DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeliveryTripFindUniqueOrThrowArgs>(args: SelectSubset<T, DeliveryTripFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryTrip that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripFindFirstArgs} args - Arguments to find a DeliveryTrip
+     * @example
+     * // Get one DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeliveryTripFindFirstArgs>(args?: SelectSubset<T, DeliveryTripFindFirstArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeliveryTrip that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripFindFirstOrThrowArgs} args - Arguments to find a DeliveryTrip
+     * @example
+     * // Get one DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeliveryTripFindFirstOrThrowArgs>(args?: SelectSubset<T, DeliveryTripFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DeliveryTrips that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DeliveryTrips
+     * const deliveryTrips = await prisma.deliveryTrip.findMany()
+     * 
+     * // Get first 10 DeliveryTrips
+     * const deliveryTrips = await prisma.deliveryTrip.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deliveryTripWithIdOnly = await prisma.deliveryTrip.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeliveryTripFindManyArgs>(args?: SelectSubset<T, DeliveryTripFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DeliveryTrip.
+     * @param {DeliveryTripCreateArgs} args - Arguments to create a DeliveryTrip.
+     * @example
+     * // Create one DeliveryTrip
+     * const DeliveryTrip = await prisma.deliveryTrip.create({
+     *   data: {
+     *     // ... data to create a DeliveryTrip
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeliveryTripCreateArgs>(args: SelectSubset<T, DeliveryTripCreateArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DeliveryTrips.
+     * @param {DeliveryTripCreateManyArgs} args - Arguments to create many DeliveryTrips.
+     * @example
+     * // Create many DeliveryTrips
+     * const deliveryTrip = await prisma.deliveryTrip.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeliveryTripCreateManyArgs>(args?: SelectSubset<T, DeliveryTripCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DeliveryTrips and returns the data saved in the database.
+     * @param {DeliveryTripCreateManyAndReturnArgs} args - Arguments to create many DeliveryTrips.
+     * @example
+     * // Create many DeliveryTrips
+     * const deliveryTrip = await prisma.deliveryTrip.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DeliveryTrips and only return the `id`
+     * const deliveryTripWithIdOnly = await prisma.deliveryTrip.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeliveryTripCreateManyAndReturnArgs>(args?: SelectSubset<T, DeliveryTripCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DeliveryTrip.
+     * @param {DeliveryTripDeleteArgs} args - Arguments to delete one DeliveryTrip.
+     * @example
+     * // Delete one DeliveryTrip
+     * const DeliveryTrip = await prisma.deliveryTrip.delete({
+     *   where: {
+     *     // ... filter to delete one DeliveryTrip
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeliveryTripDeleteArgs>(args: SelectSubset<T, DeliveryTripDeleteArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DeliveryTrip.
+     * @param {DeliveryTripUpdateArgs} args - Arguments to update one DeliveryTrip.
+     * @example
+     * // Update one DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeliveryTripUpdateArgs>(args: SelectSubset<T, DeliveryTripUpdateArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DeliveryTrips.
+     * @param {DeliveryTripDeleteManyArgs} args - Arguments to filter DeliveryTrips to delete.
+     * @example
+     * // Delete a few DeliveryTrips
+     * const { count } = await prisma.deliveryTrip.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeliveryTripDeleteManyArgs>(args?: SelectSubset<T, DeliveryTripDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryTrips.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DeliveryTrips
+     * const deliveryTrip = await prisma.deliveryTrip.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeliveryTripUpdateManyArgs>(args: SelectSubset<T, DeliveryTripUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeliveryTrips and returns the data updated in the database.
+     * @param {DeliveryTripUpdateManyAndReturnArgs} args - Arguments to update many DeliveryTrips.
+     * @example
+     * // Update many DeliveryTrips
+     * const deliveryTrip = await prisma.deliveryTrip.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DeliveryTrips and only return the `id`
+     * const deliveryTripWithIdOnly = await prisma.deliveryTrip.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeliveryTripUpdateManyAndReturnArgs>(args: SelectSubset<T, DeliveryTripUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DeliveryTrip.
+     * @param {DeliveryTripUpsertArgs} args - Arguments to update or create a DeliveryTrip.
+     * @example
+     * // Update or create a DeliveryTrip
+     * const deliveryTrip = await prisma.deliveryTrip.upsert({
+     *   create: {
+     *     // ... data to create a DeliveryTrip
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DeliveryTrip we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeliveryTripUpsertArgs>(args: SelectSubset<T, DeliveryTripUpsertArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DeliveryTrips.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripCountArgs} args - Arguments to filter DeliveryTrips to count.
+     * @example
+     * // Count the number of DeliveryTrips
+     * const count = await prisma.deliveryTrip.count({
+     *   where: {
+     *     // ... the filter for the DeliveryTrips we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeliveryTripCountArgs>(
+      args?: Subset<T, DeliveryTripCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeliveryTripCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DeliveryTrip.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeliveryTripAggregateArgs>(args: Subset<T, DeliveryTripAggregateArgs>): Prisma.PrismaPromise<GetDeliveryTripAggregateType<T>>
+
+    /**
+     * Group by DeliveryTrip.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliveryTripGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeliveryTripGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeliveryTripGroupByArgs['orderBy'] }
+        : { orderBy?: DeliveryTripGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeliveryTripGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeliveryTripGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DeliveryTrip model
+   */
+  readonly fields: DeliveryTripFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DeliveryTrip.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeliveryTripClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    organization<T extends OrganizationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OrganizationDefaultArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    sale<T extends DeliveryTrip$saleArgs<ExtArgs> = {}>(args?: Subset<T, DeliveryTrip$saleArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    gpsPoints<T extends DeliveryTrip$gpsPointsArgs<ExtArgs> = {}>(args?: Subset<T, DeliveryTrip$gpsPointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DeliveryTrip model
+   */
+  interface DeliveryTripFieldRefs {
+    readonly id: FieldRef<"DeliveryTrip", 'String'>
+    readonly organizationId: FieldRef<"DeliveryTrip", 'String'>
+    readonly saleId: FieldRef<"DeliveryTrip", 'String'>
+    readonly referenceCode: FieldRef<"DeliveryTrip", 'String'>
+    readonly description: FieldRef<"DeliveryTrip", 'String'>
+    readonly driverLabel: FieldRef<"DeliveryTrip", 'String'>
+    readonly vehicleLabel: FieldRef<"DeliveryTrip", 'String'>
+    readonly status: FieldRef<"DeliveryTrip", 'DeliveryTripStatus'>
+    readonly createdAt: FieldRef<"DeliveryTrip", 'DateTime'>
+    readonly updatedAt: FieldRef<"DeliveryTrip", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DeliveryTrip findUnique
+   */
+  export type DeliveryTripFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryTrip to fetch.
+     */
+    where: DeliveryTripWhereUniqueInput
+  }
+
+  /**
+   * DeliveryTrip findUniqueOrThrow
+   */
+  export type DeliveryTripFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryTrip to fetch.
+     */
+    where: DeliveryTripWhereUniqueInput
+  }
+
+  /**
+   * DeliveryTrip findFirst
+   */
+  export type DeliveryTripFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryTrip to fetch.
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryTrips to fetch.
+     */
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryTrips.
+     */
+    cursor?: DeliveryTripWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryTrips from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryTrips.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryTrips.
+     */
+    distinct?: DeliveryTripScalarFieldEnum | DeliveryTripScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryTrip findFirstOrThrow
+   */
+  export type DeliveryTripFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryTrip to fetch.
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryTrips to fetch.
+     */
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeliveryTrips.
+     */
+    cursor?: DeliveryTripWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryTrips from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryTrips.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryTrips.
+     */
+    distinct?: DeliveryTripScalarFieldEnum | DeliveryTripScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryTrip findMany
+   */
+  export type DeliveryTripFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter, which DeliveryTrips to fetch.
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeliveryTrips to fetch.
+     */
+    orderBy?: DeliveryTripOrderByWithRelationInput | DeliveryTripOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DeliveryTrips.
+     */
+    cursor?: DeliveryTripWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeliveryTrips from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeliveryTrips.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeliveryTrips.
+     */
+    distinct?: DeliveryTripScalarFieldEnum | DeliveryTripScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryTrip create
+   */
+  export type DeliveryTripCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DeliveryTrip.
+     */
+    data: XOR<DeliveryTripCreateInput, DeliveryTripUncheckedCreateInput>
+  }
+
+  /**
+   * DeliveryTrip createMany
+   */
+  export type DeliveryTripCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DeliveryTrips.
+     */
+    data: DeliveryTripCreateManyInput | DeliveryTripCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DeliveryTrip createManyAndReturn
+   */
+  export type DeliveryTripCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * The data used to create many DeliveryTrips.
+     */
+    data: DeliveryTripCreateManyInput | DeliveryTripCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryTrip update
+   */
+  export type DeliveryTripUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DeliveryTrip.
+     */
+    data: XOR<DeliveryTripUpdateInput, DeliveryTripUncheckedUpdateInput>
+    /**
+     * Choose, which DeliveryTrip to update.
+     */
+    where: DeliveryTripWhereUniqueInput
+  }
+
+  /**
+   * DeliveryTrip updateMany
+   */
+  export type DeliveryTripUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DeliveryTrips.
+     */
+    data: XOR<DeliveryTripUpdateManyMutationInput, DeliveryTripUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryTrips to update
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * Limit how many DeliveryTrips to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryTrip updateManyAndReturn
+   */
+  export type DeliveryTripUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * The data used to update DeliveryTrips.
+     */
+    data: XOR<DeliveryTripUpdateManyMutationInput, DeliveryTripUncheckedUpdateManyInput>
+    /**
+     * Filter which DeliveryTrips to update
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * Limit how many DeliveryTrips to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeliveryTrip upsert
+   */
+  export type DeliveryTripUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DeliveryTrip to update in case it exists.
+     */
+    where: DeliveryTripWhereUniqueInput
+    /**
+     * In case the DeliveryTrip found by the `where` argument doesn't exist, create a new DeliveryTrip with this data.
+     */
+    create: XOR<DeliveryTripCreateInput, DeliveryTripUncheckedCreateInput>
+    /**
+     * In case the DeliveryTrip was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeliveryTripUpdateInput, DeliveryTripUncheckedUpdateInput>
+  }
+
+  /**
+   * DeliveryTrip delete
+   */
+  export type DeliveryTripDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+    /**
+     * Filter which DeliveryTrip to delete.
+     */
+    where: DeliveryTripWhereUniqueInput
+  }
+
+  /**
+   * DeliveryTrip deleteMany
+   */
+  export type DeliveryTripDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeliveryTrips to delete
+     */
+    where?: DeliveryTripWhereInput
+    /**
+     * Limit how many DeliveryTrips to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeliveryTrip.sale
+   */
+  export type DeliveryTrip$saleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Sale
+     */
+    select?: SaleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Sale
+     */
+    omit?: SaleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SaleInclude<ExtArgs> | null
+    where?: SaleWhereInput
+  }
+
+  /**
+   * DeliveryTrip.gpsPoints
+   */
+  export type DeliveryTrip$gpsPointsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    where?: GpsTrackPointWhereInput
+    orderBy?: GpsTrackPointOrderByWithRelationInput | GpsTrackPointOrderByWithRelationInput[]
+    cursor?: GpsTrackPointWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GpsTrackPointScalarFieldEnum | GpsTrackPointScalarFieldEnum[]
+  }
+
+  /**
+   * DeliveryTrip without action
+   */
+  export type DeliveryTripDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeliveryTrip
+     */
+    select?: DeliveryTripSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeliveryTrip
+     */
+    omit?: DeliveryTripOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliveryTripInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GpsTrackPoint
+   */
+
+  export type AggregateGpsTrackPoint = {
+    _count: GpsTrackPointCountAggregateOutputType | null
+    _avg: GpsTrackPointAvgAggregateOutputType | null
+    _sum: GpsTrackPointSumAggregateOutputType | null
+    _min: GpsTrackPointMinAggregateOutputType | null
+    _max: GpsTrackPointMaxAggregateOutputType | null
+  }
+
+  export type GpsTrackPointAvgAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type GpsTrackPointSumAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type GpsTrackPointMinAggregateOutputType = {
+    id: string | null
+    tripId: string | null
+    latitude: number | null
+    longitude: number | null
+    recordedAt: Date | null
+    subject: $Enums.GpsSubjectType | null
+    deliveryStatus: $Enums.DeliveryProgressStatus | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type GpsTrackPointMaxAggregateOutputType = {
+    id: string | null
+    tripId: string | null
+    latitude: number | null
+    longitude: number | null
+    recordedAt: Date | null
+    subject: $Enums.GpsSubjectType | null
+    deliveryStatus: $Enums.DeliveryProgressStatus | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type GpsTrackPointCountAggregateOutputType = {
+    id: number
+    tripId: number
+    latitude: number
+    longitude: number
+    recordedAt: number
+    subject: number
+    deliveryStatus: number
+    note: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type GpsTrackPointAvgAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type GpsTrackPointSumAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type GpsTrackPointMinAggregateInputType = {
+    id?: true
+    tripId?: true
+    latitude?: true
+    longitude?: true
+    recordedAt?: true
+    subject?: true
+    deliveryStatus?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type GpsTrackPointMaxAggregateInputType = {
+    id?: true
+    tripId?: true
+    latitude?: true
+    longitude?: true
+    recordedAt?: true
+    subject?: true
+    deliveryStatus?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type GpsTrackPointCountAggregateInputType = {
+    id?: true
+    tripId?: true
+    latitude?: true
+    longitude?: true
+    recordedAt?: true
+    subject?: true
+    deliveryStatus?: true
+    note?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type GpsTrackPointAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GpsTrackPoint to aggregate.
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GpsTrackPoints to fetch.
+     */
+    orderBy?: GpsTrackPointOrderByWithRelationInput | GpsTrackPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GpsTrackPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GpsTrackPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GpsTrackPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GpsTrackPoints
+    **/
+    _count?: true | GpsTrackPointCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GpsTrackPointAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GpsTrackPointSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GpsTrackPointMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GpsTrackPointMaxAggregateInputType
+  }
+
+  export type GetGpsTrackPointAggregateType<T extends GpsTrackPointAggregateArgs> = {
+        [P in keyof T & keyof AggregateGpsTrackPoint]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGpsTrackPoint[P]>
+      : GetScalarType<T[P], AggregateGpsTrackPoint[P]>
+  }
+
+
+
+
+  export type GpsTrackPointGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GpsTrackPointWhereInput
+    orderBy?: GpsTrackPointOrderByWithAggregationInput | GpsTrackPointOrderByWithAggregationInput[]
+    by: GpsTrackPointScalarFieldEnum[] | GpsTrackPointScalarFieldEnum
+    having?: GpsTrackPointScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GpsTrackPointCountAggregateInputType | true
+    _avg?: GpsTrackPointAvgAggregateInputType
+    _sum?: GpsTrackPointSumAggregateInputType
+    _min?: GpsTrackPointMinAggregateInputType
+    _max?: GpsTrackPointMaxAggregateInputType
+  }
+
+  export type GpsTrackPointGroupByOutputType = {
+    id: string
+    tripId: string
+    latitude: number
+    longitude: number
+    recordedAt: Date
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note: string | null
+    createdAt: Date
+    _count: GpsTrackPointCountAggregateOutputType | null
+    _avg: GpsTrackPointAvgAggregateOutputType | null
+    _sum: GpsTrackPointSumAggregateOutputType | null
+    _min: GpsTrackPointMinAggregateOutputType | null
+    _max: GpsTrackPointMaxAggregateOutputType | null
+  }
+
+  type GetGpsTrackPointGroupByPayload<T extends GpsTrackPointGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GpsTrackPointGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GpsTrackPointGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GpsTrackPointGroupByOutputType[P]>
+            : GetScalarType<T[P], GpsTrackPointGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GpsTrackPointSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tripId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    recordedAt?: boolean
+    subject?: boolean
+    deliveryStatus?: boolean
+    note?: boolean
+    createdAt?: boolean
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gpsTrackPoint"]>
+
+  export type GpsTrackPointSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tripId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    recordedAt?: boolean
+    subject?: boolean
+    deliveryStatus?: boolean
+    note?: boolean
+    createdAt?: boolean
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gpsTrackPoint"]>
+
+  export type GpsTrackPointSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tripId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    recordedAt?: boolean
+    subject?: boolean
+    deliveryStatus?: boolean
+    note?: boolean
+    createdAt?: boolean
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["gpsTrackPoint"]>
+
+  export type GpsTrackPointSelectScalar = {
+    id?: boolean
+    tripId?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    recordedAt?: boolean
+    subject?: boolean
+    deliveryStatus?: boolean
+    note?: boolean
+    createdAt?: boolean
+  }
+
+  export type GpsTrackPointOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tripId" | "latitude" | "longitude" | "recordedAt" | "subject" | "deliveryStatus" | "note" | "createdAt", ExtArgs["result"]["gpsTrackPoint"]>
+  export type GpsTrackPointInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }
+  export type GpsTrackPointIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }
+  export type GpsTrackPointIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    trip?: boolean | DeliveryTripDefaultArgs<ExtArgs>
+  }
+
+  export type $GpsTrackPointPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GpsTrackPoint"
+    objects: {
+      trip: Prisma.$DeliveryTripPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tripId: string
+      latitude: number
+      longitude: number
+      recordedAt: Date
+      subject: $Enums.GpsSubjectType
+      deliveryStatus: $Enums.DeliveryProgressStatus
+      note: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["gpsTrackPoint"]>
+    composites: {}
+  }
+
+  type GpsTrackPointGetPayload<S extends boolean | null | undefined | GpsTrackPointDefaultArgs> = $Result.GetResult<Prisma.$GpsTrackPointPayload, S>
+
+  type GpsTrackPointCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GpsTrackPointFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GpsTrackPointCountAggregateInputType | true
+    }
+
+  export interface GpsTrackPointDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GpsTrackPoint'], meta: { name: 'GpsTrackPoint' } }
+    /**
+     * Find zero or one GpsTrackPoint that matches the filter.
+     * @param {GpsTrackPointFindUniqueArgs} args - Arguments to find a GpsTrackPoint
+     * @example
+     * // Get one GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GpsTrackPointFindUniqueArgs>(args: SelectSubset<T, GpsTrackPointFindUniqueArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GpsTrackPoint that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GpsTrackPointFindUniqueOrThrowArgs} args - Arguments to find a GpsTrackPoint
+     * @example
+     * // Get one GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GpsTrackPointFindUniqueOrThrowArgs>(args: SelectSubset<T, GpsTrackPointFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GpsTrackPoint that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointFindFirstArgs} args - Arguments to find a GpsTrackPoint
+     * @example
+     * // Get one GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GpsTrackPointFindFirstArgs>(args?: SelectSubset<T, GpsTrackPointFindFirstArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GpsTrackPoint that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointFindFirstOrThrowArgs} args - Arguments to find a GpsTrackPoint
+     * @example
+     * // Get one GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GpsTrackPointFindFirstOrThrowArgs>(args?: SelectSubset<T, GpsTrackPointFindFirstOrThrowArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GpsTrackPoints that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GpsTrackPoints
+     * const gpsTrackPoints = await prisma.gpsTrackPoint.findMany()
+     * 
+     * // Get first 10 GpsTrackPoints
+     * const gpsTrackPoints = await prisma.gpsTrackPoint.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gpsTrackPointWithIdOnly = await prisma.gpsTrackPoint.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GpsTrackPointFindManyArgs>(args?: SelectSubset<T, GpsTrackPointFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GpsTrackPoint.
+     * @param {GpsTrackPointCreateArgs} args - Arguments to create a GpsTrackPoint.
+     * @example
+     * // Create one GpsTrackPoint
+     * const GpsTrackPoint = await prisma.gpsTrackPoint.create({
+     *   data: {
+     *     // ... data to create a GpsTrackPoint
+     *   }
+     * })
+     * 
+     */
+    create<T extends GpsTrackPointCreateArgs>(args: SelectSubset<T, GpsTrackPointCreateArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GpsTrackPoints.
+     * @param {GpsTrackPointCreateManyArgs} args - Arguments to create many GpsTrackPoints.
+     * @example
+     * // Create many GpsTrackPoints
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GpsTrackPointCreateManyArgs>(args?: SelectSubset<T, GpsTrackPointCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GpsTrackPoints and returns the data saved in the database.
+     * @param {GpsTrackPointCreateManyAndReturnArgs} args - Arguments to create many GpsTrackPoints.
+     * @example
+     * // Create many GpsTrackPoints
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GpsTrackPoints and only return the `id`
+     * const gpsTrackPointWithIdOnly = await prisma.gpsTrackPoint.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GpsTrackPointCreateManyAndReturnArgs>(args?: SelectSubset<T, GpsTrackPointCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GpsTrackPoint.
+     * @param {GpsTrackPointDeleteArgs} args - Arguments to delete one GpsTrackPoint.
+     * @example
+     * // Delete one GpsTrackPoint
+     * const GpsTrackPoint = await prisma.gpsTrackPoint.delete({
+     *   where: {
+     *     // ... filter to delete one GpsTrackPoint
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GpsTrackPointDeleteArgs>(args: SelectSubset<T, GpsTrackPointDeleteArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GpsTrackPoint.
+     * @param {GpsTrackPointUpdateArgs} args - Arguments to update one GpsTrackPoint.
+     * @example
+     * // Update one GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GpsTrackPointUpdateArgs>(args: SelectSubset<T, GpsTrackPointUpdateArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GpsTrackPoints.
+     * @param {GpsTrackPointDeleteManyArgs} args - Arguments to filter GpsTrackPoints to delete.
+     * @example
+     * // Delete a few GpsTrackPoints
+     * const { count } = await prisma.gpsTrackPoint.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GpsTrackPointDeleteManyArgs>(args?: SelectSubset<T, GpsTrackPointDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GpsTrackPoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GpsTrackPoints
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GpsTrackPointUpdateManyArgs>(args: SelectSubset<T, GpsTrackPointUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GpsTrackPoints and returns the data updated in the database.
+     * @param {GpsTrackPointUpdateManyAndReturnArgs} args - Arguments to update many GpsTrackPoints.
+     * @example
+     * // Update many GpsTrackPoints
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GpsTrackPoints and only return the `id`
+     * const gpsTrackPointWithIdOnly = await prisma.gpsTrackPoint.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GpsTrackPointUpdateManyAndReturnArgs>(args: SelectSubset<T, GpsTrackPointUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GpsTrackPoint.
+     * @param {GpsTrackPointUpsertArgs} args - Arguments to update or create a GpsTrackPoint.
+     * @example
+     * // Update or create a GpsTrackPoint
+     * const gpsTrackPoint = await prisma.gpsTrackPoint.upsert({
+     *   create: {
+     *     // ... data to create a GpsTrackPoint
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GpsTrackPoint we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GpsTrackPointUpsertArgs>(args: SelectSubset<T, GpsTrackPointUpsertArgs<ExtArgs>>): Prisma__GpsTrackPointClient<$Result.GetResult<Prisma.$GpsTrackPointPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GpsTrackPoints.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointCountArgs} args - Arguments to filter GpsTrackPoints to count.
+     * @example
+     * // Count the number of GpsTrackPoints
+     * const count = await prisma.gpsTrackPoint.count({
+     *   where: {
+     *     // ... the filter for the GpsTrackPoints we want to count
+     *   }
+     * })
+    **/
+    count<T extends GpsTrackPointCountArgs>(
+      args?: Subset<T, GpsTrackPointCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GpsTrackPointCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GpsTrackPoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GpsTrackPointAggregateArgs>(args: Subset<T, GpsTrackPointAggregateArgs>): Prisma.PrismaPromise<GetGpsTrackPointAggregateType<T>>
+
+    /**
+     * Group by GpsTrackPoint.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GpsTrackPointGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GpsTrackPointGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GpsTrackPointGroupByArgs['orderBy'] }
+        : { orderBy?: GpsTrackPointGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GpsTrackPointGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGpsTrackPointGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GpsTrackPoint model
+   */
+  readonly fields: GpsTrackPointFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GpsTrackPoint.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GpsTrackPointClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    trip<T extends DeliveryTripDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DeliveryTripDefaultArgs<ExtArgs>>): Prisma__DeliveryTripClient<$Result.GetResult<Prisma.$DeliveryTripPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GpsTrackPoint model
+   */
+  interface GpsTrackPointFieldRefs {
+    readonly id: FieldRef<"GpsTrackPoint", 'String'>
+    readonly tripId: FieldRef<"GpsTrackPoint", 'String'>
+    readonly latitude: FieldRef<"GpsTrackPoint", 'Float'>
+    readonly longitude: FieldRef<"GpsTrackPoint", 'Float'>
+    readonly recordedAt: FieldRef<"GpsTrackPoint", 'DateTime'>
+    readonly subject: FieldRef<"GpsTrackPoint", 'GpsSubjectType'>
+    readonly deliveryStatus: FieldRef<"GpsTrackPoint", 'DeliveryProgressStatus'>
+    readonly note: FieldRef<"GpsTrackPoint", 'String'>
+    readonly createdAt: FieldRef<"GpsTrackPoint", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GpsTrackPoint findUnique
+   */
+  export type GpsTrackPointFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter, which GpsTrackPoint to fetch.
+     */
+    where: GpsTrackPointWhereUniqueInput
+  }
+
+  /**
+   * GpsTrackPoint findUniqueOrThrow
+   */
+  export type GpsTrackPointFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter, which GpsTrackPoint to fetch.
+     */
+    where: GpsTrackPointWhereUniqueInput
+  }
+
+  /**
+   * GpsTrackPoint findFirst
+   */
+  export type GpsTrackPointFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter, which GpsTrackPoint to fetch.
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GpsTrackPoints to fetch.
+     */
+    orderBy?: GpsTrackPointOrderByWithRelationInput | GpsTrackPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GpsTrackPoints.
+     */
+    cursor?: GpsTrackPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GpsTrackPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GpsTrackPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GpsTrackPoints.
+     */
+    distinct?: GpsTrackPointScalarFieldEnum | GpsTrackPointScalarFieldEnum[]
+  }
+
+  /**
+   * GpsTrackPoint findFirstOrThrow
+   */
+  export type GpsTrackPointFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter, which GpsTrackPoint to fetch.
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GpsTrackPoints to fetch.
+     */
+    orderBy?: GpsTrackPointOrderByWithRelationInput | GpsTrackPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GpsTrackPoints.
+     */
+    cursor?: GpsTrackPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GpsTrackPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GpsTrackPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GpsTrackPoints.
+     */
+    distinct?: GpsTrackPointScalarFieldEnum | GpsTrackPointScalarFieldEnum[]
+  }
+
+  /**
+   * GpsTrackPoint findMany
+   */
+  export type GpsTrackPointFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter, which GpsTrackPoints to fetch.
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GpsTrackPoints to fetch.
+     */
+    orderBy?: GpsTrackPointOrderByWithRelationInput | GpsTrackPointOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GpsTrackPoints.
+     */
+    cursor?: GpsTrackPointWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GpsTrackPoints from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GpsTrackPoints.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GpsTrackPoints.
+     */
+    distinct?: GpsTrackPointScalarFieldEnum | GpsTrackPointScalarFieldEnum[]
+  }
+
+  /**
+   * GpsTrackPoint create
+   */
+  export type GpsTrackPointCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GpsTrackPoint.
+     */
+    data: XOR<GpsTrackPointCreateInput, GpsTrackPointUncheckedCreateInput>
+  }
+
+  /**
+   * GpsTrackPoint createMany
+   */
+  export type GpsTrackPointCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GpsTrackPoints.
+     */
+    data: GpsTrackPointCreateManyInput | GpsTrackPointCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GpsTrackPoint createManyAndReturn
+   */
+  export type GpsTrackPointCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * The data used to create many GpsTrackPoints.
+     */
+    data: GpsTrackPointCreateManyInput | GpsTrackPointCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GpsTrackPoint update
+   */
+  export type GpsTrackPointUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GpsTrackPoint.
+     */
+    data: XOR<GpsTrackPointUpdateInput, GpsTrackPointUncheckedUpdateInput>
+    /**
+     * Choose, which GpsTrackPoint to update.
+     */
+    where: GpsTrackPointWhereUniqueInput
+  }
+
+  /**
+   * GpsTrackPoint updateMany
+   */
+  export type GpsTrackPointUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GpsTrackPoints.
+     */
+    data: XOR<GpsTrackPointUpdateManyMutationInput, GpsTrackPointUncheckedUpdateManyInput>
+    /**
+     * Filter which GpsTrackPoints to update
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * Limit how many GpsTrackPoints to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GpsTrackPoint updateManyAndReturn
+   */
+  export type GpsTrackPointUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * The data used to update GpsTrackPoints.
+     */
+    data: XOR<GpsTrackPointUpdateManyMutationInput, GpsTrackPointUncheckedUpdateManyInput>
+    /**
+     * Filter which GpsTrackPoints to update
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * Limit how many GpsTrackPoints to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GpsTrackPoint upsert
+   */
+  export type GpsTrackPointUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GpsTrackPoint to update in case it exists.
+     */
+    where: GpsTrackPointWhereUniqueInput
+    /**
+     * In case the GpsTrackPoint found by the `where` argument doesn't exist, create a new GpsTrackPoint with this data.
+     */
+    create: XOR<GpsTrackPointCreateInput, GpsTrackPointUncheckedCreateInput>
+    /**
+     * In case the GpsTrackPoint was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GpsTrackPointUpdateInput, GpsTrackPointUncheckedUpdateInput>
+  }
+
+  /**
+   * GpsTrackPoint delete
+   */
+  export type GpsTrackPointDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+    /**
+     * Filter which GpsTrackPoint to delete.
+     */
+    where: GpsTrackPointWhereUniqueInput
+  }
+
+  /**
+   * GpsTrackPoint deleteMany
+   */
+  export type GpsTrackPointDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GpsTrackPoints to delete
+     */
+    where?: GpsTrackPointWhereInput
+    /**
+     * Limit how many GpsTrackPoints to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GpsTrackPoint without action
+   */
+  export type GpsTrackPointDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GpsTrackPoint
+     */
+    select?: GpsTrackPointSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GpsTrackPoint
+     */
+    omit?: GpsTrackPointOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GpsTrackPointInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -44662,6 +48602,7 @@ export namespace Prisma {
     phone: 'phone',
     verified: 'verified',
     active: 'active',
+    enabledModules: 'enabledModules',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -45064,6 +49005,51 @@ export namespace Prisma {
   export type ProductionReportScalarFieldEnum = (typeof ProductionReportScalarFieldEnum)[keyof typeof ProductionReportScalarFieldEnum]
 
 
+  export const GeoMapLayerScalarFieldEnum: {
+    id: 'id',
+    organizationId: 'organizationId',
+    name: 'name',
+    category: 'category',
+    geoJson: 'geoJson',
+    sourceFileName: 'sourceFileName',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GeoMapLayerScalarFieldEnum = (typeof GeoMapLayerScalarFieldEnum)[keyof typeof GeoMapLayerScalarFieldEnum]
+
+
+  export const DeliveryTripScalarFieldEnum: {
+    id: 'id',
+    organizationId: 'organizationId',
+    saleId: 'saleId',
+    referenceCode: 'referenceCode',
+    description: 'description',
+    driverLabel: 'driverLabel',
+    vehicleLabel: 'vehicleLabel',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DeliveryTripScalarFieldEnum = (typeof DeliveryTripScalarFieldEnum)[keyof typeof DeliveryTripScalarFieldEnum]
+
+
+  export const GpsTrackPointScalarFieldEnum: {
+    id: 'id',
+    tripId: 'tripId',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    recordedAt: 'recordedAt',
+    subject: 'subject',
+    deliveryStatus: 'deliveryStatus',
+    note: 'note',
+    createdAt: 'createdAt'
+  };
+
+  export type GpsTrackPointScalarFieldEnum = (typeof GpsTrackPointScalarFieldEnum)[keyof typeof GpsTrackPointScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -45145,6 +49131,13 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -45159,6 +49152,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -45184,6 +49186,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpVerticalModule[]'
+   */
+  export type ListEnumErpVerticalModuleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpVerticalModule[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ErpVerticalModule'
+   */
+  export type EnumErpVerticalModuleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpVerticalModule'>
     
 
 
@@ -45328,6 +49344,76 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'GeoMapLayerCategory'
+   */
+  export type EnumGeoMapLayerCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GeoMapLayerCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'GeoMapLayerCategory[]'
+   */
+  export type ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GeoMapLayerCategory[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryTripStatus'
+   */
+  export type EnumDeliveryTripStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryTripStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryTripStatus[]'
+   */
+  export type ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryTripStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'GpsSubjectType'
+   */
+  export type EnumGpsSubjectTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GpsSubjectType'>
+    
+
+
+  /**
+   * Reference to a field of type 'GpsSubjectType[]'
+   */
+  export type ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GpsSubjectType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryProgressStatus'
+   */
+  export type EnumDeliveryProgressStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryProgressStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'DeliveryProgressStatus[]'
+   */
+  export type ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryProgressStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'UserRole'
    */
   export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -45357,6 +49443,7 @@ export namespace Prisma {
     phone?: StringNullableFilter<"Organization"> | string | null
     verified?: BoolFilter<"Organization"> | boolean
     active?: BoolFilter<"Organization"> | boolean
+    enabledModules?: EnumErpVerticalModuleNullableListFilter<"Organization">
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -45377,6 +49464,8 @@ export namespace Prisma {
     workCenters?: WorkCenterListRelationFilter
     billsOfMaterials?: BillOfMaterialListRelationFilter
     productionOrders?: ProductionOrderListRelationFilter
+    geoMapLayers?: GeoMapLayerListRelationFilter
+    deliveryTrips?: DeliveryTripListRelationFilter
   }
 
   export type OrganizationOrderByWithRelationInput = {
@@ -45389,6 +49478,7 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     verified?: SortOrder
     active?: SortOrder
+    enabledModules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     owner?: UserOrderByWithRelationInput
@@ -45409,6 +49499,8 @@ export namespace Prisma {
     workCenters?: WorkCenterOrderByRelationAggregateInput
     billsOfMaterials?: BillOfMaterialOrderByRelationAggregateInput
     productionOrders?: ProductionOrderOrderByRelationAggregateInput
+    geoMapLayers?: GeoMapLayerOrderByRelationAggregateInput
+    deliveryTrips?: DeliveryTripOrderByRelationAggregateInput
   }
 
   export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -45424,6 +49516,7 @@ export namespace Prisma {
     phone?: StringNullableFilter<"Organization"> | string | null
     verified?: BoolFilter<"Organization"> | boolean
     active?: BoolFilter<"Organization"> | boolean
+    enabledModules?: EnumErpVerticalModuleNullableListFilter<"Organization">
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -45444,6 +49537,8 @@ export namespace Prisma {
     workCenters?: WorkCenterListRelationFilter
     billsOfMaterials?: BillOfMaterialListRelationFilter
     productionOrders?: ProductionOrderListRelationFilter
+    geoMapLayers?: GeoMapLayerListRelationFilter
+    deliveryTrips?: DeliveryTripListRelationFilter
   }, "id" | "slug">
 
   export type OrganizationOrderByWithAggregationInput = {
@@ -45456,6 +49551,7 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     verified?: SortOrder
     active?: SortOrder
+    enabledModules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrganizationCountOrderByAggregateInput
@@ -45476,6 +49572,7 @@ export namespace Prisma {
     phone?: StringNullableWithAggregatesFilter<"Organization"> | string | null
     verified?: BoolWithAggregatesFilter<"Organization"> | boolean
     active?: BoolWithAggregatesFilter<"Organization"> | boolean
+    enabledModules?: EnumErpVerticalModuleNullableListFilter<"Organization">
     createdAt?: DateTimeWithAggregatesFilter<"Organization"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Organization"> | Date | string
   }
@@ -46100,6 +50197,7 @@ export namespace Prisma {
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, CustomerWhereInput> | null
     lines?: SaleLineListRelationFilter
+    deliveryTrips?: DeliveryTripListRelationFilter
   }
 
   export type SaleOrderByWithRelationInput = {
@@ -46114,6 +50212,7 @@ export namespace Prisma {
     organization?: OrganizationOrderByWithRelationInput
     customer?: CustomerOrderByWithRelationInput
     lines?: SaleLineOrderByRelationAggregateInput
+    deliveryTrips?: DeliveryTripOrderByRelationAggregateInput
   }
 
   export type SaleWhereUniqueInput = Prisma.AtLeast<{
@@ -46131,6 +50230,7 @@ export namespace Prisma {
     organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
     customer?: XOR<CustomerNullableScalarRelationFilter, CustomerWhereInput> | null
     lines?: SaleLineListRelationFilter
+    deliveryTrips?: DeliveryTripListRelationFilter
   }, "id">
 
   export type SaleOrderByWithAggregationInput = {
@@ -47637,6 +51737,239 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ProductionReport"> | Date | string
   }
 
+  export type GeoMapLayerWhereInput = {
+    AND?: GeoMapLayerWhereInput | GeoMapLayerWhereInput[]
+    OR?: GeoMapLayerWhereInput[]
+    NOT?: GeoMapLayerWhereInput | GeoMapLayerWhereInput[]
+    id?: StringFilter<"GeoMapLayer"> | string
+    organizationId?: StringFilter<"GeoMapLayer"> | string
+    name?: StringFilter<"GeoMapLayer"> | string
+    category?: EnumGeoMapLayerCategoryFilter<"GeoMapLayer"> | $Enums.GeoMapLayerCategory
+    geoJson?: JsonFilter<"GeoMapLayer">
+    sourceFileName?: StringNullableFilter<"GeoMapLayer"> | string | null
+    createdAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+    updatedAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+  }
+
+  export type GeoMapLayerOrderByWithRelationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    geoJson?: SortOrder
+    sourceFileName?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organization?: OrganizationOrderByWithRelationInput
+  }
+
+  export type GeoMapLayerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GeoMapLayerWhereInput | GeoMapLayerWhereInput[]
+    OR?: GeoMapLayerWhereInput[]
+    NOT?: GeoMapLayerWhereInput | GeoMapLayerWhereInput[]
+    organizationId?: StringFilter<"GeoMapLayer"> | string
+    name?: StringFilter<"GeoMapLayer"> | string
+    category?: EnumGeoMapLayerCategoryFilter<"GeoMapLayer"> | $Enums.GeoMapLayerCategory
+    geoJson?: JsonFilter<"GeoMapLayer">
+    sourceFileName?: StringNullableFilter<"GeoMapLayer"> | string | null
+    createdAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+    updatedAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+  }, "id">
+
+  export type GeoMapLayerOrderByWithAggregationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    geoJson?: SortOrder
+    sourceFileName?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GeoMapLayerCountOrderByAggregateInput
+    _max?: GeoMapLayerMaxOrderByAggregateInput
+    _min?: GeoMapLayerMinOrderByAggregateInput
+  }
+
+  export type GeoMapLayerScalarWhereWithAggregatesInput = {
+    AND?: GeoMapLayerScalarWhereWithAggregatesInput | GeoMapLayerScalarWhereWithAggregatesInput[]
+    OR?: GeoMapLayerScalarWhereWithAggregatesInput[]
+    NOT?: GeoMapLayerScalarWhereWithAggregatesInput | GeoMapLayerScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GeoMapLayer"> | string
+    organizationId?: StringWithAggregatesFilter<"GeoMapLayer"> | string
+    name?: StringWithAggregatesFilter<"GeoMapLayer"> | string
+    category?: EnumGeoMapLayerCategoryWithAggregatesFilter<"GeoMapLayer"> | $Enums.GeoMapLayerCategory
+    geoJson?: JsonWithAggregatesFilter<"GeoMapLayer">
+    sourceFileName?: StringNullableWithAggregatesFilter<"GeoMapLayer"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GeoMapLayer"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GeoMapLayer"> | Date | string
+  }
+
+  export type DeliveryTripWhereInput = {
+    AND?: DeliveryTripWhereInput | DeliveryTripWhereInput[]
+    OR?: DeliveryTripWhereInput[]
+    NOT?: DeliveryTripWhereInput | DeliveryTripWhereInput[]
+    id?: StringFilter<"DeliveryTrip"> | string
+    organizationId?: StringFilter<"DeliveryTrip"> | string
+    saleId?: StringNullableFilter<"DeliveryTrip"> | string | null
+    referenceCode?: StringNullableFilter<"DeliveryTrip"> | string | null
+    description?: StringNullableFilter<"DeliveryTrip"> | string | null
+    driverLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    vehicleLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    status?: EnumDeliveryTripStatusFilter<"DeliveryTrip"> | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+    updatedAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    sale?: XOR<SaleNullableScalarRelationFilter, SaleWhereInput> | null
+    gpsPoints?: GpsTrackPointListRelationFilter
+  }
+
+  export type DeliveryTripOrderByWithRelationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    saleId?: SortOrderInput | SortOrder
+    referenceCode?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    driverLabel?: SortOrderInput | SortOrder
+    vehicleLabel?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    organization?: OrganizationOrderByWithRelationInput
+    sale?: SaleOrderByWithRelationInput
+    gpsPoints?: GpsTrackPointOrderByRelationAggregateInput
+  }
+
+  export type DeliveryTripWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DeliveryTripWhereInput | DeliveryTripWhereInput[]
+    OR?: DeliveryTripWhereInput[]
+    NOT?: DeliveryTripWhereInput | DeliveryTripWhereInput[]
+    organizationId?: StringFilter<"DeliveryTrip"> | string
+    saleId?: StringNullableFilter<"DeliveryTrip"> | string | null
+    referenceCode?: StringNullableFilter<"DeliveryTrip"> | string | null
+    description?: StringNullableFilter<"DeliveryTrip"> | string | null
+    driverLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    vehicleLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    status?: EnumDeliveryTripStatusFilter<"DeliveryTrip"> | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+    updatedAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+    organization?: XOR<OrganizationScalarRelationFilter, OrganizationWhereInput>
+    sale?: XOR<SaleNullableScalarRelationFilter, SaleWhereInput> | null
+    gpsPoints?: GpsTrackPointListRelationFilter
+  }, "id">
+
+  export type DeliveryTripOrderByWithAggregationInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    saleId?: SortOrderInput | SortOrder
+    referenceCode?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    driverLabel?: SortOrderInput | SortOrder
+    vehicleLabel?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DeliveryTripCountOrderByAggregateInput
+    _max?: DeliveryTripMaxOrderByAggregateInput
+    _min?: DeliveryTripMinOrderByAggregateInput
+  }
+
+  export type DeliveryTripScalarWhereWithAggregatesInput = {
+    AND?: DeliveryTripScalarWhereWithAggregatesInput | DeliveryTripScalarWhereWithAggregatesInput[]
+    OR?: DeliveryTripScalarWhereWithAggregatesInput[]
+    NOT?: DeliveryTripScalarWhereWithAggregatesInput | DeliveryTripScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DeliveryTrip"> | string
+    organizationId?: StringWithAggregatesFilter<"DeliveryTrip"> | string
+    saleId?: StringNullableWithAggregatesFilter<"DeliveryTrip"> | string | null
+    referenceCode?: StringNullableWithAggregatesFilter<"DeliveryTrip"> | string | null
+    description?: StringNullableWithAggregatesFilter<"DeliveryTrip"> | string | null
+    driverLabel?: StringNullableWithAggregatesFilter<"DeliveryTrip"> | string | null
+    vehicleLabel?: StringNullableWithAggregatesFilter<"DeliveryTrip"> | string | null
+    status?: EnumDeliveryTripStatusWithAggregatesFilter<"DeliveryTrip"> | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeWithAggregatesFilter<"DeliveryTrip"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DeliveryTrip"> | Date | string
+  }
+
+  export type GpsTrackPointWhereInput = {
+    AND?: GpsTrackPointWhereInput | GpsTrackPointWhereInput[]
+    OR?: GpsTrackPointWhereInput[]
+    NOT?: GpsTrackPointWhereInput | GpsTrackPointWhereInput[]
+    id?: StringFilter<"GpsTrackPoint"> | string
+    tripId?: StringFilter<"GpsTrackPoint"> | string
+    latitude?: FloatFilter<"GpsTrackPoint"> | number
+    longitude?: FloatFilter<"GpsTrackPoint"> | number
+    recordedAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+    subject?: EnumGpsSubjectTypeFilter<"GpsTrackPoint"> | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFilter<"GpsTrackPoint"> | $Enums.DeliveryProgressStatus
+    note?: StringNullableFilter<"GpsTrackPoint"> | string | null
+    createdAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+    trip?: XOR<DeliveryTripScalarRelationFilter, DeliveryTripWhereInput>
+  }
+
+  export type GpsTrackPointOrderByWithRelationInput = {
+    id?: SortOrder
+    tripId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    recordedAt?: SortOrder
+    subject?: SortOrder
+    deliveryStatus?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    trip?: DeliveryTripOrderByWithRelationInput
+  }
+
+  export type GpsTrackPointWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GpsTrackPointWhereInput | GpsTrackPointWhereInput[]
+    OR?: GpsTrackPointWhereInput[]
+    NOT?: GpsTrackPointWhereInput | GpsTrackPointWhereInput[]
+    tripId?: StringFilter<"GpsTrackPoint"> | string
+    latitude?: FloatFilter<"GpsTrackPoint"> | number
+    longitude?: FloatFilter<"GpsTrackPoint"> | number
+    recordedAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+    subject?: EnumGpsSubjectTypeFilter<"GpsTrackPoint"> | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFilter<"GpsTrackPoint"> | $Enums.DeliveryProgressStatus
+    note?: StringNullableFilter<"GpsTrackPoint"> | string | null
+    createdAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+    trip?: XOR<DeliveryTripScalarRelationFilter, DeliveryTripWhereInput>
+  }, "id">
+
+  export type GpsTrackPointOrderByWithAggregationInput = {
+    id?: SortOrder
+    tripId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    recordedAt?: SortOrder
+    subject?: SortOrder
+    deliveryStatus?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: GpsTrackPointCountOrderByAggregateInput
+    _avg?: GpsTrackPointAvgOrderByAggregateInput
+    _max?: GpsTrackPointMaxOrderByAggregateInput
+    _min?: GpsTrackPointMinOrderByAggregateInput
+    _sum?: GpsTrackPointSumOrderByAggregateInput
+  }
+
+  export type GpsTrackPointScalarWhereWithAggregatesInput = {
+    AND?: GpsTrackPointScalarWhereWithAggregatesInput | GpsTrackPointScalarWhereWithAggregatesInput[]
+    OR?: GpsTrackPointScalarWhereWithAggregatesInput[]
+    NOT?: GpsTrackPointScalarWhereWithAggregatesInput | GpsTrackPointScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GpsTrackPoint"> | string
+    tripId?: StringWithAggregatesFilter<"GpsTrackPoint"> | string
+    latitude?: FloatWithAggregatesFilter<"GpsTrackPoint"> | number
+    longitude?: FloatWithAggregatesFilter<"GpsTrackPoint"> | number
+    recordedAt?: DateTimeWithAggregatesFilter<"GpsTrackPoint"> | Date | string
+    subject?: EnumGpsSubjectTypeWithAggregatesFilter<"GpsTrackPoint"> | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusWithAggregatesFilter<"GpsTrackPoint"> | $Enums.DeliveryProgressStatus
+    note?: StringNullableWithAggregatesFilter<"GpsTrackPoint"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GpsTrackPoint"> | Date | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -48027,6 +52360,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -48047,6 +52381,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateInput = {
@@ -48059,6 +52395,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -48078,6 +52415,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUpdateInput = {
@@ -48089,6 +52428,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -48109,6 +52449,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateInput = {
@@ -48121,6 +52463,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -48140,6 +52483,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateManyInput = {
@@ -48152,6 +52497,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48165,6 +52511,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48179,6 +52526,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48836,6 +53184,7 @@ export namespace Prisma {
     organization: OrganizationCreateNestedOneWithoutSalesInput
     customer?: CustomerCreateNestedOneWithoutSalesInput
     lines?: SaleLineCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUncheckedCreateInput = {
@@ -48848,6 +53197,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lines?: SaleLineUncheckedCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUpdateInput = {
@@ -48860,6 +53210,7 @@ export namespace Prisma {
     organization?: OrganizationUpdateOneRequiredWithoutSalesNestedInput
     customer?: CustomerUpdateOneWithoutSalesNestedInput
     lines?: SaleLineUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateInput = {
@@ -48872,6 +53223,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: SaleLineUncheckedUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleCreateManyInput = {
@@ -50423,6 +54775,258 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GeoMapLayerCreateInput = {
+    id?: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutGeoMapLayersInput
+  }
+
+  export type GeoMapLayerUncheckedCreateInput = {
+    id?: string
+    organizationId: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GeoMapLayerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutGeoMapLayersNestedInput
+  }
+
+  export type GeoMapLayerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GeoMapLayerCreateManyInput = {
+    id?: string
+    organizationId: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GeoMapLayerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GeoMapLayerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryTripCreateInput = {
+    id?: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutDeliveryTripsInput
+    sale?: SaleCreateNestedOneWithoutDeliveryTripsInput
+    gpsPoints?: GpsTrackPointCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripUncheckedCreateInput = {
+    id?: string
+    organizationId: string
+    saleId?: string | null
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gpsPoints?: GpsTrackPointUncheckedCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutDeliveryTripsNestedInput
+    sale?: SaleUpdateOneWithoutDeliveryTripsNestedInput
+    gpsPoints?: GpsTrackPointUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    saleId?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gpsPoints?: GpsTrackPointUncheckedUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripCreateManyInput = {
+    id?: string
+    organizationId: string
+    saleId?: string | null
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliveryTripUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryTripUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    saleId?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GpsTrackPointCreateInput = {
+    id?: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+    trip: DeliveryTripCreateNestedOneWithoutGpsPointsInput
+  }
+
+  export type GpsTrackPointUncheckedCreateInput = {
+    id?: string
+    tripId: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GpsTrackPointUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trip?: DeliveryTripUpdateOneRequiredWithoutGpsPointsNestedInput
+  }
+
+  export type GpsTrackPointUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tripId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GpsTrackPointCreateManyInput = {
+    id?: string
+    tripId: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GpsTrackPointUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GpsTrackPointUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tripId?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -50881,6 +55485,14 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type EnumErpVerticalModuleNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.ErpVerticalModule[] | ListEnumErpVerticalModuleFieldRefInput<$PrismaModel> | null
+    has?: $Enums.ErpVerticalModule | EnumErpVerticalModuleFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.ErpVerticalModule[] | ListEnumErpVerticalModuleFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.ErpVerticalModule[] | ListEnumErpVerticalModuleFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -50999,6 +55611,18 @@ export namespace Prisma {
     none?: ProductionOrderWhereInput
   }
 
+  export type GeoMapLayerListRelationFilter = {
+    every?: GeoMapLayerWhereInput
+    some?: GeoMapLayerWhereInput
+    none?: GeoMapLayerWhereInput
+  }
+
+  export type DeliveryTripListRelationFilter = {
+    every?: DeliveryTripWhereInput
+    some?: DeliveryTripWhereInput
+    none?: DeliveryTripWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -51072,6 +55696,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type GeoMapLayerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeliveryTripOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type OrganizationCountOrderByAggregateInput = {
     id?: SortOrder
     ownerUserId?: SortOrder
@@ -51082,6 +55714,7 @@ export namespace Prisma {
     phone?: SortOrder
     verified?: SortOrder
     active?: SortOrder
+    enabledModules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -52764,6 +57397,259 @@ export namespace Prisma {
     runtimeMin?: SortOrder
   }
 
+  export type EnumGeoMapLayerCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.GeoMapLayerCategory | EnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel> | $Enums.GeoMapLayerCategory
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type GeoMapLayerCountOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    geoJson?: SortOrder
+    sourceFileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GeoMapLayerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    sourceFileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GeoMapLayerMinOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    name?: SortOrder
+    category?: SortOrder
+    sourceFileName?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumGeoMapLayerCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GeoMapLayerCategory | EnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumGeoMapLayerCategoryWithAggregatesFilter<$PrismaModel> | $Enums.GeoMapLayerCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel>
+    _max?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type EnumDeliveryTripStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryTripStatus | EnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryTripStatusFilter<$PrismaModel> | $Enums.DeliveryTripStatus
+  }
+
+  export type SaleNullableScalarRelationFilter = {
+    is?: SaleWhereInput | null
+    isNot?: SaleWhereInput | null
+  }
+
+  export type GpsTrackPointListRelationFilter = {
+    every?: GpsTrackPointWhereInput
+    some?: GpsTrackPointWhereInput
+    none?: GpsTrackPointWhereInput
+  }
+
+  export type GpsTrackPointOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeliveryTripCountOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    saleId?: SortOrder
+    referenceCode?: SortOrder
+    description?: SortOrder
+    driverLabel?: SortOrder
+    vehicleLabel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeliveryTripMaxOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    saleId?: SortOrder
+    referenceCode?: SortOrder
+    description?: SortOrder
+    driverLabel?: SortOrder
+    vehicleLabel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeliveryTripMinOrderByAggregateInput = {
+    id?: SortOrder
+    organizationId?: SortOrder
+    saleId?: SortOrder
+    referenceCode?: SortOrder
+    description?: SortOrder
+    driverLabel?: SortOrder
+    vehicleLabel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumDeliveryTripStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryTripStatus | EnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryTripStatusWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryTripStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryTripStatusFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryTripStatusFilter<$PrismaModel>
+  }
+
+  export type EnumGpsSubjectTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GpsSubjectType | EnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGpsSubjectTypeFilter<$PrismaModel> | $Enums.GpsSubjectType
+  }
+
+  export type EnumDeliveryProgressStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryProgressStatus | EnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel> | $Enums.DeliveryProgressStatus
+  }
+
+  export type DeliveryTripScalarRelationFilter = {
+    is?: DeliveryTripWhereInput
+    isNot?: DeliveryTripWhereInput
+  }
+
+  export type GpsTrackPointCountOrderByAggregateInput = {
+    id?: SortOrder
+    tripId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    recordedAt?: SortOrder
+    subject?: SortOrder
+    deliveryStatus?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GpsTrackPointAvgOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type GpsTrackPointMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tripId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    recordedAt?: SortOrder
+    subject?: SortOrder
+    deliveryStatus?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GpsTrackPointMinOrderByAggregateInput = {
+    id?: SortOrder
+    tripId?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    recordedAt?: SortOrder
+    subject?: SortOrder
+    deliveryStatus?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GpsTrackPointSumOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type EnumGpsSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GpsSubjectType | EnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGpsSubjectTypeWithAggregatesFilter<$PrismaModel> | $Enums.GpsSubjectType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGpsSubjectTypeFilter<$PrismaModel>
+    _max?: NestedEnumGpsSubjectTypeFilter<$PrismaModel>
+  }
+
+  export type EnumDeliveryProgressStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryProgressStatus | EnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryProgressStatusWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryProgressStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel>
+  }
+
   export type EnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -53032,6 +57918,10 @@ export namespace Prisma {
     counter?: SortOrder
   }
 
+  export type OrganizationCreateenabledModulesInput = {
+    set: $Enums.ErpVerticalModule[]
+  }
+
   export type UserCreateNestedOneWithoutOrganizationsOwnedInput = {
     create?: XOR<UserCreateWithoutOrganizationsOwnedInput, UserUncheckedCreateWithoutOrganizationsOwnedInput>
     connectOrCreate?: UserCreateOrConnectWithoutOrganizationsOwnedInput
@@ -53157,6 +58047,20 @@ export namespace Prisma {
     connect?: ProductionOrderWhereUniqueInput | ProductionOrderWhereUniqueInput[]
   }
 
+  export type GeoMapLayerCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput> | GeoMapLayerCreateWithoutOrganizationInput[] | GeoMapLayerUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: GeoMapLayerCreateOrConnectWithoutOrganizationInput | GeoMapLayerCreateOrConnectWithoutOrganizationInput[]
+    createMany?: GeoMapLayerCreateManyOrganizationInputEnvelope
+    connect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+  }
+
+  export type DeliveryTripCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput> | DeliveryTripCreateWithoutOrganizationInput[] | DeliveryTripUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutOrganizationInput | DeliveryTripCreateOrConnectWithoutOrganizationInput[]
+    createMany?: DeliveryTripCreateManyOrganizationInputEnvelope
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+  }
+
   export type OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput = {
     create?: XOR<OrganizationMemberCreateWithoutOrganizationInput, OrganizationMemberUncheckedCreateWithoutOrganizationInput> | OrganizationMemberCreateWithoutOrganizationInput[] | OrganizationMemberUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: OrganizationMemberCreateOrConnectWithoutOrganizationInput | OrganizationMemberCreateOrConnectWithoutOrganizationInput[]
@@ -53276,6 +58180,20 @@ export namespace Prisma {
     connect?: ProductionOrderWhereUniqueInput | ProductionOrderWhereUniqueInput[]
   }
 
+  export type GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput> | GeoMapLayerCreateWithoutOrganizationInput[] | GeoMapLayerUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: GeoMapLayerCreateOrConnectWithoutOrganizationInput | GeoMapLayerCreateOrConnectWithoutOrganizationInput[]
+    createMany?: GeoMapLayerCreateManyOrganizationInputEnvelope
+    connect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+  }
+
+  export type DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput> | DeliveryTripCreateWithoutOrganizationInput[] | DeliveryTripUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutOrganizationInput | DeliveryTripCreateOrConnectWithoutOrganizationInput[]
+    createMany?: DeliveryTripCreateManyOrganizationInputEnvelope
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -53286,6 +58204,11 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type OrganizationUpdateenabledModulesInput = {
+    set?: $Enums.ErpVerticalModule[]
+    push?: $Enums.ErpVerticalModule | $Enums.ErpVerticalModule[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -53538,6 +58461,34 @@ export namespace Prisma {
     deleteMany?: ProductionOrderScalarWhereInput | ProductionOrderScalarWhereInput[]
   }
 
+  export type GeoMapLayerUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput> | GeoMapLayerCreateWithoutOrganizationInput[] | GeoMapLayerUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: GeoMapLayerCreateOrConnectWithoutOrganizationInput | GeoMapLayerCreateOrConnectWithoutOrganizationInput[]
+    upsert?: GeoMapLayerUpsertWithWhereUniqueWithoutOrganizationInput | GeoMapLayerUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: GeoMapLayerCreateManyOrganizationInputEnvelope
+    set?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    disconnect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    delete?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    connect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    update?: GeoMapLayerUpdateWithWhereUniqueWithoutOrganizationInput | GeoMapLayerUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: GeoMapLayerUpdateManyWithWhereWithoutOrganizationInput | GeoMapLayerUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: GeoMapLayerScalarWhereInput | GeoMapLayerScalarWhereInput[]
+  }
+
+  export type DeliveryTripUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput> | DeliveryTripCreateWithoutOrganizationInput[] | DeliveryTripUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutOrganizationInput | DeliveryTripCreateOrConnectWithoutOrganizationInput[]
+    upsert?: DeliveryTripUpsertWithWhereUniqueWithoutOrganizationInput | DeliveryTripUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: DeliveryTripCreateManyOrganizationInputEnvelope
+    set?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    disconnect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    delete?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    update?: DeliveryTripUpdateWithWhereUniqueWithoutOrganizationInput | DeliveryTripUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: DeliveryTripUpdateManyWithWhereWithoutOrganizationInput | DeliveryTripUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
+  }
+
   export type OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput = {
     create?: XOR<OrganizationMemberCreateWithoutOrganizationInput, OrganizationMemberUncheckedCreateWithoutOrganizationInput> | OrganizationMemberCreateWithoutOrganizationInput[] | OrganizationMemberUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: OrganizationMemberCreateOrConnectWithoutOrganizationInput | OrganizationMemberCreateOrConnectWithoutOrganizationInput[]
@@ -53774,6 +58725,34 @@ export namespace Prisma {
     update?: ProductionOrderUpdateWithWhereUniqueWithoutOrganizationInput | ProductionOrderUpdateWithWhereUniqueWithoutOrganizationInput[]
     updateMany?: ProductionOrderUpdateManyWithWhereWithoutOrganizationInput | ProductionOrderUpdateManyWithWhereWithoutOrganizationInput[]
     deleteMany?: ProductionOrderScalarWhereInput | ProductionOrderScalarWhereInput[]
+  }
+
+  export type GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput> | GeoMapLayerCreateWithoutOrganizationInput[] | GeoMapLayerUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: GeoMapLayerCreateOrConnectWithoutOrganizationInput | GeoMapLayerCreateOrConnectWithoutOrganizationInput[]
+    upsert?: GeoMapLayerUpsertWithWhereUniqueWithoutOrganizationInput | GeoMapLayerUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: GeoMapLayerCreateManyOrganizationInputEnvelope
+    set?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    disconnect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    delete?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    connect?: GeoMapLayerWhereUniqueInput | GeoMapLayerWhereUniqueInput[]
+    update?: GeoMapLayerUpdateWithWhereUniqueWithoutOrganizationInput | GeoMapLayerUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: GeoMapLayerUpdateManyWithWhereWithoutOrganizationInput | GeoMapLayerUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: GeoMapLayerScalarWhereInput | GeoMapLayerScalarWhereInput[]
+  }
+
+  export type DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput> | DeliveryTripCreateWithoutOrganizationInput[] | DeliveryTripUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutOrganizationInput | DeliveryTripCreateOrConnectWithoutOrganizationInput[]
+    upsert?: DeliveryTripUpsertWithWhereUniqueWithoutOrganizationInput | DeliveryTripUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: DeliveryTripCreateManyOrganizationInputEnvelope
+    set?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    disconnect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    delete?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    update?: DeliveryTripUpdateWithWhereUniqueWithoutOrganizationInput | DeliveryTripUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: DeliveryTripUpdateManyWithWhereWithoutOrganizationInput | DeliveryTripUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
   }
 
   export type OrganizationCreateNestedOneWithoutMembersInput = {
@@ -54519,11 +59498,25 @@ export namespace Prisma {
     connect?: SaleLineWhereUniqueInput | SaleLineWhereUniqueInput[]
   }
 
+  export type DeliveryTripCreateNestedManyWithoutSaleInput = {
+    create?: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput> | DeliveryTripCreateWithoutSaleInput[] | DeliveryTripUncheckedCreateWithoutSaleInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutSaleInput | DeliveryTripCreateOrConnectWithoutSaleInput[]
+    createMany?: DeliveryTripCreateManySaleInputEnvelope
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+  }
+
   export type SaleLineUncheckedCreateNestedManyWithoutSaleInput = {
     create?: XOR<SaleLineCreateWithoutSaleInput, SaleLineUncheckedCreateWithoutSaleInput> | SaleLineCreateWithoutSaleInput[] | SaleLineUncheckedCreateWithoutSaleInput[]
     connectOrCreate?: SaleLineCreateOrConnectWithoutSaleInput | SaleLineCreateOrConnectWithoutSaleInput[]
     createMany?: SaleLineCreateManySaleInputEnvelope
     connect?: SaleLineWhereUniqueInput | SaleLineWhereUniqueInput[]
+  }
+
+  export type DeliveryTripUncheckedCreateNestedManyWithoutSaleInput = {
+    create?: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput> | DeliveryTripCreateWithoutSaleInput[] | DeliveryTripUncheckedCreateWithoutSaleInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutSaleInput | DeliveryTripCreateOrConnectWithoutSaleInput[]
+    createMany?: DeliveryTripCreateManySaleInputEnvelope
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
   }
 
   export type EnumSaleStatusFieldUpdateOperationsInput = {
@@ -54562,6 +59555,20 @@ export namespace Prisma {
     deleteMany?: SaleLineScalarWhereInput | SaleLineScalarWhereInput[]
   }
 
+  export type DeliveryTripUpdateManyWithoutSaleNestedInput = {
+    create?: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput> | DeliveryTripCreateWithoutSaleInput[] | DeliveryTripUncheckedCreateWithoutSaleInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutSaleInput | DeliveryTripCreateOrConnectWithoutSaleInput[]
+    upsert?: DeliveryTripUpsertWithWhereUniqueWithoutSaleInput | DeliveryTripUpsertWithWhereUniqueWithoutSaleInput[]
+    createMany?: DeliveryTripCreateManySaleInputEnvelope
+    set?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    disconnect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    delete?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    update?: DeliveryTripUpdateWithWhereUniqueWithoutSaleInput | DeliveryTripUpdateWithWhereUniqueWithoutSaleInput[]
+    updateMany?: DeliveryTripUpdateManyWithWhereWithoutSaleInput | DeliveryTripUpdateManyWithWhereWithoutSaleInput[]
+    deleteMany?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
+  }
+
   export type SaleLineUncheckedUpdateManyWithoutSaleNestedInput = {
     create?: XOR<SaleLineCreateWithoutSaleInput, SaleLineUncheckedCreateWithoutSaleInput> | SaleLineCreateWithoutSaleInput[] | SaleLineUncheckedCreateWithoutSaleInput[]
     connectOrCreate?: SaleLineCreateOrConnectWithoutSaleInput | SaleLineCreateOrConnectWithoutSaleInput[]
@@ -54574,6 +59581,20 @@ export namespace Prisma {
     update?: SaleLineUpdateWithWhereUniqueWithoutSaleInput | SaleLineUpdateWithWhereUniqueWithoutSaleInput[]
     updateMany?: SaleLineUpdateManyWithWhereWithoutSaleInput | SaleLineUpdateManyWithWhereWithoutSaleInput[]
     deleteMany?: SaleLineScalarWhereInput | SaleLineScalarWhereInput[]
+  }
+
+  export type DeliveryTripUncheckedUpdateManyWithoutSaleNestedInput = {
+    create?: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput> | DeliveryTripCreateWithoutSaleInput[] | DeliveryTripUncheckedCreateWithoutSaleInput[]
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutSaleInput | DeliveryTripCreateOrConnectWithoutSaleInput[]
+    upsert?: DeliveryTripUpsertWithWhereUniqueWithoutSaleInput | DeliveryTripUpsertWithWhereUniqueWithoutSaleInput[]
+    createMany?: DeliveryTripCreateManySaleInputEnvelope
+    set?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    disconnect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    delete?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    connect?: DeliveryTripWhereUniqueInput | DeliveryTripWhereUniqueInput[]
+    update?: DeliveryTripUpdateWithWhereUniqueWithoutSaleInput | DeliveryTripUpdateWithWhereUniqueWithoutSaleInput[]
+    updateMany?: DeliveryTripUpdateManyWithWhereWithoutSaleInput | DeliveryTripUpdateManyWithWhereWithoutSaleInput[]
+    deleteMany?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
   }
 
   export type SaleCreateNestedOneWithoutLinesInput = {
@@ -55604,6 +60625,122 @@ export namespace Prisma {
     update?: XOR<XOR<WorkCenterUpdateToOneWithWhereWithoutProductionReportsInput, WorkCenterUpdateWithoutProductionReportsInput>, WorkCenterUncheckedUpdateWithoutProductionReportsInput>
   }
 
+  export type OrganizationCreateNestedOneWithoutGeoMapLayersInput = {
+    create?: XOR<OrganizationCreateWithoutGeoMapLayersInput, OrganizationUncheckedCreateWithoutGeoMapLayersInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutGeoMapLayersInput
+    connect?: OrganizationWhereUniqueInput
+  }
+
+  export type EnumGeoMapLayerCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.GeoMapLayerCategory
+  }
+
+  export type OrganizationUpdateOneRequiredWithoutGeoMapLayersNestedInput = {
+    create?: XOR<OrganizationCreateWithoutGeoMapLayersInput, OrganizationUncheckedCreateWithoutGeoMapLayersInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutGeoMapLayersInput
+    upsert?: OrganizationUpsertWithoutGeoMapLayersInput
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutGeoMapLayersInput, OrganizationUpdateWithoutGeoMapLayersInput>, OrganizationUncheckedUpdateWithoutGeoMapLayersInput>
+  }
+
+  export type OrganizationCreateNestedOneWithoutDeliveryTripsInput = {
+    create?: XOR<OrganizationCreateWithoutDeliveryTripsInput, OrganizationUncheckedCreateWithoutDeliveryTripsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutDeliveryTripsInput
+    connect?: OrganizationWhereUniqueInput
+  }
+
+  export type SaleCreateNestedOneWithoutDeliveryTripsInput = {
+    create?: XOR<SaleCreateWithoutDeliveryTripsInput, SaleUncheckedCreateWithoutDeliveryTripsInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutDeliveryTripsInput
+    connect?: SaleWhereUniqueInput
+  }
+
+  export type GpsTrackPointCreateNestedManyWithoutTripInput = {
+    create?: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput> | GpsTrackPointCreateWithoutTripInput[] | GpsTrackPointUncheckedCreateWithoutTripInput[]
+    connectOrCreate?: GpsTrackPointCreateOrConnectWithoutTripInput | GpsTrackPointCreateOrConnectWithoutTripInput[]
+    createMany?: GpsTrackPointCreateManyTripInputEnvelope
+    connect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+  }
+
+  export type GpsTrackPointUncheckedCreateNestedManyWithoutTripInput = {
+    create?: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput> | GpsTrackPointCreateWithoutTripInput[] | GpsTrackPointUncheckedCreateWithoutTripInput[]
+    connectOrCreate?: GpsTrackPointCreateOrConnectWithoutTripInput | GpsTrackPointCreateOrConnectWithoutTripInput[]
+    createMany?: GpsTrackPointCreateManyTripInputEnvelope
+    connect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+  }
+
+  export type EnumDeliveryTripStatusFieldUpdateOperationsInput = {
+    set?: $Enums.DeliveryTripStatus
+  }
+
+  export type OrganizationUpdateOneRequiredWithoutDeliveryTripsNestedInput = {
+    create?: XOR<OrganizationCreateWithoutDeliveryTripsInput, OrganizationUncheckedCreateWithoutDeliveryTripsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutDeliveryTripsInput
+    upsert?: OrganizationUpsertWithoutDeliveryTripsInput
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutDeliveryTripsInput, OrganizationUpdateWithoutDeliveryTripsInput>, OrganizationUncheckedUpdateWithoutDeliveryTripsInput>
+  }
+
+  export type SaleUpdateOneWithoutDeliveryTripsNestedInput = {
+    create?: XOR<SaleCreateWithoutDeliveryTripsInput, SaleUncheckedCreateWithoutDeliveryTripsInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutDeliveryTripsInput
+    upsert?: SaleUpsertWithoutDeliveryTripsInput
+    disconnect?: SaleWhereInput | boolean
+    delete?: SaleWhereInput | boolean
+    connect?: SaleWhereUniqueInput
+    update?: XOR<XOR<SaleUpdateToOneWithWhereWithoutDeliveryTripsInput, SaleUpdateWithoutDeliveryTripsInput>, SaleUncheckedUpdateWithoutDeliveryTripsInput>
+  }
+
+  export type GpsTrackPointUpdateManyWithoutTripNestedInput = {
+    create?: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput> | GpsTrackPointCreateWithoutTripInput[] | GpsTrackPointUncheckedCreateWithoutTripInput[]
+    connectOrCreate?: GpsTrackPointCreateOrConnectWithoutTripInput | GpsTrackPointCreateOrConnectWithoutTripInput[]
+    upsert?: GpsTrackPointUpsertWithWhereUniqueWithoutTripInput | GpsTrackPointUpsertWithWhereUniqueWithoutTripInput[]
+    createMany?: GpsTrackPointCreateManyTripInputEnvelope
+    set?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    disconnect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    delete?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    connect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    update?: GpsTrackPointUpdateWithWhereUniqueWithoutTripInput | GpsTrackPointUpdateWithWhereUniqueWithoutTripInput[]
+    updateMany?: GpsTrackPointUpdateManyWithWhereWithoutTripInput | GpsTrackPointUpdateManyWithWhereWithoutTripInput[]
+    deleteMany?: GpsTrackPointScalarWhereInput | GpsTrackPointScalarWhereInput[]
+  }
+
+  export type GpsTrackPointUncheckedUpdateManyWithoutTripNestedInput = {
+    create?: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput> | GpsTrackPointCreateWithoutTripInput[] | GpsTrackPointUncheckedCreateWithoutTripInput[]
+    connectOrCreate?: GpsTrackPointCreateOrConnectWithoutTripInput | GpsTrackPointCreateOrConnectWithoutTripInput[]
+    upsert?: GpsTrackPointUpsertWithWhereUniqueWithoutTripInput | GpsTrackPointUpsertWithWhereUniqueWithoutTripInput[]
+    createMany?: GpsTrackPointCreateManyTripInputEnvelope
+    set?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    disconnect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    delete?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    connect?: GpsTrackPointWhereUniqueInput | GpsTrackPointWhereUniqueInput[]
+    update?: GpsTrackPointUpdateWithWhereUniqueWithoutTripInput | GpsTrackPointUpdateWithWhereUniqueWithoutTripInput[]
+    updateMany?: GpsTrackPointUpdateManyWithWhereWithoutTripInput | GpsTrackPointUpdateManyWithWhereWithoutTripInput[]
+    deleteMany?: GpsTrackPointScalarWhereInput | GpsTrackPointScalarWhereInput[]
+  }
+
+  export type DeliveryTripCreateNestedOneWithoutGpsPointsInput = {
+    create?: XOR<DeliveryTripCreateWithoutGpsPointsInput, DeliveryTripUncheckedCreateWithoutGpsPointsInput>
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutGpsPointsInput
+    connect?: DeliveryTripWhereUniqueInput
+  }
+
+  export type EnumGpsSubjectTypeFieldUpdateOperationsInput = {
+    set?: $Enums.GpsSubjectType
+  }
+
+  export type EnumDeliveryProgressStatusFieldUpdateOperationsInput = {
+    set?: $Enums.DeliveryProgressStatus
+  }
+
+  export type DeliveryTripUpdateOneRequiredWithoutGpsPointsNestedInput = {
+    create?: XOR<DeliveryTripCreateWithoutGpsPointsInput, DeliveryTripUncheckedCreateWithoutGpsPointsInput>
+    connectOrCreate?: DeliveryTripCreateOrConnectWithoutGpsPointsInput
+    upsert?: DeliveryTripUpsertWithoutGpsPointsInput
+    connect?: DeliveryTripWhereUniqueInput
+    update?: XOR<XOR<DeliveryTripUpdateToOneWithWhereWithoutGpsPointsInput, DeliveryTripUpdateWithoutGpsPointsInput>, DeliveryTripUncheckedUpdateWithoutGpsPointsInput>
+  }
+
   export type UserCreatetimesInput = {
     set: string[]
   }
@@ -56205,6 +61342,97 @@ export namespace Prisma {
     _max?: NestedEnumProductionOrderStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumGeoMapLayerCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.GeoMapLayerCategory | EnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel> | $Enums.GeoMapLayerCategory
+  }
+
+  export type NestedEnumGeoMapLayerCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GeoMapLayerCategory | EnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GeoMapLayerCategory[] | ListEnumGeoMapLayerCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumGeoMapLayerCategoryWithAggregatesFilter<$PrismaModel> | $Enums.GeoMapLayerCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel>
+    _max?: NestedEnumGeoMapLayerCategoryFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedEnumDeliveryTripStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryTripStatus | EnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryTripStatusFilter<$PrismaModel> | $Enums.DeliveryTripStatus
+  }
+
+  export type NestedEnumDeliveryTripStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryTripStatus | EnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryTripStatus[] | ListEnumDeliveryTripStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryTripStatusWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryTripStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryTripStatusFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryTripStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGpsSubjectTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GpsSubjectType | EnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGpsSubjectTypeFilter<$PrismaModel> | $Enums.GpsSubjectType
+  }
+
+  export type NestedEnumDeliveryProgressStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryProgressStatus | EnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel> | $Enums.DeliveryProgressStatus
+  }
+
+  export type NestedEnumGpsSubjectTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GpsSubjectType | EnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GpsSubjectType[] | ListEnumGpsSubjectTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGpsSubjectTypeWithAggregatesFilter<$PrismaModel> | $Enums.GpsSubjectType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGpsSubjectTypeFilter<$PrismaModel>
+    _max?: NestedEnumGpsSubjectTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDeliveryProgressStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DeliveryProgressStatus | EnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DeliveryProgressStatus[] | ListEnumDeliveryProgressStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDeliveryProgressStatusWithAggregatesFilter<$PrismaModel> | $Enums.DeliveryProgressStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel>
+    _max?: NestedEnumDeliveryProgressStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
     in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -56456,6 +61684,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     customer?: CustomerCreateNestedOneWithoutSalesInput
     lines?: SaleLineCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUncheckedCreateWithoutOrganizationInput = {
@@ -56467,6 +61696,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lines?: SaleLineUncheckedCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutSaleInput
   }
 
   export type SaleCreateOrConnectWithoutOrganizationInput = {
@@ -56860,6 +62090,72 @@ export namespace Prisma {
 
   export type ProductionOrderCreateManyOrganizationInputEnvelope = {
     data: ProductionOrderCreateManyOrganizationInput | ProductionOrderCreateManyOrganizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GeoMapLayerCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GeoMapLayerUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GeoMapLayerCreateOrConnectWithoutOrganizationInput = {
+    where: GeoMapLayerWhereUniqueInput
+    create: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type GeoMapLayerCreateManyOrganizationInputEnvelope = {
+    data: GeoMapLayerCreateManyOrganizationInput | GeoMapLayerCreateManyOrganizationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DeliveryTripCreateWithoutOrganizationInput = {
+    id?: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sale?: SaleCreateNestedOneWithoutDeliveryTripsInput
+    gpsPoints?: GpsTrackPointCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    saleId?: string | null
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gpsPoints?: GpsTrackPointUncheckedCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripCreateOrConnectWithoutOrganizationInput = {
+    where: DeliveryTripWhereUniqueInput
+    create: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type DeliveryTripCreateManyOrganizationInputEnvelope = {
+    data: DeliveryTripCreateManyOrganizationInput | DeliveryTripCreateManyOrganizationInput[]
     skipDuplicates?: boolean
   }
 
@@ -57442,6 +62738,68 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ProductionOrder"> | Date | string
   }
 
+  export type GeoMapLayerUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: GeoMapLayerWhereUniqueInput
+    update: XOR<GeoMapLayerUpdateWithoutOrganizationInput, GeoMapLayerUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<GeoMapLayerCreateWithoutOrganizationInput, GeoMapLayerUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type GeoMapLayerUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: GeoMapLayerWhereUniqueInput
+    data: XOR<GeoMapLayerUpdateWithoutOrganizationInput, GeoMapLayerUncheckedUpdateWithoutOrganizationInput>
+  }
+
+  export type GeoMapLayerUpdateManyWithWhereWithoutOrganizationInput = {
+    where: GeoMapLayerScalarWhereInput
+    data: XOR<GeoMapLayerUpdateManyMutationInput, GeoMapLayerUncheckedUpdateManyWithoutOrganizationInput>
+  }
+
+  export type GeoMapLayerScalarWhereInput = {
+    AND?: GeoMapLayerScalarWhereInput | GeoMapLayerScalarWhereInput[]
+    OR?: GeoMapLayerScalarWhereInput[]
+    NOT?: GeoMapLayerScalarWhereInput | GeoMapLayerScalarWhereInput[]
+    id?: StringFilter<"GeoMapLayer"> | string
+    organizationId?: StringFilter<"GeoMapLayer"> | string
+    name?: StringFilter<"GeoMapLayer"> | string
+    category?: EnumGeoMapLayerCategoryFilter<"GeoMapLayer"> | $Enums.GeoMapLayerCategory
+    geoJson?: JsonFilter<"GeoMapLayer">
+    sourceFileName?: StringNullableFilter<"GeoMapLayer"> | string | null
+    createdAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+    updatedAt?: DateTimeFilter<"GeoMapLayer"> | Date | string
+  }
+
+  export type DeliveryTripUpsertWithWhereUniqueWithoutOrganizationInput = {
+    where: DeliveryTripWhereUniqueInput
+    update: XOR<DeliveryTripUpdateWithoutOrganizationInput, DeliveryTripUncheckedUpdateWithoutOrganizationInput>
+    create: XOR<DeliveryTripCreateWithoutOrganizationInput, DeliveryTripUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type DeliveryTripUpdateWithWhereUniqueWithoutOrganizationInput = {
+    where: DeliveryTripWhereUniqueInput
+    data: XOR<DeliveryTripUpdateWithoutOrganizationInput, DeliveryTripUncheckedUpdateWithoutOrganizationInput>
+  }
+
+  export type DeliveryTripUpdateManyWithWhereWithoutOrganizationInput = {
+    where: DeliveryTripScalarWhereInput
+    data: XOR<DeliveryTripUpdateManyMutationInput, DeliveryTripUncheckedUpdateManyWithoutOrganizationInput>
+  }
+
+  export type DeliveryTripScalarWhereInput = {
+    AND?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
+    OR?: DeliveryTripScalarWhereInput[]
+    NOT?: DeliveryTripScalarWhereInput | DeliveryTripScalarWhereInput[]
+    id?: StringFilter<"DeliveryTrip"> | string
+    organizationId?: StringFilter<"DeliveryTrip"> | string
+    saleId?: StringNullableFilter<"DeliveryTrip"> | string | null
+    referenceCode?: StringNullableFilter<"DeliveryTrip"> | string | null
+    description?: StringNullableFilter<"DeliveryTrip"> | string | null
+    driverLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    vehicleLabel?: StringNullableFilter<"DeliveryTrip"> | string | null
+    status?: EnumDeliveryTripStatusFilter<"DeliveryTrip"> | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+    updatedAt?: DateTimeFilter<"DeliveryTrip"> | Date | string
+  }
+
   export type OrganizationCreateWithoutMembersInput = {
     id?: string
     name: string
@@ -57451,6 +62809,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -57470,6 +62829,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -57482,6 +62843,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
@@ -57500,6 +62862,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -57598,6 +62962,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -57617,6 +62982,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -57629,6 +62996,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -57647,6 +63015,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type UserUpsertWithoutOrganizationMembershipsInput = {
@@ -57775,6 +63145,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -57794,6 +63165,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutAccountGroupsInput = {
@@ -57806,6 +63179,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -57824,6 +63198,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutAccountGroupsInput = {
@@ -57897,6 +63273,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -57916,6 +63293,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutAccountGroupsInput = {
@@ -57928,6 +63307,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -57946,6 +63326,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type AccountGroupPermissionUpsertWithWhereUniqueWithoutGroupInput = {
@@ -58147,6 +63529,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -58166,6 +63549,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -58178,6 +63563,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -58196,6 +63582,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -58285,6 +63673,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -58304,6 +63693,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -58316,6 +63707,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -58334,6 +63726,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateWithoutCustomersInput = {
@@ -58345,6 +63739,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -58364,6 +63759,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutCustomersInput = {
@@ -58376,6 +63773,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -58394,6 +63792,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutCustomersInput = {
@@ -58410,6 +63810,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     organization: OrganizationCreateNestedOneWithoutSalesInput
     lines?: SaleLineCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUncheckedCreateWithoutCustomerInput = {
@@ -58421,6 +63822,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     lines?: SaleLineUncheckedCreateNestedManyWithoutSaleInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutSaleInput
   }
 
   export type SaleCreateOrConnectWithoutCustomerInput = {
@@ -58489,6 +63891,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -58508,6 +63911,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutCustomersInput = {
@@ -58520,6 +63925,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -58538,6 +63944,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type SaleUpsertWithWhereUniqueWithoutCustomerInput = {
@@ -58581,6 +63989,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -58600,6 +64009,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutProductsInput = {
@@ -58612,6 +64023,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -58630,6 +64042,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutProductsInput = {
@@ -58849,6 +64263,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -58868,6 +64283,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutProductsInput = {
@@ -58880,6 +64297,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -58898,6 +64316,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type SaleLineUpsertWithWhereUniqueWithoutProductInput = {
@@ -59055,6 +64475,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -59074,6 +64495,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutSuppliersInput = {
@@ -59086,6 +64509,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -59104,6 +64528,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutSuppliersInput = {
@@ -59163,6 +64589,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -59182,6 +64609,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutSuppliersInput = {
@@ -59194,6 +64623,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -59212,6 +64642,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type PurchaseUpsertWithWhereUniqueWithoutSupplierInput = {
@@ -59239,6 +64671,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -59258,6 +64691,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutSalesInput = {
@@ -59270,6 +64705,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -59288,6 +64724,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutSalesInput = {
@@ -59362,6 +64800,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DeliveryTripCreateWithoutSaleInput = {
+    id?: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutDeliveryTripsInput
+    gpsPoints?: GpsTrackPointCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripUncheckedCreateWithoutSaleInput = {
+    id?: string
+    organizationId: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    gpsPoints?: GpsTrackPointUncheckedCreateNestedManyWithoutTripInput
+  }
+
+  export type DeliveryTripCreateOrConnectWithoutSaleInput = {
+    where: DeliveryTripWhereUniqueInput
+    create: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput>
+  }
+
+  export type DeliveryTripCreateManySaleInputEnvelope = {
+    data: DeliveryTripCreateManySaleInput | DeliveryTripCreateManySaleInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OrganizationUpsertWithoutSalesInput = {
     update: XOR<OrganizationUpdateWithoutSalesInput, OrganizationUncheckedUpdateWithoutSalesInput>
     create: XOR<OrganizationCreateWithoutSalesInput, OrganizationUncheckedCreateWithoutSalesInput>
@@ -59382,6 +64856,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -59401,6 +64876,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutSalesInput = {
@@ -59413,6 +64890,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -59431,6 +64909,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type CustomerUpsertWithoutSalesInput = {
@@ -59496,6 +64976,22 @@ export namespace Prisma {
     data: XOR<SaleLineUpdateManyMutationInput, SaleLineUncheckedUpdateManyWithoutSaleInput>
   }
 
+  export type DeliveryTripUpsertWithWhereUniqueWithoutSaleInput = {
+    where: DeliveryTripWhereUniqueInput
+    update: XOR<DeliveryTripUpdateWithoutSaleInput, DeliveryTripUncheckedUpdateWithoutSaleInput>
+    create: XOR<DeliveryTripCreateWithoutSaleInput, DeliveryTripUncheckedCreateWithoutSaleInput>
+  }
+
+  export type DeliveryTripUpdateWithWhereUniqueWithoutSaleInput = {
+    where: DeliveryTripWhereUniqueInput
+    data: XOR<DeliveryTripUpdateWithoutSaleInput, DeliveryTripUncheckedUpdateWithoutSaleInput>
+  }
+
+  export type DeliveryTripUpdateManyWithWhereWithoutSaleInput = {
+    where: DeliveryTripScalarWhereInput
+    data: XOR<DeliveryTripUpdateManyMutationInput, DeliveryTripUncheckedUpdateManyWithoutSaleInput>
+  }
+
   export type SaleCreateWithoutLinesInput = {
     id?: string
     status?: $Enums.SaleStatus
@@ -59505,6 +65001,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     organization: OrganizationCreateNestedOneWithoutSalesInput
     customer?: CustomerCreateNestedOneWithoutSalesInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUncheckedCreateWithoutLinesInput = {
@@ -59516,6 +65013,7 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutSaleInput
   }
 
   export type SaleCreateOrConnectWithoutLinesInput = {
@@ -59586,6 +65084,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organization?: OrganizationUpdateOneRequiredWithoutSalesNestedInput
     customer?: CustomerUpdateOneWithoutSalesNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateWithoutLinesInput = {
@@ -59597,6 +65096,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type ProductUpsertWithoutSaleLinesInput = {
@@ -59657,6 +65157,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -59676,6 +65177,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutSalesGoalsInput = {
@@ -59688,6 +65191,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -59706,6 +65210,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutSalesGoalsInput = {
@@ -59733,6 +65239,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -59752,6 +65259,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutSalesGoalsInput = {
@@ -59764,6 +65273,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -59782,6 +65292,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateWithoutPurchasesInput = {
@@ -59793,6 +65305,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -59812,6 +65325,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutPurchasesInput = {
@@ -59824,6 +65339,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -59842,6 +65358,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutPurchasesInput = {
@@ -59926,6 +65444,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -59945,6 +65464,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutPurchasesInput = {
@@ -59957,6 +65478,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -59975,6 +65497,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type SupplierUpsertWithoutPurchasesInput = {
@@ -60220,6 +65744,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -60239,6 +65764,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutAppointmentsInput = {
@@ -60251,6 +65778,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -60269,6 +65797,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutAppointmentsInput = {
@@ -60361,6 +65891,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -60380,6 +65911,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutAppointmentsInput = {
@@ -60392,6 +65925,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -60410,6 +65944,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type AppointmentInstallmentUpsertWithWhereUniqueWithoutAppointmentInput = {
@@ -60451,6 +65987,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -60470,6 +66007,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutServicesInput = {
@@ -60482,6 +66021,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -60500,6 +66040,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutServicesInput = {
@@ -60591,6 +66133,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -60610,6 +66153,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutServicesInput = {
@@ -60622,6 +66167,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -60640,6 +66186,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type AppointmentUpsertWithWhereUniqueWithoutServiceInput = {
@@ -60695,6 +66243,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -60714,6 +66263,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutStockItemsInput = {
@@ -60726,6 +66277,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -60744,6 +66296,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutStockItemsInput = {
@@ -60827,6 +66381,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -60846,6 +66401,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutStockItemsInput = {
@@ -60858,6 +66415,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -60876,6 +66434,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type StockMovementUpsertWithWhereUniqueWithoutStockItemInput = {
@@ -61205,6 +66765,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -61224,6 +66785,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutReceivablesInput = {
@@ -61236,6 +66799,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -61254,6 +66818,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutReceivablesInput = {
@@ -61322,6 +66888,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -61341,6 +66908,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutReceivablesInput = {
@@ -61353,6 +66922,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -61371,6 +66941,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type CustomerUpsertWithoutReceivablesInput = {
@@ -61429,6 +67001,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -61448,6 +67021,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutRemindersInput = {
@@ -61460,6 +67035,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -61478,6 +67054,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutRemindersInput = {
@@ -61505,6 +67083,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -61524,6 +67103,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutRemindersInput = {
@@ -61536,6 +67117,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -61554,6 +67136,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateWithoutWorkCentersInput = {
@@ -61565,6 +67149,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -61584,6 +67169,8 @@ export namespace Prisma {
     receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutWorkCentersInput = {
@@ -61596,6 +67183,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -61614,6 +67202,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutWorkCentersInput = {
@@ -61705,6 +67295,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -61724,6 +67315,8 @@ export namespace Prisma {
     receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutWorkCentersInput = {
@@ -61736,6 +67329,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -61754,6 +67348,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type RoutingStepUpsertWithWhereUniqueWithoutWorkCenterInput = {
@@ -61827,6 +67423,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -61846,6 +67443,8 @@ export namespace Prisma {
     receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutBillsOfMaterialsInput = {
@@ -61858,6 +67457,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -61876,6 +67476,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutBillsOfMaterialsInput = {
@@ -62054,6 +67656,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -62073,6 +67676,8 @@ export namespace Prisma {
     receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutBillsOfMaterialsInput = {
@@ -62085,6 +67690,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -62103,6 +67709,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type ProductUpsertWithoutBomParentsInput = {
@@ -62503,6 +68111,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
@@ -62522,6 +68131,8 @@ export namespace Prisma {
     receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutProductionOrdersInput = {
@@ -62534,6 +68145,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -62552,6 +68164,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutProductionOrdersInput = {
@@ -62713,6 +68327,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
@@ -62732,6 +68347,8 @@ export namespace Prisma {
     receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutProductionOrdersInput = {
@@ -62744,6 +68361,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -62762,6 +68380,8 @@ export namespace Prisma {
     receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type BillOfMaterialUpsertWithoutProductionOrdersInput = {
@@ -63222,6 +68842,497 @@ export namespace Prisma {
     routingSteps?: RoutingStepUncheckedUpdateManyWithoutWorkCenterNestedInput
   }
 
+  export type OrganizationCreateWithoutGeoMapLayersInput = {
+    id?: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
+    members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerCreateNestedManyWithoutOrganizationInput
+    products?: ProductCreateNestedManyWithoutOrganizationInput
+    sales?: SaleCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentCreateNestedManyWithoutOrganizationInput
+    services?: ServiceCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationUncheckedCreateWithoutGeoMapLayersInput = {
+    id?: string
+    ownerUserId: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+    products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
+    sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutOrganizationInput
+    services?: ServiceUncheckedCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemUncheckedCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationCreateOrConnectWithoutGeoMapLayersInput = {
+    where: OrganizationWhereUniqueInput
+    create: XOR<OrganizationCreateWithoutGeoMapLayersInput, OrganizationUncheckedCreateWithoutGeoMapLayersInput>
+  }
+
+  export type OrganizationUpsertWithoutGeoMapLayersInput = {
+    update: XOR<OrganizationUpdateWithoutGeoMapLayersInput, OrganizationUncheckedUpdateWithoutGeoMapLayersInput>
+    create: XOR<OrganizationCreateWithoutGeoMapLayersInput, OrganizationUncheckedCreateWithoutGeoMapLayersInput>
+    where?: OrganizationWhereInput
+  }
+
+  export type OrganizationUpdateToOneWithWhereWithoutGeoMapLayersInput = {
+    where?: OrganizationWhereInput
+    data: XOR<OrganizationUpdateWithoutGeoMapLayersInput, OrganizationUncheckedUpdateWithoutGeoMapLayersInput>
+  }
+
+  export type OrganizationUpdateWithoutGeoMapLayersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
+    members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type OrganizationUncheckedUpdateWithoutGeoMapLayersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUncheckedUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type OrganizationCreateWithoutDeliveryTripsInput = {
+    id?: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner: UserCreateNestedOneWithoutOrganizationsOwnedInput
+    members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerCreateNestedManyWithoutOrganizationInput
+    products?: ProductCreateNestedManyWithoutOrganizationInput
+    sales?: SaleCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentCreateNestedManyWithoutOrganizationInput
+    services?: ServiceCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationUncheckedCreateWithoutDeliveryTripsInput = {
+    id?: string
+    ownerUserId: string
+    name: string
+    slug: string
+    document?: string | null
+    email?: string | null
+    phone?: string | null
+    verified?: boolean
+    active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+    accountGroups?: AccountGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    roleAssignments?: OrganizationMemberGroupUncheckedCreateNestedManyWithoutOrganizationInput
+    customers?: CustomerUncheckedCreateNestedManyWithoutOrganizationInput
+    products?: ProductUncheckedCreateNestedManyWithoutOrganizationInput
+    sales?: SaleUncheckedCreateNestedManyWithoutOrganizationInput
+    salesGoals?: SalesGoalUncheckedCreateNestedManyWithoutOrganizationInput
+    suppliers?: SupplierUncheckedCreateNestedManyWithoutOrganizationInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutOrganizationInput
+    appointments?: AppointmentUncheckedCreateNestedManyWithoutOrganizationInput
+    services?: ServiceUncheckedCreateNestedManyWithoutOrganizationInput
+    stockItems?: StockItemUncheckedCreateNestedManyWithoutOrganizationInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutOrganizationInput
+    receivables?: ReceivableUncheckedCreateNestedManyWithoutOrganizationInput
+    workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
+    billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
+    productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+  }
+
+  export type OrganizationCreateOrConnectWithoutDeliveryTripsInput = {
+    where: OrganizationWhereUniqueInput
+    create: XOR<OrganizationCreateWithoutDeliveryTripsInput, OrganizationUncheckedCreateWithoutDeliveryTripsInput>
+  }
+
+  export type SaleCreateWithoutDeliveryTripsInput = {
+    id?: string
+    status?: $Enums.SaleStatus
+    totalCents: number
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutSalesInput
+    customer?: CustomerCreateNestedOneWithoutSalesInput
+    lines?: SaleLineCreateNestedManyWithoutSaleInput
+  }
+
+  export type SaleUncheckedCreateWithoutDeliveryTripsInput = {
+    id?: string
+    organizationId: string
+    customerId?: string | null
+    status?: $Enums.SaleStatus
+    totalCents: number
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lines?: SaleLineUncheckedCreateNestedManyWithoutSaleInput
+  }
+
+  export type SaleCreateOrConnectWithoutDeliveryTripsInput = {
+    where: SaleWhereUniqueInput
+    create: XOR<SaleCreateWithoutDeliveryTripsInput, SaleUncheckedCreateWithoutDeliveryTripsInput>
+  }
+
+  export type GpsTrackPointCreateWithoutTripInput = {
+    id?: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GpsTrackPointUncheckedCreateWithoutTripInput = {
+    id?: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GpsTrackPointCreateOrConnectWithoutTripInput = {
+    where: GpsTrackPointWhereUniqueInput
+    create: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput>
+  }
+
+  export type GpsTrackPointCreateManyTripInputEnvelope = {
+    data: GpsTrackPointCreateManyTripInput | GpsTrackPointCreateManyTripInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrganizationUpsertWithoutDeliveryTripsInput = {
+    update: XOR<OrganizationUpdateWithoutDeliveryTripsInput, OrganizationUncheckedUpdateWithoutDeliveryTripsInput>
+    create: XOR<OrganizationCreateWithoutDeliveryTripsInput, OrganizationUncheckedCreateWithoutDeliveryTripsInput>
+    where?: OrganizationWhereInput
+  }
+
+  export type OrganizationUpdateToOneWithWhereWithoutDeliveryTripsInput = {
+    where?: OrganizationWhereInput
+    data: XOR<OrganizationUpdateWithoutDeliveryTripsInput, OrganizationUncheckedUpdateWithoutDeliveryTripsInput>
+  }
+
+  export type OrganizationUpdateWithoutDeliveryTripsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOrganizationsOwnedNestedInput
+    members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type OrganizationUncheckedUpdateWithoutDeliveryTripsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ownerUserId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    document?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+    accountGroups?: AccountGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    roleAssignments?: OrganizationMemberGroupUncheckedUpdateManyWithoutOrganizationNestedInput
+    customers?: CustomerUncheckedUpdateManyWithoutOrganizationNestedInput
+    products?: ProductUncheckedUpdateManyWithoutOrganizationNestedInput
+    sales?: SaleUncheckedUpdateManyWithoutOrganizationNestedInput
+    salesGoals?: SalesGoalUncheckedUpdateManyWithoutOrganizationNestedInput
+    suppliers?: SupplierUncheckedUpdateManyWithoutOrganizationNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutOrganizationNestedInput
+    appointments?: AppointmentUncheckedUpdateManyWithoutOrganizationNestedInput
+    services?: ServiceUncheckedUpdateManyWithoutOrganizationNestedInput
+    stockItems?: StockItemUncheckedUpdateManyWithoutOrganizationNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutOrganizationNestedInput
+    receivables?: ReceivableUncheckedUpdateManyWithoutOrganizationNestedInput
+    workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
+    billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
+    productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+  }
+
+  export type SaleUpsertWithoutDeliveryTripsInput = {
+    update: XOR<SaleUpdateWithoutDeliveryTripsInput, SaleUncheckedUpdateWithoutDeliveryTripsInput>
+    create: XOR<SaleCreateWithoutDeliveryTripsInput, SaleUncheckedCreateWithoutDeliveryTripsInput>
+    where?: SaleWhereInput
+  }
+
+  export type SaleUpdateToOneWithWhereWithoutDeliveryTripsInput = {
+    where?: SaleWhereInput
+    data: XOR<SaleUpdateWithoutDeliveryTripsInput, SaleUncheckedUpdateWithoutDeliveryTripsInput>
+  }
+
+  export type SaleUpdateWithoutDeliveryTripsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumSaleStatusFieldUpdateOperationsInput | $Enums.SaleStatus
+    totalCents?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutSalesNestedInput
+    customer?: CustomerUpdateOneWithoutSalesNestedInput
+    lines?: SaleLineUpdateManyWithoutSaleNestedInput
+  }
+
+  export type SaleUncheckedUpdateWithoutDeliveryTripsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    customerId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSaleStatusFieldUpdateOperationsInput | $Enums.SaleStatus
+    totalCents?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lines?: SaleLineUncheckedUpdateManyWithoutSaleNestedInput
+  }
+
+  export type GpsTrackPointUpsertWithWhereUniqueWithoutTripInput = {
+    where: GpsTrackPointWhereUniqueInput
+    update: XOR<GpsTrackPointUpdateWithoutTripInput, GpsTrackPointUncheckedUpdateWithoutTripInput>
+    create: XOR<GpsTrackPointCreateWithoutTripInput, GpsTrackPointUncheckedCreateWithoutTripInput>
+  }
+
+  export type GpsTrackPointUpdateWithWhereUniqueWithoutTripInput = {
+    where: GpsTrackPointWhereUniqueInput
+    data: XOR<GpsTrackPointUpdateWithoutTripInput, GpsTrackPointUncheckedUpdateWithoutTripInput>
+  }
+
+  export type GpsTrackPointUpdateManyWithWhereWithoutTripInput = {
+    where: GpsTrackPointScalarWhereInput
+    data: XOR<GpsTrackPointUpdateManyMutationInput, GpsTrackPointUncheckedUpdateManyWithoutTripInput>
+  }
+
+  export type GpsTrackPointScalarWhereInput = {
+    AND?: GpsTrackPointScalarWhereInput | GpsTrackPointScalarWhereInput[]
+    OR?: GpsTrackPointScalarWhereInput[]
+    NOT?: GpsTrackPointScalarWhereInput | GpsTrackPointScalarWhereInput[]
+    id?: StringFilter<"GpsTrackPoint"> | string
+    tripId?: StringFilter<"GpsTrackPoint"> | string
+    latitude?: FloatFilter<"GpsTrackPoint"> | number
+    longitude?: FloatFilter<"GpsTrackPoint"> | number
+    recordedAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+    subject?: EnumGpsSubjectTypeFilter<"GpsTrackPoint"> | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFilter<"GpsTrackPoint"> | $Enums.DeliveryProgressStatus
+    note?: StringNullableFilter<"GpsTrackPoint"> | string | null
+    createdAt?: DateTimeFilter<"GpsTrackPoint"> | Date | string
+  }
+
+  export type DeliveryTripCreateWithoutGpsPointsInput = {
+    id?: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    organization: OrganizationCreateNestedOneWithoutDeliveryTripsInput
+    sale?: SaleCreateNestedOneWithoutDeliveryTripsInput
+  }
+
+  export type DeliveryTripUncheckedCreateWithoutGpsPointsInput = {
+    id?: string
+    organizationId: string
+    saleId?: string | null
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliveryTripCreateOrConnectWithoutGpsPointsInput = {
+    where: DeliveryTripWhereUniqueInput
+    create: XOR<DeliveryTripCreateWithoutGpsPointsInput, DeliveryTripUncheckedCreateWithoutGpsPointsInput>
+  }
+
+  export type DeliveryTripUpsertWithoutGpsPointsInput = {
+    update: XOR<DeliveryTripUpdateWithoutGpsPointsInput, DeliveryTripUncheckedUpdateWithoutGpsPointsInput>
+    create: XOR<DeliveryTripCreateWithoutGpsPointsInput, DeliveryTripUncheckedCreateWithoutGpsPointsInput>
+    where?: DeliveryTripWhereInput
+  }
+
+  export type DeliveryTripUpdateToOneWithWhereWithoutGpsPointsInput = {
+    where?: DeliveryTripWhereInput
+    data: XOR<DeliveryTripUpdateWithoutGpsPointsInput, DeliveryTripUncheckedUpdateWithoutGpsPointsInput>
+  }
+
+  export type DeliveryTripUpdateWithoutGpsPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutDeliveryTripsNestedInput
+    sale?: SaleUpdateOneWithoutDeliveryTripsNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateWithoutGpsPointsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    saleId?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateWithoutUserInput = {
     type: string
     provider: string
@@ -63325,6 +69436,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberCreateNestedManyWithoutOrganizationInput
@@ -63344,6 +69456,8 @@ export namespace Prisma {
     workCenters?: WorkCenterCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateWithoutOwnerInput = {
@@ -63355,6 +69469,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
@@ -63374,6 +69489,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedCreateNestedManyWithoutOrganizationInput
     billsOfMaterials?: BillOfMaterialUncheckedCreateNestedManyWithoutOrganizationInput
     productionOrders?: ProductionOrderUncheckedCreateNestedManyWithoutOrganizationInput
+    geoMapLayers?: GeoMapLayerUncheckedCreateNestedManyWithoutOrganizationInput
+    deliveryTrips?: DeliveryTripUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationCreateOrConnectWithoutOwnerInput = {
@@ -63535,6 +69652,7 @@ export namespace Prisma {
     phone?: StringNullableFilter<"Organization"> | string | null
     verified?: BoolFilter<"Organization"> | boolean
     active?: BoolFilter<"Organization"> | boolean
+    enabledModules?: EnumErpVerticalModuleNullableListFilter<"Organization">
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
   }
@@ -64041,6 +70159,28 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type GeoMapLayerCreateManyOrganizationInput = {
+    id?: string
+    name: string
+    category: $Enums.GeoMapLayerCategory
+    geoJson: JsonNullValueInput | InputJsonValue
+    sourceFileName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliveryTripCreateManyOrganizationInput = {
+    id?: string
+    saleId?: string | null
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type OrganizationMemberUpdateWithoutOrganizationInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumOrganizationMemberRoleFieldUpdateOperationsInput | $Enums.OrganizationMemberRole
@@ -64231,6 +70371,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: CustomerUpdateOneWithoutSalesNestedInput
     lines?: SaleLineUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateWithoutOrganizationInput = {
@@ -64242,6 +70383,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: SaleLineUncheckedUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateManyWithoutOrganizationInput = {
@@ -64651,6 +70793,74 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GeoMapLayerUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GeoMapLayerUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GeoMapLayerUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    category?: EnumGeoMapLayerCategoryFieldUpdateOperationsInput | $Enums.GeoMapLayerCategory
+    geoJson?: JsonNullValueInput | InputJsonValue
+    sourceFileName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliveryTripUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sale?: SaleUpdateOneWithoutDeliveryTripsNestedInput
+    gpsPoints?: GpsTrackPointUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    saleId?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gpsPoints?: GpsTrackPointUncheckedUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    saleId?: NullableStringFieldUpdateOperationsInput | string | null
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OrganizationMemberGroupCreateManyOrganizationMemberInput = {
     id?: string
     accountGroupId: string
@@ -64787,6 +70997,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     organization?: OrganizationUpdateOneRequiredWithoutSalesNestedInput
     lines?: SaleLineUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateWithoutCustomerInput = {
@@ -64798,6 +71009,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lines?: SaleLineUncheckedUpdateManyWithoutSaleNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateManyWithoutCustomerInput = {
@@ -65153,6 +71365,18 @@ export namespace Prisma {
     lineTotalCents: number
   }
 
+  export type DeliveryTripCreateManySaleInput = {
+    id?: string
+    organizationId: string
+    referenceCode?: string | null
+    description?: string | null
+    driverLabel?: string | null
+    vehicleLabel?: string | null
+    status?: $Enums.DeliveryTripStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type SaleLineUpdateWithoutSaleInput = {
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
@@ -65175,6 +71399,44 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     unitPriceCents?: IntFieldUpdateOperationsInput | number
     lineTotalCents?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DeliveryTripUpdateWithoutSaleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    organization?: OrganizationUpdateOneRequiredWithoutDeliveryTripsNestedInput
+    gpsPoints?: GpsTrackPointUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateWithoutSaleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gpsPoints?: GpsTrackPointUncheckedUpdateManyWithoutTripNestedInput
+  }
+
+  export type DeliveryTripUncheckedUpdateManyWithoutSaleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    organizationId?: StringFieldUpdateOperationsInput | string
+    referenceCode?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    driverLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicleLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumDeliveryTripStatusFieldUpdateOperationsInput | $Enums.DeliveryTripStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PurchaseLineCreateManyPurchaseInput = {
@@ -65727,6 +71989,50 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GpsTrackPointCreateManyTripInput = {
+    id?: string
+    latitude: number
+    longitude: number
+    recordedAt: Date | string
+    subject: $Enums.GpsSubjectType
+    deliveryStatus: $Enums.DeliveryProgressStatus
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GpsTrackPointUpdateWithoutTripInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GpsTrackPointUncheckedUpdateWithoutTripInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GpsTrackPointUncheckedUpdateManyWithoutTripInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    subject?: EnumGpsSubjectTypeFieldUpdateOperationsInput | $Enums.GpsSubjectType
+    deliveryStatus?: EnumDeliveryProgressStatusFieldUpdateOperationsInput | $Enums.DeliveryProgressStatus
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateManyUserInput = {
     type: string
     provider: string
@@ -65768,6 +72074,7 @@ export namespace Prisma {
     phone?: string | null
     verified?: boolean
     active?: boolean
+    enabledModules?: OrganizationCreateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -65885,6 +72192,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUpdateManyWithoutOrganizationNestedInput
@@ -65904,6 +72212,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateWithoutOwnerInput = {
@@ -65915,6 +72225,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -65934,6 +72245,8 @@ export namespace Prisma {
     workCenters?: WorkCenterUncheckedUpdateManyWithoutOrganizationNestedInput
     billsOfMaterials?: BillOfMaterialUncheckedUpdateManyWithoutOrganizationNestedInput
     productionOrders?: ProductionOrderUncheckedUpdateManyWithoutOrganizationNestedInput
+    geoMapLayers?: GeoMapLayerUncheckedUpdateManyWithoutOrganizationNestedInput
+    deliveryTrips?: DeliveryTripUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateManyWithoutOwnerInput = {
@@ -65945,6 +72258,7 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     verified?: BoolFieldUpdateOperationsInput | boolean
     active?: BoolFieldUpdateOperationsInput | boolean
+    enabledModules?: OrganizationUpdateenabledModulesInput | $Enums.ErpVerticalModule[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

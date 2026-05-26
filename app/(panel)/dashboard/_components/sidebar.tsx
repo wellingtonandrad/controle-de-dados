@@ -33,10 +33,14 @@ import {
   ClipboardList,
   HandCoins,
   Shield,
+  Truck,
+  CalendarDays,
 } from "lucide-react"
 import Link from "next/link"
 import { ClientOnly } from "@/components/client-only"
 import { dashboardTitleFromPathname } from "./dashboard-title"
+import type { ErpVerticalModule } from "@/lib/generated/prisma"
+import { hasErpModule } from "@/lib/erp/vertical-modules"
 
 function userInitials(name: string | null, email: string | null): string {
   const n = (name ?? "").trim()
@@ -54,7 +58,8 @@ function userInitials(name: string | null, email: string | null): string {
 
 export function SidebarDashboard({
   children,
-  isClinicOwner = false,
+  isOrganizationOwner = false,
+  enabledModules = [],
   canViewReports = true,
   userName = null,
   userEmail = null,
@@ -64,7 +69,9 @@ export function SidebarDashboard({
 }: {
   children: React.ReactNode
   /** Dono da empresa: equipe. */
-  isClinicOwner?: boolean
+  isOrganizationOwner?: boolean
+  /** Módulos verticais ativos nesta empresa. */
+  enabledModules?: ErpVerticalModule[]
   /** Dono ou membro com permissão de relatórios. */
   canViewReports?: boolean
   userName?: string | null
@@ -77,6 +84,11 @@ export function SidebarDashboard({
   const [isCollapsed, setIsCollapsed] = useState(false)
   const pageTitle = dashboardTitleFromPathname(pathname)
   const initials = userInitials(userName, userEmail)
+
+  const showLogistics = hasErpModule(enabledModules, "LOGISTICS")
+  const showServices = hasErpModule(enabledModules, "SERVICES")
+  const showIndustry = hasErpModule(enabledModules, "INDUSTRY")
+  const hasVerticalNav = showLogistics || showServices || showIndustry
 
   const navSections = (
     <>
@@ -128,6 +140,57 @@ export function SidebarDashboard({
         />
       )}
 
+      {hasVerticalNav ? (
+        <>
+          <span className="mt-4 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+            Módulos
+          </span>
+          {showLogistics ? (
+            <SidebarLink
+              href="/dashboard/logistica"
+              label="Logística"
+              pathname={pathname}
+              isCollapsed={isCollapsed}
+              icon={<Truck className="size-5 shrink-0" />}
+            />
+          ) : null}
+          {showServices ? (
+            <SidebarLink
+              href="/dashboard/services"
+              label="Serviços e agenda"
+              pathname={pathname}
+              isCollapsed={isCollapsed}
+              icon={<CalendarDays className="size-5 shrink-0" />}
+            />
+          ) : null}
+          {showIndustry ? (
+            <>
+              <SidebarLink
+                href="/dashboard/engenharia"
+                label="Engenharia"
+                pathname={pathname}
+                isCollapsed={isCollapsed}
+                icon={<Wrench className="size-5 shrink-0" />}
+              />
+              <SidebarLink
+                href="/dashboard/producao"
+                label="Produção"
+                pathname={pathname}
+                isCollapsed={isCollapsed}
+                icon={<Factory className="size-5 shrink-0" />}
+              />
+              <SidebarLink
+                href="/dashboard/necessidades"
+                label="Necessidades"
+                pathname={pathname}
+                isCollapsed={isCollapsed}
+                icon={<ClipboardList className="size-5 shrink-0" />}
+              />
+            </>
+          ) : null}
+        </>
+      ) : null}
+
       <span className="mt-4 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
         Cadastros
       </span>
@@ -145,22 +208,8 @@ export function SidebarDashboard({
         isCollapsed={isCollapsed}
         icon={<Package className="size-5 shrink-0" />}
       />
-      <SidebarLink
-        href="/dashboard/engenharia"
-        label="Engenharia"
-        pathname={pathname}
-        isCollapsed={isCollapsed}
-        icon={<Wrench className="size-5 shrink-0" />}
-      />
-      <SidebarLink
-        href="/dashboard/producao"
-        label="Produção"
-        pathname={pathname}
-        isCollapsed={isCollapsed}
-        icon={<Factory className="size-5 shrink-0" />}
-      />
 
-      {isClinicOwner && (
+      {isOrganizationOwner && (
         <>
           <span className="mt-4 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
             Organização
@@ -243,6 +292,49 @@ export function SidebarDashboard({
           icon={<ChartColumn className="size-5 shrink-0" />}
         />
       )}
+      {showLogistics ? (
+        <SidebarLink
+          href="/dashboard/logistica"
+          label="Logística"
+          pathname={pathname}
+          isCollapsed={isCollapsed}
+          icon={<Truck className="size-5 shrink-0" />}
+        />
+      ) : null}
+      {showServices ? (
+        <SidebarLink
+          href="/dashboard/services"
+          label="Serviços"
+          pathname={pathname}
+          isCollapsed={isCollapsed}
+          icon={<CalendarDays className="size-5 shrink-0" />}
+        />
+      ) : null}
+      {showIndustry ? (
+        <>
+          <SidebarLink
+            href="/dashboard/engenharia"
+            label="Engenharia"
+            pathname={pathname}
+            isCollapsed={isCollapsed}
+            icon={<Wrench className="size-5 shrink-0" />}
+          />
+          <SidebarLink
+            href="/dashboard/producao"
+            label="Produção"
+            pathname={pathname}
+            isCollapsed={isCollapsed}
+            icon={<Factory className="size-5 shrink-0" />}
+          />
+          <SidebarLink
+            href="/dashboard/necessidades"
+            label="Necessidades"
+            pathname={pathname}
+            isCollapsed={isCollapsed}
+            icon={<ClipboardList className="size-5 shrink-0" />}
+          />
+        </>
+      ) : null}
       <SidebarLink
         href="/dashboard/clientes"
         label="Clientes"
@@ -257,28 +349,7 @@ export function SidebarDashboard({
         isCollapsed={isCollapsed}
         icon={<Package className="size-5 shrink-0" />}
       />
-      <SidebarLink
-        href="/dashboard/engenharia"
-        label="Engenharia"
-        pathname={pathname}
-        isCollapsed={isCollapsed}
-        icon={<Wrench className="size-5 shrink-0" />}
-      />
-      <SidebarLink
-        href="/dashboard/producao"
-        label="Produção"
-        pathname={pathname}
-        isCollapsed={isCollapsed}
-        icon={<Factory className="size-5 shrink-0" />}
-      />
-      <SidebarLink
-        href="/dashboard/necessidades"
-        label="Necessidades"
-        pathname={pathname}
-        isCollapsed={isCollapsed}
-        icon={<ClipboardList className="size-5 shrink-0" />}
-      />
-      {isClinicOwner && (
+      {isOrganizationOwner && (
         <SidebarLink
           href="/dashboard/equipe"
           label="Equipe"

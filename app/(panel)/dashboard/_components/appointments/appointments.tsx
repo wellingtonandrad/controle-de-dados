@@ -1,4 +1,4 @@
-import { getTimesClinic} from "../../_components/_data-access/get-times-clinic"
+import { getOrganizationScheduleTimes } from "../../_components/_data-access/get-organization-schedule-times"
 import { AppointmentsList } from "./appointments-list"
 
 export async function Appointments({
@@ -7,7 +7,7 @@ export async function Appointments({
   organizationId: string
 }) {
 
-const { times } = await getTimesClinic({ organizationId })
+const { times } = await getOrganizationScheduleTimes({ organizationId })
 
 
 
