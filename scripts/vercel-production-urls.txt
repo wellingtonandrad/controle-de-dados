@@ -1,0 +1,17 @@
+# Cole no Vercel → Project erp-controle-dados → Settings → Environment Variables
+# Ambiente: Production (repita em Preview se quiser)
+# Sem barra no final nas URLs base.
+
+NEXT_PUBLIC_URL=https://erp-controle-dados.vercel.app
+NEXTAUTH_URL=https://erp-controle-dados.vercel.app
+STRIPE_SUCCESS_URL=https://erp-controle-dados.vercel.app/dashboard
+STRIPE_CANCEL_URL=https://erp-controle-dados.vercel.app/dashboard
+STRIPE_SUCESSS_URL=https://erp-controle-dados.vercel.app/dashboard
+
+# Google Cloud Console → OAuth client → Authorized redirect URIs:
+https://erp-controle-dados.vercel.app/api/auth/callback/google
+
+# GitHub → Settings → Developer settings → OAuth App → Authorization callback URL:
+https://erp-controle-dados.vercel.app/api/auth/callback/github
+
+# Depois: Deployments → ⋮ no último deploy → Redeploy
