@@ -112,6 +112,14 @@ enum ErpVerticalModule {
   INDUSTRY
 }
 
+enum AuditLogCategory {
+  STOCK
+  SALE
+  FINANCE
+  LOGISTICS
+  ORGANIZATION
+}
+
 model Organization {
   id          String @id @default(cuid())
   ownerUserId String
@@ -150,6 +158,7 @@ model Organization {
   productionOrders ProductionOrder[]
   geoMapLayers     GeoMapLayer[]
   deliveryTrips    DeliveryTrip[]
+  auditLogs        AuditLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -744,6 +753,27 @@ model GpsTrackPoint {
   @@index([tripId, recordedAt])
 }
 
+model AuditLog {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  category   AuditLogCategory
+  action     String
+  summary    String
+  entityType String?
+  entityId   String?
+  metadata   Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, category, createdAt])
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -766,6 +796,7 @@ model User {
 
   organizationsOwned      Organization[]       @relation("OrganizationOwner")
   organizationMemberships OrganizationMember[]
+  auditLogs               AuditLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
