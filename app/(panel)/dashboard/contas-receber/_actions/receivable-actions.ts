@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma"
 import { getActiveOrganizationId } from "@/app/utils/auth/organization-context"
 import { hasOrganizationPermission } from "@/app/utils/auth/rbac"
 import { sendReceivablesRemindersForOrganization } from "@/lib/notifications/receivables-reminder"
+import { recordAudit } from "@/lib/audit/record-audit"
 
 const createReceivableSchema = z.object({
   customerId: z.string().optional(),

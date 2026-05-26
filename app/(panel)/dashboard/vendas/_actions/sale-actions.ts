@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { recordAudit } from "@/lib/audit/record-audit"
+import nodemailer from "nodemailer"
 
 const lineSchema = z.object({
   productId: z.string().min(1),
