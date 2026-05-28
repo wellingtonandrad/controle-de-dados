@@ -1,3 +1,7 @@
+// =============================================================================
+// Configuração Prisma — PostgreSQL (Neon) + client gerado em lib/generated/prisma
+// =============================================================================
+
 generator client {
   provider = "prisma-client-js"
   output   = "../lib/generated/prisma"
@@ -7,75 +11,99 @@ datasource db {
   provider = "postgresql"
 }
 
+// =============================================================================
+// CORE · Módulo 1 — Segurança (auth, usuários, perfis, multi-empresa, RBAC)
+// =============================================================================
+
+/// Papel global do usuário na plataforma (fora da empresa).
 enum UserRole {
-  EXTERNAL
-  ACCOUNT_HOLDER
+  EXTERNAL        // Visitante / sem painel de titular
+  ACCOUNT_HOLDER  // Pode possuir empresa e acessar o painel ERP
 }
 
+/// Papel do usuário dentro de uma organização (empresa).
 enum OrganizationMemberRole {
-  OWNER
-  MANAGER
-  STAFF
+  OWNER   // Dono — configura módulos, equipe, cargos
+  MANAGER // Gestor — relatórios e operações amplas
+  STAFF   // Operacional — escopo definido pelos grupos de permissão
 }
 
+// -----------------------------------------------------------------------------
+// CORE · Módulo 2 — Cadastros + comercial (status de documentos)
+// -----------------------------------------------------------------------------
+
+/// Venda: orçamento (rascunho) vs venda confirmada vs cancelada.
 enum SaleStatus {
-  DRAFT
-  CONFIRMED
-  CANCELLED
+  DRAFT     // Orçamento — não conta como venda fechada no painel
+  CONFIRMED // Venda efetiva
+  CANCELLED // Cancelada
 }
 
+/// Compra: mesma lógica de rascunho / confirmada / cancelada.
 enum PurchaseStatus {
-  DRAFT
-  CONFIRMED
-  CANCELLED
+  DRAFT     // Pedido em elaboração
+  CONFIRMED // Compra registrada (pode gerar entrada de estoque)
+  CANCELLED // Cancelada
 }
 
+/// Agenda pública / serviços (módulo SERVICES).
 enum AppointmentStatus {
-  SCHEDULED
-  COMPLETED
-  NO_SHOW
-  CANCELED
+  SCHEDULED // Agendado
+  COMPLETED // Realizado
+  NO_SHOW   // Cliente não compareceu
+  CANCELED  // Cancelado
 }
 
+// -----------------------------------------------------------------------------
+// CORE · Módulo 4 — Operação (estoque e produção)
+// -----------------------------------------------------------------------------
+
+/// Tipo de movimentação de estoque (entrada, saída, ajuste, consumo em atendimento).
 enum StockMovementKind {
-  IN
-  OUT
-  ADJUSTMENT
-  APPOINTMENT_CONSUMPTION
+  IN                      // Entrada
+  OUT                     // Saída
+  ADJUSTMENT              // Ajuste de inventário
+  APPOINTMENT_CONSUMPTION // Baixa automática por agendamento/serviço
 }
 
+/// Classificação do item no catálogo (MP=materia-prima, PA=produto acabado, etc.).
 enum ProductItemType {
-  MP
-  PI
-  PA
-  EM
-  SV
+  MP // Matéria-prima
+  PI // Produto intermediário
+  PA // Produto acabado
+  EM // Embalagem
+  SV // Serviço
 }
 
+/// Ordem de produção (módulo INDUSTRY).
 enum ProductionOrderStatus {
-  PLANNED
-  RELEASED
-  IN_PROGRESS
-  PAUSED
-  FINISHED
-  CANCELLED
+  PLANNED     // Planejada
+  RELEASED    // Liberada para o chão
+  IN_PROGRESS // Em produção
+  PAUSED      // Pausada
+  FINISHED    // Finalizada
+  CANCELLED   // Cancelada
 }
 
-/** Camada importada de KMZ/KML: região de entrega, fábrica, bairro, rota. */
+// -----------------------------------------------------------------------------
+// Plug-in LOGISTICS — mapas, entregas e GPS
+// -----------------------------------------------------------------------------
+
+/// Camada geográfica importada de KMZ/KML.
 enum GeoMapLayerCategory {
-  DELIVERY_REGION
-  FACTORY_SITE
-  NEIGHBORHOOD_BOUNDARY
-  PLANNED_ROUTE
+  DELIVERY_REGION      // Região de entrega
+  FACTORY_SITE         // Unidade / fábrica
+  NEIGHBORHOOD_BOUNDARY // Limite de bairro ou zona
+  PLANNED_ROUTE        // Rota planejada
 }
 
-/** Quem enviou o ponto de GPS: entregador ou veículo da empresa. */
+/// Origem do ponto GPS na viagem.
 enum GpsSubjectType {
-  DELIVERER
-  COMPANY_VEHICLE
+  DELIVERER        // Entregador (pessoa)
+  COMPANY_VEHICLE  // Veículo da empresa
 }
 
-/** Status da entrega no momento do registro do ponto. */
+/// Situação da entrega no instante em que o ponto foi registrado.
 enum DeliveryProgressStatus {
   SCHEDULED
   LOADING
@@ -83,70 +111,85 @@ enum DeliveryProgressStatus {
   IN_TRANSIT
   AT_CUSTOMER
   DELIVERED
-  EXCEPTION
+  EXCEPTION   // Problema na entrega
   RETURNING
   CANCELLED
 }
 
+/// Ciclo de vida da viagem / entrega.
 enum DeliveryTripStatus {
-  DRAFT
-  ACTIVE
-  COMPLETED
-  CANCELLED
+  DRAFT     // Rascunho — viagem criada, ainda não em rota
+  ACTIVE    // Em andamento (coleta de GPS)
+  COMPLETED // Concluída
+  CANCELLED // Cancelada
 }
 
-/** Módulos verticais do ERP multissetorial (CORE é sempre implícito). */
+// -----------------------------------------------------------------------------
+// Módulos verticais plugáveis (CORE permanece sempre ativo — não está neste enum)
+// -----------------------------------------------------------------------------
+
+/// Setores opcionais por empresa: menu e rotas em /dashboard/* filtrados por enabledModules.
 enum ErpVerticalModule {
-  LOGISTICS
-  MARKETS
-  SERVICES
-  HOSPITALS
-  INDUSTRY
+  LOGISTICS // Frota, KMZ, entregas, GPS (e protótipo lotes/coletor)
+  MARKETS   // PDV / varejo (piloto)
+  SERVICES  // Agenda, serviços, página pública /empresa/[id]
+  HOSPITALS // Saúde (evolução)
+  INDUSTRY  // Engenharia, BOM, produção, necessidades
 }
+
+// -----------------------------------------------------------------------------
+// CORE · Módulo 6 — Auditoria (categorias de evento)
+// -----------------------------------------------------------------------------
 
 enum AuditLogCategory {
-  STOCK
-  SALE
-  FINANCE
-  LOGISTICS
-  ORGANIZATION
+  STOCK        // Estoque
+  SALE         // Vendas
+  FINANCE      // Financeiro (contas a receber, etc.)
+  LOGISTICS    // Logística
+  ORGANIZATION // Empresa, módulos, equipe
 }
 
+// =============================================================================
+// Multi-empresa — tenant principal do ERP
+// =============================================================================
+
+/// Empresa (tenant). Agrupa todos os dados operacionais e módulos ativos.
 model Organization {
   id          String @id @default(cuid())
-  ownerUserId String
+  ownerUserId String // Titular da conta (User ACCOUNT_HOLDER)
   owner       User   @relation("OrganizationOwner", fields: [ownerUserId], references: [id], onDelete: Restrict)
 
   name     String
-  slug     String  @unique
-  document String?
+  slug     String  @unique // URL pública: /empresa/[slug]
+  document String? // CNPJ/CPF
   email    String?
   phone    String?
 
-  verified Boolean @default(false)
+  verified Boolean @default(false) // Aprovação / onboarding
   active   Boolean @default(true)
 
-  /** Módulos ativos nesta empresa (menu e rotas verticais). */
+  /// Plug-ins verticais ligados (Logística, Serviços, Indústria…). CORE não aparece aqui.
   enabledModules ErpVerticalModule[] @default([LOGISTICS, SERVICES, INDUSTRY])
 
+  // Relações — resumo por área do CORE + plug-ins
   members          OrganizationMember[]
-  accountGroups    AccountGroup[]
+  accountGroups    AccountGroup[] // Cargos / perfis de permissão
   roleAssignments  OrganizationMemberGroup[]
-  customers        Customer[]
+  customers        Customer[] // Cadastros
   products         Product[]
-  sales            Sale[]
+  sales            Sale[] // Comercial
   salesGoals       SalesGoal[]
   suppliers        Supplier[]
   purchases        Purchase[]
-  appointments     Appointment[]
+  appointments     Appointment[] // SERVICES
   services         Service[]
-  stockItems       StockItem[]
+  stockItems       StockItem[] // Operação / estoque
   reminders        Reminder[]
-  receivables      Receivable[]
-  workCenters      WorkCenter[]
+  receivables      Receivable[] // Financeiro
+  workCenters      WorkCenter[] // INDUSTRY
   billsOfMaterials BillOfMaterial[]
   productionOrders ProductionOrder[]
-  geoMapLayers     GeoMapLayer[]
+  geoMapLayers     GeoMapLayer[] // LOGISTICS
   deliveryTrips    DeliveryTrip[]
   auditLogs        AuditLog[]
 
@@ -156,15 +199,16 @@ model Organization {
   @@index([ownerUserId])
 }
 
+/// Vínculo usuário ↔ empresa (equipe).
 model OrganizationMember {
   id             String                 @id @default(cuid())
   organizationId String
   userId         String
-  role           OrganizationMemberRole
+  role           OrganizationMemberRole // OWNER | MANAGER | STAFF
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accountGroups OrganizationMemberGroup[]
+  organization  Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user          User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountGroups OrganizationMemberGroup[] // Grupos de permissão (cargos)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -173,16 +217,18 @@ model OrganizationMember {
   @@index([userId])
 }
 
+/// Permissão atômica do sistema (ex.: reports:view, stock:write).
 model Permission {
   id        String   @id @default(cuid())
-  key       String   @unique
-  label     String
+  key       String   @unique // Chave usada no código (RBAC)
+  label     String   // Nome exibido na UI de cargos
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   groups AccountGroupPermission[]
 }
 
+/// Grupo de permissões = “cargo” customizável por empresa.
 model AccountGroup {
   id             String       @id @default(cuid())
   organizationId String
@@ -190,7 +236,7 @@ model AccountGroup {
 
   name        String
   description String?
-  isSystem    Boolean @default(false)
+  isSystem    Boolean @default(false) // Grupos criados pelo seed (não apagar)
 
   permissions AccountGroupPermission[]
   members     OrganizationMemberGroup[]
@@ -202,32 +248,39 @@ model AccountGroup {
   @@index([organizationId])
 }
 
+/// N:N cargo ↔ permissão.
 model AccountGroupPermission {
-  id            String       @id @default(cuid())
-  groupId       String
-  permissionId  String
-  group         AccountGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  permission    Permission   @relation(fields: [permissionId], references: [id], onDelete: Cascade)
-  createdAt     DateTime     @default(now())
+  id           String       @id @default(cuid())
+  groupId      String
+  permissionId String
+  group        AccountGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  permission   Permission   @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  createdAt    DateTime     @default(now())
 
   @@unique([groupId, permissionId])
   @@index([permissionId])
 }
 
+/// N:N membro da equipe ↔ cargo.
 model OrganizationMemberGroup {
-  id                    String             @id @default(cuid())
-  organizationMemberId  String
-  accountGroupId        String
-  organizationMember    OrganizationMember @relation(fields: [organizationMemberId], references: [id], onDelete: Cascade)
-  accountGroup          AccountGroup       @relation(fields: [accountGroupId], references: [id], onDelete: Cascade)
-  organizationId        String
-  organization          Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  createdAt             DateTime           @default(now())
+  id                   String             @id @default(cuid())
+  organizationMemberId String
+  accountGroupId       String
+  organizationMember   OrganizationMember @relation(fields: [organizationMemberId], references: [id], onDelete: Cascade)
+  accountGroup         AccountGroup       @relation(fields: [accountGroupId], references: [id], onDelete: Cascade)
+  organizationId       String
+  organization         Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt            DateTime           @default(now())
 
   @@unique([organizationMemberId, accountGroupId])
   @@index([organizationId, organizationMemberId])
 }
 
+// =============================================================================
+// CORE · Módulo 2 — Cadastros
+// =============================================================================
+
+/// Cliente da empresa (B2B ou consumidor).
 model Customer {
   id             String       @id @default(cuid())
   organizationId String
@@ -244,7 +297,7 @@ model Customer {
   notes      String?
   active     Boolean @default(true)
 
-  sales Sale[]
+  sales       Sale[]
   receivables Receivable[]
 
   createdAt DateTime @default(now())
@@ -253,24 +306,25 @@ model Customer {
   @@index([organizationId, name])
 }
 
+/// Produto vendável / comprável / usado em BOM e produção.
 model Product {
   id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   name       String
-  sku        String
+  sku        String // Único por empresa
   unit       String          @default("un")
   itemType   ProductItemType @default(PA)
-  priceCents Int
-  costCents  Int?
+  priceCents Int // Preço de venda (centavos)
+  costCents  Int? // Custo (opcional)
   active     Boolean         @default(true)
 
-  saleLines        SaleLine[]
-  purchaseLines    PurchaseLine[]
-  bomParents       BillOfMaterial[]  @relation("BomProduct")
-  bomComponents    BomItem[]         @relation("BomComponentProduct")
-  productionOrders ProductionOrder[]
+  saleLines         SaleLine[]
+  purchaseLines     PurchaseLine[]
+  bomParents        BillOfMaterial[]         @relation("BomProduct")
+  bomComponents     BomItem[]                @relation("BomComponentProduct")
+  productionOrders  ProductionOrder[]
   materialPlanLines ProductionMaterialPlan[] @relation("MaterialPlanComponent")
 
   createdAt DateTime @default(now())
@@ -280,6 +334,7 @@ model Product {
   @@index([organizationId, active])
 }
 
+/// Fornecedor (compras).
 model Supplier {
   id             String       @id @default(cuid())
   organizationId String
@@ -300,6 +355,11 @@ model Supplier {
   @@index([organizationId, name])
 }
 
+// =============================================================================
+// CORE · Comercial (vendas e compras)
+// =============================================================================
+
+/// Pedido de venda ou orçamento (status DRAFT = orçamento).
 model Sale {
   id             String       @id @default(cuid())
   organizationId String
@@ -312,8 +372,8 @@ model Sale {
   totalCents Int
   notes      String?
 
-  lines SaleLine[]
-  deliveryTrips DeliveryTrip[]
+  lines         SaleLine[]
+  deliveryTrips DeliveryTrip[] // LOGISTICS — entrega opcional da venda
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -322,6 +382,7 @@ model Sale {
   @@index([customerId])
 }
 
+/// Item da venda.
 model SaleLine {
   id        String  @id @default(cuid())
   saleId    String
@@ -336,13 +397,14 @@ model SaleLine {
   @@index([saleId])
 }
 
+/// Meta mensal de faturamento / pedidos (dashboard de vendas).
 model SalesGoal {
   id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  year       Int
-  month      Int
+  year         Int
+  month        Int
   revenueCents Int @default(0)
   ordersCount  Int @default(0)
 
@@ -353,6 +415,7 @@ model SalesGoal {
   @@index([organizationId, year, month])
 }
 
+/// Pedido de compra ao fornecedor.
 model Purchase {
   id             String       @id @default(cuid())
   organizationId String
@@ -374,6 +437,7 @@ model Purchase {
   @@index([supplierId])
 }
 
+/// Item da compra.
 model PurchaseLine {
   id         String   @id @default(cuid())
   purchaseId String
@@ -388,6 +452,11 @@ model PurchaseLine {
   @@index([purchaseId])
 }
 
+// =============================================================================
+// Plug-in SERVICES — agenda e serviços
+// =============================================================================
+
+/// Agendamento feito pela página pública da empresa.
 model Appointment {
   id              String   @id @default(cuid())
   name            String
@@ -410,12 +479,13 @@ model Appointment {
   updatedAt DateTime @updatedAt
 }
 
+/// Catálogo de serviços (barbearia, consulta, etc.).
 model Service {
   id       String  @id @default(cuid())
   name     String
-  price    Int
-  duration Int
-  status   Boolean @default(true)
+  price    Int // Centavos
+  duration Int // Minutos
+  status   Boolean @default(true) // Ativo na agenda
 
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
@@ -427,12 +497,17 @@ model Service {
   updatedAt DateTime @updatedAt
 }
 
+// =============================================================================
+// CORE · Módulo 4 — Estoque (materiais; distinto de Product no catálogo comercial)
+// =============================================================================
+
+/// Item de estoque (pode ser nome diferente do Product — consumo em serviços).
 model StockItem {
   id              String  @id @default(cuid())
   name            String
   unit            String  @default("un")
   currentQuantity Int     @default(0)
-  minimumQuantity Int     @default(0)
+  minimumQuantity Int     @default(0) // Alerta de estoque baixo
   active          Boolean @default(true)
 
   organizationId String
@@ -448,6 +523,7 @@ model StockItem {
   @@index([organizationId, active])
 }
 
+/// Histórico de movimentação (append-only na prática).
 model StockMovement {
   id          String    @id @default(cuid())
   stockItemId String
@@ -456,7 +532,7 @@ model StockMovement {
   kind            StockMovementKind
   quantity        Int
   note            String?
-  appointmentId   String?
+  appointmentId   String? // Se kind = APPOINTMENT_CONSUMPTION
   createdByUserId String?
 
   createdAt DateTime @default(now())
@@ -464,6 +540,7 @@ model StockMovement {
   @@index([stockItemId, createdAt])
 }
 
+/// Receita de consumo: quanto de cada material um serviço gasta.
 model ServiceStockConsumption {
   id          String    @id @default(cuid())
   serviceId   String
@@ -479,6 +556,11 @@ model ServiceStockConsumption {
   @@unique([serviceId, stockItemId])
 }
 
+// =============================================================================
+// CORE · Módulo 3 — Financeiro (contas a receber; PIX/NFS-e futuros)
+// =============================================================================
+
+/// Parcelas de pagamento ligadas a um agendamento.
 model AppointmentInstallment {
   id            String      @id @default(cuid())
   appointmentId String
@@ -495,6 +577,7 @@ model AppointmentInstallment {
   @@unique([appointmentId, sequence])
 }
 
+/// Conta a receber manual (cobrança avulsa).
 model Receivable {
   id             String       @id @default(cuid())
   organizationId String
@@ -503,11 +586,11 @@ model Receivable {
   customerId String?
   customer   Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
 
-  description String
-  amountCents Int
-  dueDate     DateTime
-  paidAt      DateTime?
-  notes       String?
+  description     String
+  amountCents     Int
+  dueDate         DateTime
+  paidAt          DateTime? // null = em aberto
+  notes           String?
   createdByUserId String?
 
   createdAt DateTime @default(now())
@@ -517,6 +600,7 @@ model Receivable {
   @@index([organizationId, paidAt])
 }
 
+/// Lembrete interno da empresa (painel).
 model Reminder {
   id             String       @id @default(cuid())
   description    String
@@ -527,6 +611,11 @@ model Reminder {
   updatedAt DateTime @updatedAt
 }
 
+// =============================================================================
+// Plug-in INDUSTRY — engenharia, BOM, produção, necessidades
+// =============================================================================
+
+/// Centro de trabalho / máquina na rota de produção.
 model WorkCenter {
   id             String       @id @default(cuid())
   organizationId String
@@ -534,7 +623,7 @@ model WorkCenter {
 
   name              String
   code              String?
-  capacityPerDayMin Int     @default(480)
+  capacityPerDayMin Int     @default(480) // Capacidade diária em minutos
   active            Boolean @default(true)
 
   routingSteps      RoutingStep[]
@@ -547,6 +636,7 @@ model WorkCenter {
   @@index([organizationId, active])
 }
 
+/// Lista de materiais (BOM) de um produto acabado.
 model BillOfMaterial {
   id             String       @id @default(cuid())
   organizationId String
@@ -570,6 +660,7 @@ model BillOfMaterial {
   @@index([organizationId, active])
 }
 
+/// Componente da BOM (quantidade + perda).
 model BomItem {
   id String @id @default(cuid())
 
@@ -589,6 +680,7 @@ model BomItem {
   @@index([bomId])
 }
 
+/// Etapa da rota (sequência no centro de trabalho).
 model RoutingStep {
   id String @id @default(cuid())
 
@@ -600,8 +692,8 @@ model RoutingStep {
 
   sequence Int
   name     String
-  setupMin Int    @default(0)
-  cycleMin Int    @default(0)
+  setupMin Int @default(0)
+  cycleMin Int @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -610,6 +702,7 @@ model RoutingStep {
   @@index([bomId])
 }
 
+/// Ordem de produção no chão de fábrica.
 model ProductionOrder {
   id             String       @id @default(cuid())
   organizationId String
@@ -641,6 +734,7 @@ model ProductionOrder {
   @@index([organizationId, status, createdAt])
 }
 
+/// Plano de materiais da OP (consumo previsto vs realizado).
 model ProductionMaterialPlan {
   id String @id @default(cuid())
 
@@ -660,6 +754,7 @@ model ProductionMaterialPlan {
   @@index([productionOrderId])
 }
 
+/// Apontamento de produção (boa quantidade, refugo, tempo).
 model ProductionReport {
   id String @id @default(cuid())
 
@@ -680,16 +775,20 @@ model ProductionReport {
   @@index([productionOrderId, createdAt])
 }
 
+// =============================================================================
+// Plug-in LOGISTICS — mapas KMZ, viagens e rastreamento GPS
+// =============================================================================
+
+/// Camada de mapa (GeoJSON persistido após import KMZ/KML).
 model GeoMapLayer {
   id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  name     String
-  category GeoMapLayerCategory
-  /** GeoJSON FeatureCollection extraído do KML/KMZ. */
-  geoJson         Json
-  sourceFileName  String?
+  name           String
+  category       GeoMapLayerCategory
+  geoJson        Json // FeatureCollection
+  sourceFileName String? // Nome do arquivo original
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -697,18 +796,19 @@ model GeoMapLayer {
   @@index([organizationId, category])
 }
 
+/// Viagem de entrega (pode vincular a uma venda).
 model DeliveryTrip {
   id             String       @id @default(cuid())
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   saleId String?
-  sale   Sale? @relation(fields: [saleId], references: [id], onDelete: SetNull)
+  sale   Sale?   @relation(fields: [saleId], references: [id], onDelete: SetNull)
 
-  referenceCode String?
+  referenceCode String? // Código interno da rota
   description   String?
-  driverLabel   String?
-  vehicleLabel  String?
+  driverLabel   String? // Nome do entregador
+  vehicleLabel  String? // Placa / veículo
 
   status DeliveryTripStatus @default(DRAFT)
 
@@ -721,18 +821,19 @@ model DeliveryTrip {
   @@index([saleId])
 }
 
+/// Ponto de GPS ao longo da viagem.
 model GpsTrackPoint {
   id String @id @default(cuid())
 
   tripId String
   trip   DeliveryTrip @relation(fields: [tripId], references: [id], onDelete: Cascade)
 
-  latitude  Float
-  longitude Float
+  latitude   Float
+  longitude  Float
   recordedAt DateTime
 
-  subject         GpsSubjectType
-  deliveryStatus  DeliveryProgressStatus
+  subject        GpsSubjectType
+  deliveryStatus DeliveryProgressStatus
 
   note String?
 
@@ -741,20 +842,25 @@ model GpsTrackPoint {
   @@index([tripId, recordedAt])
 }
 
+// =============================================================================
+// CORE · Módulo 6 — Auditoria (trilha de ações; append-only na prática)
+// =============================================================================
+
+/// Registro de auditoria por organização (quem fez o quê).
 model AuditLog {
-  id             String           @id @default(cuid())
+  id             String       @id @default(cuid())
   organizationId String
-  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   category   AuditLogCategory
-  action     String
-  summary    String
-  entityType String?
+  action     String // Ex.: sale.create, stock.movement
+  summary    String // Texto legível
+  entityType String? // Ex.: Sale, StockItem
   entityId   String?
-  metadata   Json?
+  metadata   Json? // Detalhes extras
 
   createdAt DateTime @default(now())
 
@@ -762,6 +868,11 @@ model AuditLog {
   @@index([organizationId, category, createdAt])
 }
 
+// =============================================================================
+// NextAuth / Auth.js — usuário e sessão OAuth (Google/GitHub)
+// =============================================================================
+
+/// Usuário da plataforma (login social).
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -775,12 +886,12 @@ model User {
   status  Boolean  @default(true)
 
   timeZone           String?
-  stripe_customer_id String?
-  times              String[] @default([])
+  stripe_customer_id String? // Legado Stripe (portal)
+  times              String[] @default([]) // Horários agenda (legado)
 
   accounts      Account[]
   sessions      Session[]
-  Authenticator Authenticator[]
+  Authenticator Authenticator[] // WebAuthn (se habilitado)
 
   organizationsOwned      Organization[]       @relation("OrganizationOwner")
   organizationMemberships OrganizationMember[]
@@ -790,6 +901,7 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+/// Conta OAuth vinculada (Google, GitHub).
 model Account {
   userId            String
   type              String
@@ -812,6 +924,7 @@ model Account {
   @@id([provider, providerAccountId])
 }
 
+/// Sessão ativa do usuário.
 model Session {
   sessionToken String   @unique
   userId       String
@@ -823,6 +936,7 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
+/// Token de verificação de e-mail (Auth.js).
 model VerificationToken {
   identifier String
   token      String
@@ -831,6 +945,7 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
+/// Credencial WebAuthn / passkey.
 model Authenticator {
   credentialID         String
   userId               String
